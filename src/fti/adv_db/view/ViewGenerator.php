@@ -65,13 +65,25 @@ class ViewGenerator
      */
     public function createTextInputBlock($label, $value, $name)
     {
+        return $this->createSimpleInputBlock($label, $value, $name, DefaultAttributeValues::TYPE_TEXT);
+    }
+
+    /**
+     * @param string $label
+     * @param string $value
+     * @param string $name
+     * @param string $type
+     * @return DOMElement
+     */
+    private function createSimpleInputBlock($label, $value, $name, $type)
+    {
         $containerEl = $this->createFieldBlockContainer();
         $id = $this->genUniqueID();
 
         $labelEl = $this->createLabel($label, $id);
         $containerEl->appendChild($labelEl);
 
-        $inputEl = $this->createInput($name, $value, DefaultAttributeValues::TYPE_TEXT, $id);
+        $inputEl = $this->createInput($name, $value, $type, $id);
         $containerEl->appendChild($inputEl);
 
         return $containerEl;

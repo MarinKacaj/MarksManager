@@ -17,5 +17,8 @@ class Attribute
     const TYPE = 'type';
     const NAME = 'name';
     const VALUE = 'value';
+    const MIN = 'min';
+    const MAX = 'max';
+    const STEP = 'step';
     const FOR_INPUT = 'for';
 }
