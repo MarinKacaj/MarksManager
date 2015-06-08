@@ -9,7 +9,7 @@
 namespace fti\adv_db\property;
 
 
-use \DOMDocument as DOMDocument;
+use DOMDocument as DOMDocument;
 
 /**
  * Class Integer

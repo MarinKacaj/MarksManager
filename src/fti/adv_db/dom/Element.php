@@ -9,8 +9,10 @@
 namespace fti\adv_db\dom;
 
 
-class Element {
+class Element
+{
 
+    const FORM = 'form';
     const INPUT = 'input';
     const SELECT = 'select';
     const DIV = 'div';

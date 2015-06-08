@@ -9,8 +9,13 @@
 namespace fti\adv_db\dom;
 
 
-class Attribute {
+class Attribute
+{
 
+    const ID = 'id';
+    const CLASS_NAME = 'class';
     const TYPE = 'type';
     const NAME = 'name';
+    const VALUE = 'value';
+    const FOR_INPUT = 'for';
 }

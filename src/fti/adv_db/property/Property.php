@@ -9,13 +9,14 @@
 namespace fti\adv_db\property;
 
 
-use \DOMDocument as DOMDocument;
+use DOMDocument as DOMDocument;
 
 /**
  * Interface Property
  * @package fti\adv_db\property
  */
-interface Property {
+interface Property
+{
 
     const INTEGER = 1;
     const FLOAT = 2;
