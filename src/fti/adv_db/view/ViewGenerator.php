@@ -8,8 +8,8 @@
 
 namespace fti\adv_db\view;
 
-use \DOMDocument;
-use \DOMElement;
+use DOMDocument;
+use DOMElement;
 use fti\adv_db\dom\Attribute;
 use fti\adv_db\dom\DefaultAttributeValues;
 use fti\adv_db\dom\Element;
@@ -109,7 +109,10 @@ class ViewGenerator
         ));
         $labelEl->setAttribute(Attribute::CLASS_NAME, $fullClassName);
         $labelEl->setAttribute(Attribute::FOR_INPUT, DefaultAttributeValues::INPUT_ID_PREFIX . $id);
-        $labelEl->textContent = $label;
+
+        $labelText = $this->domDocument->createTextNode($label);
+        $labelEl->appendChild($labelText);
+
         return $labelEl;
     }
 
@@ -126,8 +129,16 @@ class ViewGenerator
         $inputEl->setAttribute(Attribute::TYPE, $type);
         $inputEl->setAttribute(Attribute::NAME, $name);
         $inputEl->setAttribute(Attribute::VALUE, $value);
-        $inputEl->setIdAttribute($id, true);
+        $inputEl->setAttribute(Attribute::ID, $id);
         return $inputEl;
+    }
+
+    /**
+     * @return DOMDocument
+     */
+    public function getDOMDocument()
+    {
+        return $this->domDocument;
     }
 
 
