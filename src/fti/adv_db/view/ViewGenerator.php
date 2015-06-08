@@ -9,6 +9,7 @@
 namespace fti\adv_db\view;
 
 use DOMDocument;
+use DOMDocumentFragment;
 use DOMElement;
 use fti\adv_db\dom\Attribute;
 use fti\adv_db\dom\DefaultAttributeValues;
@@ -80,7 +81,7 @@ class ViewGenerator
         $containerEl = $this->createFieldBlockContainer();
         $id = $this->genUniqueID();
 
-        $labelEl = $this->createLabel($label, $id);
+        $labelEl = $this->createLabel($label, DefaultAttributeValues::GENERIC_ID_PREFIX . $id);
         $containerEl->appendChild($labelEl);
 
         $inputEl = $this->createInput($name, $value, $type, $id);
@@ -120,7 +121,7 @@ class ViewGenerator
             DefaultAttributeValues::CL_CONTROL_LABEL
         ));
         $labelEl->setAttribute(Attribute::CLASS_NAME, $fullClassName);
-        $labelEl->setAttribute(Attribute::FOR_INPUT, DefaultAttributeValues::INPUT_ID_PREFIX . $id);
+        $labelEl->setAttribute(Attribute::FOR_INPUT, DefaultAttributeValues::GENERIC_ID_PREFIX . $id);
 
         $labelText = $this->domDocument->createTextNode($label);
         $labelEl->appendChild($labelText);
@@ -132,7 +133,7 @@ class ViewGenerator
      * @param string $name
      * @param string $value
      * @param string $type
-     * @param string $id
+     * @param int $id
      * @return DOMElement
      */
     private function createInput($name, $value, $type, $id)
@@ -141,8 +142,100 @@ class ViewGenerator
         $inputEl->setAttribute(Attribute::TYPE, $type);
         $inputEl->setAttribute(Attribute::NAME, $name);
         $inputEl->setAttribute(Attribute::VALUE, $value);
-        $inputEl->setAttribute(Attribute::ID, $id);
+        $inputEl->setAttribute(Attribute::ID, DefaultAttributeValues::GENERIC_ID_PREFIX . $id);
         return $inputEl;
+    }
+
+    /**
+     * @param string $name
+     * @return DOMElement
+     */
+    public function createMarkSelectBlock($name)
+    {
+        $label = 'Result';
+        $allowedMarks = array(
+            DefaultAttributeValues::STUDENT_NOT_PRESENT => 'Absent',
+            4 => '4',
+            5 => '5',
+            6 => '6',
+            7 => '7',
+            8 => '8',
+            9 => '9',
+            10 => '10'
+        );
+        $markSelectBlock = $this->createSelectBlock($label, $name, $allowedMarks);
+        return $markSelectBlock;
+    }
+
+    /**
+     * @param string $label
+     * @param string $name
+     * @param array $valueTextPairs
+     * @return DOMElement
+     */
+    public function createSelectBlock($label, $name, $valueTextPairs)
+    {
+        $containerEl = $this->createFieldBlockContainer();
+        $id = $this->genUniqueID();
+
+        $labelEl = $this->createLabel($label, $id);
+        $containerEl->appendChild($labelEl);
+
+        $selectEl = $this->createSelectElement($name, $id);
+        $selectEl->setAttribute(Attribute::ID, $id);
+
+        $optionsFragment = $this->createOptionsFragment($valueTextPairs);
+        $selectEl->appendChild($optionsFragment);
+        $containerEl->appendChild($selectEl);
+
+        return $containerEl;
+    }
+
+    /**
+     * @param string $name
+     * @param int $id
+     * @return DOMElement
+     */
+    private function createSelectElement($name, $id)
+    {
+        $selectEl = $this->domDocument->createElement(Element::SELECT);
+        $selectEl->setAttribute(Attribute::ID, DefaultAttributeValues::GENERIC_ID_PREFIX . $id);
+        $selectEl->setAttribute(Attribute::NAME, $name);
+        return $selectEl;
+    }
+
+    /**
+     * @param array $valueTextPairs
+     * @return DOMDocumentFragment
+     */
+    private function createOptionsFragment($valueTextPairs)
+    {
+        $optionsFragment = $this->domDocument->createDocumentFragment();
+
+        foreach ($valueTextPairs as $value => $text) {
+            $optionEl = $this->createOptionElement($value, $text);
+            $optionsFragment->appendChild($optionEl);
+        }
+        unset($value);
+        unset($text);
+
+        return $optionsFragment;
+    }
+
+    /**
+     * @param string $value
+     * @param string $text
+     * @return DOMElement
+     */
+    private function createOptionElement($value, $text)
+    {
+        $optionEl = $this->domDocument->createElement(Element::OPTION);
+        $optionEl->setAttribute(Attribute::VALUE, $value);
+
+        $optionText = $this->domDocument->createTextNode($text);
+        $optionEl->appendChild($optionText);
+
+        return $optionEl;
     }
 
     /**

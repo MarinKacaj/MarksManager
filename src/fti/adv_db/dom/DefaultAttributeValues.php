@@ -34,8 +34,7 @@ class DefaultAttributeValues
     /*
      * ID prefixes
      */
-    const INPUT_ID_PREFIX = 'input-generic-id-';
-    const TEXT_AREA_ID_PREFIX = 'text-area-generic-id-';
+    const GENERIC_ID_PREFIX = 'input-generic-id-';
 
     /*
      * Input type values
@@ -44,4 +43,9 @@ class DefaultAttributeValues
     const TYPE_TEXT = 'text';
     const TYPE_NUMBER = 'number';
     const TYPE_CHECKBOX = 'checkbox';
+
+    /*
+     * Mark-related
+     */
+    const STUDENT_NOT_PRESENT = 0;
 }

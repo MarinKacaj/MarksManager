@@ -12,6 +12,8 @@ use fti\adv_db\view\ViewGenerator;
 
 $viewGenerator = new ViewGenerator();
 $inputEl = $viewGenerator->createTextInputBlock('Field1', 'field1', 'field1');
+$markSelectEl = $viewGenerator->createMarkSelectBlock('mark1');
 $domDocument = $viewGenerator->getDOMDocument();
 $domDocument->appendChild($inputEl);
+$domDocument->appendChild($markSelectEl);
 echo html_entity_decode($domDocument->saveHTML());

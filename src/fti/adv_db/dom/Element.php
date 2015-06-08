@@ -15,6 +15,7 @@ class Element
     const FORM = 'form';
     const INPUT = 'input';
     const SELECT = 'select';
+    const OPTION = 'option';
     const TEXT_AREA = 'textarea';
     const DIV = 'div';
     const LABEL = 'label';
