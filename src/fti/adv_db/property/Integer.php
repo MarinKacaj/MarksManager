@@ -9,26 +9,76 @@
 namespace fti\adv_db\property;
 
 
-class Integer implements Property {
+use \DOMDocument as DOMDocument;
 
+/**
+ * Class Integer
+ * @package fti\adv_db\property
+ */
+class Integer implements Property
+{
+
+    /**
+     * @var int
+     */
+    private $value;
+
+    /**
+     * @var string
+     */
+    private $colName;
+
+    /**
+     * @var string
+     */
+    private $label;
+
+    /**
+     * @param string $value
+     * @param string $colName
+     * @param string $label
+     */
+    function __construct($value, $colName, $label)
+    {
+        $this->value = $value;
+        $this->colName = $colName;
+        $this->label = $label;
+    }
+
+
+    /**
+     * @return int
+     */
     public function getValue()
     {
-        // TODO: Implement getValue() method.
+        return $this->value;
     }
 
+    /**
+     * @return int
+     */
     public function getType()
     {
-        // TODO: Implement getType() method.
+        return Property::INTEGER;
     }
 
+    /**
+     * @return string
+     */
     public function getColName()
     {
-        // TODO: Implement getColName() method.
+        return $this->colName;
     }
 
-    public function createDOM($label, $name)
+    /**
+     * @param DOMDocument $domDocument
+     * @param string $label
+     * @param string $name
+     * @return string
+     */
+    public function createHTML($domDocument, $label, $name)
     {
-        // TODO: Implement createDOM() method.
+
     }
 
 
