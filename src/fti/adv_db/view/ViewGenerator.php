@@ -59,6 +59,37 @@ class ViewGenerator
     }
 
     /**
+     * @param string $text
+     * @return DOMElement
+     */
+    public function createSubmitButton($text)
+    {
+        $containerEl = $this->createFieldBlockContainer();
+
+        $buttonWrapperEl = $this->domDocument->createElement(Element::DIV);
+        $fullClassName = AttributeBuilder::buildFullClassName(array(
+            DefaultAttributeValues::CL_SMALL_SCREEN_OFFSET_PREFIX . DefaultAttributeValues::LABEL_WIDTH,
+            DefaultAttributeValues::CL_SMALL_SCREEN_PREFIX . DefaultAttributeValues::INPUT_WIDTH
+        ));
+        $buttonWrapperEl->setAttribute(Attribute::CLASS_NAME, $fullClassName);
+
+        $buttonEl = $this->domDocument->createElement(Element::BUTTON);
+        $fullClassName = AttributeBuilder::buildFullClassName(array(
+            DefaultAttributeValues::CL_BUTTON,
+            DefaultAttributeValues::CL_DEFAULT_BUTTON
+        ));
+        $buttonEl->setAttribute(Attribute::CLASS_NAME, $fullClassName);
+        $buttonEl->setAttribute(Attribute::TYPE, DefaultAttributeValues::TYPE_SUBMIT);
+        $buttonText = $this->domDocument->createTextNode($text);
+        $buttonEl->appendChild($buttonText);
+        $buttonWrapperEl->appendChild($buttonEl);
+
+        $containerEl->appendChild($buttonWrapperEl);
+
+        return $containerEl;
+    }
+
+    /**
      * @param string $label
      * @param string $value
      * @param string $name

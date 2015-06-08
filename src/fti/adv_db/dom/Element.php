@@ -19,4 +19,5 @@ class Element
     const TEXT_AREA = 'textarea';
     const DIV = 'div';
     const LABEL = 'label';
+    const BUTTON = 'button';
 }
