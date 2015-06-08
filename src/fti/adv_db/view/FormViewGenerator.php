@@ -24,7 +24,7 @@ spl_autoload_register('class_auto_loader');
  * Class ViewGenerator
  * @package fti\adv_db\view
  */
-class ViewGenerator
+class FormViewGenerator
 {
 
     /**
