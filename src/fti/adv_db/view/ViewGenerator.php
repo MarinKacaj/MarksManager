@@ -73,6 +73,31 @@ class ViewGenerator
      * @param string $label
      * @param string $value
      * @param string $name
+     * @return DOMElement
+     */
+    public function createNumberInputBlock($label, $value, $name)
+    {
+        return $this->createSimpleInputBlock($label, $value, $name, DefaultAttributeValues::TYPE_NUMBER);
+    }
+
+    /**
+     * @param string $label
+     * @param string $value
+     * @param string $name
+     * @return DOMElement
+     */
+    public function createDateInputBlock($label, $value, $name)
+    {
+        $value = strtotime($value);
+        $value = date('d/m/Y', $value);
+        $dateInputBlock = $this->createSimpleInputBlock($label, $value, $name, DefaultAttributeValues::TYPE_TEXT);
+        return $dateInputBlock;
+    }
+
+    /**
+     * @param string $label
+     * @param string $value
+     * @param string $name
      * @param string $type
      * @return DOMElement
      */
@@ -236,17 +261,6 @@ class ViewGenerator
         $optionEl->appendChild($optionText);
 
         return $optionEl;
-    }
-
-    /**
-     * @param string $label
-     * @param string $value
-     * @param string $name
-     * @return DOMElement
-     */
-    public function createNumberInputBlock($label, $value, $name)
-    {
-        return $this->createSimpleInputBlock($label, $value, $name, DefaultAttributeValues::TYPE_NUMBER);
     }
 
     /**
