@@ -41,13 +41,18 @@ class DefaultAttributeValues
     const GENERIC_ID_PREFIX = 'input-generic-id-';
 
     /*
-     * Input type values
+     * Input types
      */
     const TYPE_EMAIL = 'email';
     const TYPE_TEXT = 'text';
     const TYPE_NUMBER = 'number';
     const TYPE_CHECKBOX = 'checkbox';
     const TYPE_SUBMIT = 'submit';
+
+    /*
+     * Check input field
+     */
+    const CHECKED = 'checked';
 
     /*
      * Mark-related

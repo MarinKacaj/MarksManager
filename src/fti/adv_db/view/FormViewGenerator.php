@@ -90,6 +90,16 @@ class FormViewGenerator
     }
 
     /**
+     * @return DOMElement
+     */
+    private function createFieldBlockContainer()
+    {
+        $containerEl = $this->domDocument->createElement(Element::DIV);
+        $containerEl->setAttribute(Attribute::CLASS_NAME, DefaultAttributeValues::CL_FORM_GROUP);
+        return $containerEl;
+    }
+
+    /**
      * @param string $label
      * @param string $value
      * @param string $name
@@ -98,31 +108,6 @@ class FormViewGenerator
     public function createTextInputBlock($label, $value, $name)
     {
         return $this->createSimpleInputBlock($label, $value, $name, DefaultAttributeValues::TYPE_TEXT);
-    }
-
-    /**
-     * @param string $label
-     * @param string $value
-     * @param string $name
-     * @return DOMElement
-     */
-    public function createNumberInputBlock($label, $value, $name)
-    {
-        return $this->createSimpleInputBlock($label, $value, $name, DefaultAttributeValues::TYPE_NUMBER);
-    }
-
-    /**
-     * @param string $label
-     * @param string $value
-     * @param string $name
-     * @return DOMElement
-     */
-    public function createDateInputBlock($label, $value, $name)
-    {
-        $value = strtotime($value);
-        $value = date('d/m/Y', $value);
-        $dateInputBlock = $this->createSimpleInputBlock($label, $value, $name, DefaultAttributeValues::TYPE_TEXT);
-        return $dateInputBlock;
     }
 
     /**
@@ -140,19 +125,12 @@ class FormViewGenerator
         $labelEl = $this->createLabel($label, DefaultAttributeValues::GENERIC_ID_PREFIX . $id);
         $containerEl->appendChild($labelEl);
 
+        $inputWrapperEl = $this->createDefaultInputFieldWrapperElement();
         $inputEl = $this->createInput($name, $value, $type, $id);
-        $containerEl->appendChild($inputEl);
+        $inputWrapperEl->appendChild($inputEl);
 
-        return $containerEl;
-    }
+        $containerEl->appendChild($inputWrapperEl);
 
-    /**
-     * @return DOMElement
-     */
-    private function createFieldBlockContainer()
-    {
-        $containerEl = $this->domDocument->createElement(Element::DIV);
-        $containerEl->setAttribute(Attribute::CLASS_NAME, DefaultAttributeValues::CL_FORM_GROUP);
         return $containerEl;
     }
 
@@ -186,8 +164,19 @@ class FormViewGenerator
     }
 
     /**
+     * @return DOMElement
+     */
+    private function createDefaultInputFieldWrapperElement()
+    {
+        $inputWrapperEl = $this->domDocument->createElement(Element::DIV);
+        $inputWrapperEl->setAttribute(Attribute::CLASS_NAME,
+            DefaultAttributeValues::CL_SMALL_SCREEN_PREFIX . DefaultAttributeValues::INPUT_WIDTH);
+        return $inputWrapperEl;
+    }
+
+    /**
      * @param string $name
-     * @param string $value
+     * @param mixed $value
      * @param string $type
      * @param int $id
      * @return DOMElement
@@ -197,9 +186,51 @@ class FormViewGenerator
         $inputEl = $this->domDocument->createElement(Element::INPUT);
         $inputEl->setAttribute(Attribute::TYPE, $type);
         $inputEl->setAttribute(Attribute::NAME, $name);
-        $inputEl->setAttribute(Attribute::VALUE, $value);
+        if (strcasecmp($type, DefaultAttributeValues::TYPE_CHECKBOX) === 0) {
+            if ($value === true) {
+                $inputEl->setAttribute(Attribute::CHECKED, DefaultAttributeValues::CHECKED);
+            }
+        } else {
+            $inputEl->setAttribute(Attribute::VALUE, $value);
+        }
         $inputEl->setAttribute(Attribute::ID, DefaultAttributeValues::GENERIC_ID_PREFIX . $id);
         return $inputEl;
+    }
+
+    /**
+     * @param string $label
+     * @param string $value
+     * @param string $name
+     * @return DOMElement
+     */
+    public function createNumberInputBlock($label, $value, $name)
+    {
+        return $this->createSimpleInputBlock($label, $value, $name, DefaultAttributeValues::TYPE_NUMBER);
+    }
+
+    /**
+     * @param string $label
+     * @param string $value
+     * @param string $name
+     * @return DOMElement
+     */
+    public function createDateInputBlock($label, $value, $name)
+    {
+        $value = strtotime($value);
+        $value = date('d/m/Y', $value);
+        $dateInputBlock = $this->createSimpleInputBlock($label, $value, $name, DefaultAttributeValues::TYPE_TEXT);
+        return $dateInputBlock;
+    }
+
+    /**
+     * @param string $label
+     * @param string $name
+     * @param string $value
+     * @return DOMElement
+     */
+    public function createCheckboxBlock($label, $name, $value)
+    {
+        return $this->createSimpleInputBlock($label, $value, $name, DefaultAttributeValues::TYPE_CHECKBOX);
     }
 
     /**
@@ -237,12 +268,14 @@ class FormViewGenerator
         $labelEl = $this->createLabel($label, $id);
         $containerEl->appendChild($labelEl);
 
+        $selectWrapperEl = $this->createDefaultInputFieldWrapperElement();
         $selectEl = $this->createSelectElement($name, $id);
         $selectEl->setAttribute(Attribute::ID, $id);
 
         $optionsFragment = $this->createOptionsFragment($valueTextPairs);
         $selectEl->appendChild($optionsFragment);
-        $containerEl->appendChild($selectEl);
+        $selectWrapperEl->appendChild($selectEl);
+        $containerEl->appendChild($selectWrapperEl);
 
         return $containerEl;
     }
