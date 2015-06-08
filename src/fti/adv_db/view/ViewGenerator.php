@@ -72,6 +72,17 @@ class ViewGenerator
      * @param string $label
      * @param string $value
      * @param string $name
+     * @return DOMElement
+     */
+    public function createNumberInputBlock($label, $value, $name)
+    {
+        return $this->createSimpleInputBlock($label, $value, $name, DefaultAttributeValues::TYPE_NUMBER);
+    }
+
+    /**
+     * @param string $label
+     * @param string $value
+     * @param string $name
      * @param string $type
      * @return DOMElement
      */
