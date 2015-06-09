@@ -24,29 +24,14 @@ spl_autoload_register('class_auto_loader');
  * Class ViewGenerator
  * @package fti\adv_db\view
  */
-class FormViewGenerator
+class FormViewGenerator extends ViewGenerator
 {
-
-    /**
-     * @var DOMDocument
-     */
-    private $domDocument;
-    /**
-     * @var int
-     */
-    private $genericDomID;
-
-    function __construct()
-    {
-        $this->domDocument = new DOMDocument('1.0', 'iso-8859-1');
-        $this->genericDomID = 0;
-    }
 
     /**
      * @param string $title
      * @return DOMElement
      */
-    public function createFormContainer($title)
+    public function createFormBlock($title)
     {
         $formEl = $this->domDocument->createElement(Element::FORM);
         $formEl->setAttribute(Attribute::CLASS_NAME, DefaultAttributeValues::CL_HORIZONTAL_FORM);
@@ -132,14 +117,6 @@ class FormViewGenerator
         $containerEl->appendChild($inputWrapperEl);
 
         return $containerEl;
-    }
-
-    /**
-     * @return int
-     */
-    private function genUniqueID()
-    {
-        return $this->genericDomID + 1;
     }
 
     /**
@@ -325,14 +302,6 @@ class FormViewGenerator
         $optionEl->appendChild($optionText);
 
         return $optionEl;
-    }
-
-    /**
-     * @return DOMDocument
-     */
-    public function getDOMDocument()
-    {
-        return $this->domDocument;
     }
 
 

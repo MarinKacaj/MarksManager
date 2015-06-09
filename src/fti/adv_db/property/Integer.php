@@ -10,6 +10,8 @@ namespace fti\adv_db\property;
 
 
 use DOMDocument as DOMDocument;
+use DOMElement;
+use fti\adv_db\view\FormViewGenerator;
 
 /**
  * Class Integer
@@ -71,14 +73,13 @@ class Integer implements Property
     }
 
     /**
-     * @param DOMDocument $domDocument
-     * @param string $label
+     * @param FormViewGenerator $formViewGenerator
      * @param string $name
-     * @return string
+     * @return DOMElement
      */
-    public function createHTML($domDocument, $label, $name)
+    public function createFormBlock($formViewGenerator, $name)
     {
-
+        return $formViewGenerator->createNumberInputBlock($this->label, $this->value, $name);
     }
 
 
