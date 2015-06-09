@@ -8,7 +8,6 @@
 
 namespace fti\adv_db\view;
 
-use DOMDocument;
 use DOMDocumentFragment;
 use DOMElement;
 use fti\adv_db\dom\Attribute;
