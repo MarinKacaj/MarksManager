@@ -16,4 +16,4 @@ spl_autoload_register('class_auto_loader');
 
 $universityInstance = new University('UPT', 'Tirana');
 $formViewAggregator = new FormViewAggregator($universityInstance);
-echo $formViewAggregator->buildEntityForm();
+echo $formViewAggregator->buildEntityFormHTML();

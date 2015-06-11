@@ -51,7 +51,7 @@ class FormViewAggregator extends ViewAggregator
     /**
      * @return string
      */
-    public function buildEntityForm()
+    public function buildEntityFormHTML()
     {
         $properties = $this->entityInstance->getProperties();
         foreach ($properties as $property) {
