@@ -14,7 +14,7 @@ use fti\adv_db\view\DetailViewGenerator;
 use fti\adv_db\view\FormViewGenerator;
 use fti\adv_db\view\ListViewGenerator;
 
-class ADString extends BasicProperty {
+class StringProperty extends BasicProperty {
 
     /**
      * @var string

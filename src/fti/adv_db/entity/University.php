@@ -9,7 +9,7 @@
 namespace fti\adv_db\entity;
 
 
-use fti\adv_db\property\ADString;
+use fti\adv_db\property\StringProperty;
 
 require_once dirname(dirname(__FILE__)) . '/functions/auto_loader.php';
 
@@ -30,8 +30,8 @@ class University extends Entity
     {
         parent::__construct($id, 'IAL');
 
-        $this->properties[self::PROP_NAME] = new ADString('Em_IAL', 'Emri', $name);
-        $this->properties[self::PROP_CITY] = new ADString('Qytet', 'Qyteti', $city);
+        $this->properties[self::PROP_NAME] = new StringProperty('Em_IAL', 'Emri', $name);
+        $this->properties[self::PROP_CITY] = new StringProperty('Qytet', 'Qyteti', $city);
     }
 
 
