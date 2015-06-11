@@ -6,20 +6,14 @@
  * Time: 6:14 PM
  */
 
-require_once 'src/fti/adv_db/view/FormViewGenerator.php';
+use fti\adv_db\aggregator\FormViewAggregator;
+use fti\adv_db\entity\University;
 
-use fti\adv_db\view\FormViewGenerator;
+require_once 'src/fti/adv_db/functions/auto_loader.php';
 
-$viewGenerator = new FormViewGenerator();
-$simpleInputBlock = $viewGenerator->createTextInputBlock('Field1', 'field1', 'field1');
-$markSelectBlock = $viewGenerator->createMarkSelectBlock('mark1');
-$dateInputBlock = $viewGenerator->createDateInputBlock('Date', '2010-03-21', 'date1');
-$checkboxInputBlock = $viewGenerator->createCheckboxBlock('CheckMe', 'check1', true);
-$submitButtonBlock = $viewGenerator->createSubmitButton('Submit');
-$domDocument = $viewGenerator->getDOMDocument();
-$domDocument->appendChild($simpleInputBlock);
-$domDocument->appendChild($markSelectBlock);
-$domDocument->appendChild($dateInputBlock);
-$domDocument->appendChild($checkboxInputBlock);
-$domDocument->appendChild($submitButtonBlock);
-echo html_entity_decode($domDocument->saveHTML());
+spl_autoload_register('class_auto_loader');
+
+
+$universityInstance = new University('UPT', 'Tirana');
+$formViewAggregator = new FormViewAggregator($universityInstance);
+echo $formViewAggregator->buildEntityForm();

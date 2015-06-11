@@ -53,9 +53,24 @@ class DefaultAttributeValues
      * Check input field
      */
     const CHECKED = 'checked';
+    const SELECTED = 'selected';
+
+    /*
+     * Http methods
+     */
+    const METHOD_GET = 'get';
+    const METHOD_POST = 'post';
+
+    /*
+     * Enc types
+     */
+    const ENC_TYPE_URL_ENCODED = 'application/x-www-form-urlencoded';
+    const ENC_TYPE_MULTI_PART = '';
 
     /*
      * Mark-related
      */
     const STUDENT_NOT_PRESENT = 0;
+
+
 }

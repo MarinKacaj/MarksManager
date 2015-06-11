@@ -27,19 +27,68 @@ class FormViewGenerator extends ViewGenerator
 {
 
     /**
+     * @var DOMElement
+     */
+    private $formEl;
+
+    /**
      * @param string $title
+     * @param string $action
+     * @param string $method [optional]
+     * @param string $encType [optional]
+     */
+    public function __construct($title, $action, $method = DefaultAttributeValues::METHOD_POST, $encType = DefaultAttributeValues::ENC_TYPE_URL_ENCODED)
+    {
+        parent::__construct();
+        $this->formEl = $this->createFormBlock($title, $action, $method, $encType);
+    }
+
+
+    /**
      * @return DOMElement
      */
-    public function createFormBlock($title)
+    public function getFormElement()
+    {
+        return $this->formEl;
+    }
+
+    /**
+     * @param DOMElement $fieldBlock
+     */
+    public function appendToForm($fieldBlock)
+    {
+        $this->formEl->appendChild($fieldBlock);
+    }
+
+    /**
+     * @param string $title
+     * @param $action
+     * @param string $method
+     * @param string $encType
+     * @return DOMElement
+     */
+    public function createFormBlock($title, $action, $method, $encType)
     {
         $formEl = $this->domDocument->createElement(Element::FORM);
         $formEl->setAttribute(Attribute::CLASS_NAME, DefaultAttributeValues::CL_HORIZONTAL_FORM);
+        $formEl->setAttribute(Attribute::ACTION, $action);
+        $formEl->setAttribute(Attribute::METHOD, $method);
+        $formEl->setAttribute(Attribute::ENC_TYPE, $encType);
 
         $titleEl = $this->domDocument->createElement(Element::DIV);
         $titleEl->textContent = $title;
         $formEl->appendChild($titleEl);
 
         return $formEl;
+    }
+
+    /**
+     * @param string $text
+     */
+    public function appendSubmitButton($text)
+    {
+        $submitButtonEl = $this->createSubmitButton($text);
+        $this->formEl->appendChild($submitButtonEl);
     }
 
     /**
@@ -81,6 +130,17 @@ class FormViewGenerator extends ViewGenerator
         $containerEl = $this->domDocument->createElement(Element::DIV);
         $containerEl->setAttribute(Attribute::CLASS_NAME, DefaultAttributeValues::CL_FORM_GROUP);
         return $containerEl;
+    }
+
+    /**
+     * @param string $label
+     * @param string $value
+     * @param string $name
+     */
+    public function appendTextInputBlock($label, $value, $name)
+    {
+        $textInputBlockEl = $this->createTextInputBlock($label, $value, $name);
+        $this->formEl->appendChild($textInputBlockEl);
     }
 
     /**
@@ -177,11 +237,33 @@ class FormViewGenerator extends ViewGenerator
      * @param string $label
      * @param string $value
      * @param string $name
+     */
+    public function appendNumberInputBlock($label, $value, $name)
+    {
+        $numberInputBlockEl = $this->createNumberInputBlock($label, $value, $name);
+        $this->formEl->appendChild($numberInputBlockEl);
+    }
+
+    /**
+     * @param string $label
+     * @param int $value
+     * @param string $name
      * @return DOMElement
      */
     public function createNumberInputBlock($label, $value, $name)
     {
         return $this->createSimpleInputBlock($label, $value, $name, DefaultAttributeValues::TYPE_NUMBER);
+    }
+
+    /**
+     * @param string $label
+     * @param string $value
+     * @param string $name
+     */
+    public function appendDateInputBlock($label, $value, $name)
+    {
+        $dateInputBlockEl = $this->createDateInputBlock($label, $value, $name);
+        $this->formEl->appendChild($dateInputBlockEl);
     }
 
     /**
@@ -202,6 +284,17 @@ class FormViewGenerator extends ViewGenerator
      * @param string $label
      * @param string $name
      * @param string $value
+     */
+    public function appendCheckboxBlock($label, $name, $value)
+    {
+        $checkboxBlockEl = $this->createCheckboxBlock($label, $name, $value);
+        $this->formEl->appendChild($checkboxBlockEl);
+    }
+
+    /**
+     * @param string $label
+     * @param string $name
+     * @param string $value
      * @return DOMElement
      */
     public function createCheckboxBlock($label, $name, $value)
@@ -211,9 +304,18 @@ class FormViewGenerator extends ViewGenerator
 
     /**
      * @param string $name
+     */
+    public function appendEnumSelectBlock($name)
+    {
+        $markSelectBlockEl = $this->createEnumSelectBlock($name);
+        $this->formEl->appendChild($markSelectBlockEl);
+    }
+
+    /**
+     * @param string $name
      * @return DOMElement
      */
-    public function createMarkSelectBlock($name)
+    public function createEnumSelectBlock($name)
     {
         $label = 'Result';
         $allowedMarks = array(
@@ -233,7 +335,18 @@ class FormViewGenerator extends ViewGenerator
     /**
      * @param string $label
      * @param string $name
-     * @param array $valueTextPairs
+     * @param string[] $valueTextPairs
+     */
+    public function appendSelectBlock($label, $name, $valueTextPairs)
+    {
+        $selectBlockEl = $this->createSelectBlock($label, $name, $valueTextPairs);
+        $this->formEl->appendChild($selectBlockEl);
+    }
+
+    /**
+     * @param string $label
+     * @param string $name
+     * @param string[] $valueTextPairs
      * @return DOMElement
      */
     public function createSelectBlock($label, $name, $valueTextPairs)
@@ -301,6 +414,17 @@ class FormViewGenerator extends ViewGenerator
         $optionEl->appendChild($optionText);
 
         return $optionEl;
+    }
+
+    /**
+     * @return string
+     */
+    public function getBuiltHTML()
+    {
+        $this->domDocument->appendChild($this->formEl);
+        $rawHTML = $this->domDocument->saveHTML();
+        $decodedHTML = html_entity_decode($rawHTML);
+        return $decodedHTML;
     }
 
 

@@ -85,23 +85,20 @@ abstract class BasicProperty implements Property
     /**
      * @param FormViewGenerator $formViewGenerator
      * @param string $name
-     * @return DOMElement
      */
-    abstract public function createFormBlock($formViewGenerator, $name);
+    abstract public function buildFormBlock($formViewGenerator, $name);
 
     /**
      * @param DetailViewGenerator $detailViewGenerator
      * @param string $name
-     * @return DOMElement
      */
-    abstract public function createDetailBlock($detailViewGenerator, $name);
+    abstract public function buildDetailBlock($detailViewGenerator, $name);
 
     /**
      * @param ListViewGenerator $listViewGenerator
      * @param string $name
-     * @return DOMElement
      */
-    abstract public function createListBlock($listViewGenerator, $name);
+    abstract public function buildListBlock($listViewGenerator, $name);
 
 
 }

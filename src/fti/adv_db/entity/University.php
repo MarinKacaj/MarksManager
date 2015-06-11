@@ -18,8 +18,6 @@ spl_autoload_register('class_auto_loader');
 class University extends Entity
 {
 
-    const TABLE_NAME = 'ial';
-
     const NAME = 'name';
     const CITY = 'city';
 
@@ -28,7 +26,7 @@ class University extends Entity
      * @param string $city
      * @param int $id
      */
-    function __construct($name, $city, $id = 0)
+    function __construct($name, $city, $id = Entity::UNSAVED_INSTANCE_ID)
     {
         parent::__construct($id, 'IAL');
 
@@ -42,6 +40,14 @@ class University extends Entity
     public function getDisplayName()
     {
         return $this->properties[self::NAME];
+    }
+
+    /**
+     * @return University[]
+     */
+    public function getList()
+    {
+        return array($this); // TODO - Get list from query result
     }
 
 

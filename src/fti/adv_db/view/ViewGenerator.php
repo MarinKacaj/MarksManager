@@ -33,8 +33,9 @@ class ViewGenerator
         $this->genericDomID = 0;
     }
 
+
     /**
-     * @return mixed
+     * @return DOMDocument
      */
     public function getDomDocument()
     {

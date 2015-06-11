@@ -1,23 +1,29 @@
 <?php
 /**
  * Created by PhpStorm.
- * User: C.R.C
- * Date: 6/9/2015
- * Time: 10:28 PM
+ * User: HP
+ * Date: 6/11/2015
+ * Time: 12:12 PM
  */
 
 namespace fti\adv_db\property;
 
 
 use DOMElement;
+use fti\adv_db\entity\Entity;
 use fti\adv_db\view\DetailViewGenerator;
 use fti\adv_db\view\FormViewGenerator;
 use fti\adv_db\view\ListViewGenerator;
 
-class ADString extends BasicProperty {
+require_once dirname(dirname(__FILE__)) . '/functions/auto_loader.php';
+
+spl_autoload_register('class_auto_loader');
+
+class EntityProperty extends BasicProperty
+{
 
     /**
-     * @var string
+     * @var Entity
      */
     private $value;
 
@@ -28,14 +34,14 @@ class ADString extends BasicProperty {
      */
     function __construct($colName, $label, $value)
     {
-        parent::__construct($colName, BasicProperty::STRING, $label);
+        parent::__construct($colName, BasicProperty::ENTITY, $label);
 
         $this->value = $value;
     }
 
 
     /**
-     * @return string
+     * @return Entity
      */
     public function getValue()
     {
@@ -43,7 +49,8 @@ class ADString extends BasicProperty {
     }
 
     /**
-     * @param string $value
+     * @param Entity $value
+     * @return void
      */
     public function setValue($value)
     {
@@ -56,11 +63,18 @@ class ADString extends BasicProperty {
      */
     public function buildFormBlock($formViewGenerator, $name)
     {
-        $formViewGenerator->appendTextInputBlock(
-            $this->label,
-            $this->value,
-            $name
-        );
+        $valueTextPairs = array();
+        $entityInstances = $this->value->getList();
+
+        foreach ($entityInstances as $entityInstance)
+        {
+            $value = $entityInstance->getId();
+            $text = $entityInstance->getDisplayName();
+            $valueTextPairs[$value] = $text;
+        }
+        unset($entityInstance);
+
+        $formViewGenerator->appendSelectBlock($this->label, $name, $valueTextPairs);
     }
 
     /**

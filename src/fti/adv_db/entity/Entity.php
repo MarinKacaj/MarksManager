@@ -10,16 +10,19 @@ namespace fti\adv_db\entity;
 
 
 use fti\adv_db\property\BasicProperty;
-use fti\adv_db\property\Property;
 use InvalidArgumentException;
 
 require_once dirname(dirname(__FILE__)) . '/functions/auto_loader.php';
 
 spl_autoload_register('class_auto_loader');
 
-abstract class Entity implements Property
+abstract class Entity
 {
 
+    /**
+     * @var int
+     */
+    const UNSAVED_INSTANCE_ID = 0;
     /**
      * @var int
      */
@@ -37,6 +40,10 @@ abstract class Entity implements Property
      * @var string
      */
     protected $label;
+    /**
+     * @var string
+     */
+    protected $entityName;
 
     /**
      * @param int $id
@@ -46,7 +53,18 @@ abstract class Entity implements Property
     {
         $this->setId($id);
         $this->properties = array();
+        $this->entityName = get_class();
+
         $this->label = $label;
+    }
+
+
+    /**
+     * @return string
+     */
+    public function getEntityName()
+    {
+        return $this->entityName;
     }
 
     /**
@@ -70,7 +88,7 @@ abstract class Entity implements Property
     }
 
     /**
-     * @return array
+     * @return BasicProperty[]
      */
     public function getProperties()
     {
@@ -100,12 +118,9 @@ abstract class Entity implements Property
     abstract public function getDisplayName();
 
     /**
-     * @return int
+     * @return Entity[]
      */
-    public function getType()
-    {
-        return Property::ENTITY;
-    }
+    abstract public function getList();
 
 
 }

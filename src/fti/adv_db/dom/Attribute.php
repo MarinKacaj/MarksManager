@@ -22,4 +22,7 @@ class Attribute
     const MAX = 'max';
     const STEP = 'step';
     const FOR_INPUT = 'for';
+    const ACTION = 'action';
+    const METHOD = 'method';
+    const ENC_TYPE = 'enctype';
 }
