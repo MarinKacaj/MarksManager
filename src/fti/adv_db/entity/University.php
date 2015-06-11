@@ -18,8 +18,8 @@ spl_autoload_register('class_auto_loader');
 class University extends Entity
 {
 
-    const NAME = 'name';
-    const CITY = 'city';
+    const PROP_NAME = 'name';
+    const PROP_CITY = 'city';
 
     /**
      * @param string $name
@@ -30,8 +30,26 @@ class University extends Entity
     {
         parent::__construct($id, 'IAL');
 
-        $this->properties[self::NAME] = new ADString('Em_IAL', 'Emri', $name);
-        $this->properties[self::CITY] = new ADString('Qytet', 'Qyteti', $city);
+        $this->properties[self::PROP_NAME] = new ADString('Em_IAL', 'Emri', $name);
+        $this->properties[self::PROP_CITY] = new ADString('Qytet', 'Qyteti', $city);
+    }
+
+
+    public function createFromMap($propertiesMap)
+    {
+        $properties = array();
+
+        $entityPropertyNames = Entity::getPropertyNames(__CLASS__);
+        $receivedPropertyNames = array_keys($propertiesMap);
+        $legitPropertyNames = array_intersect($entityPropertyNames, $receivedPropertyNames);
+
+        foreach ($legitPropertyNames as $legitPropertyName)
+        {
+            $properties[$legitPropertyName] = $propertiesMap[$legitPropertyName];
+        }
+        unset($legitPropertyName);
+
+        return $properties;
     }
 
     /**
@@ -39,7 +57,7 @@ class University extends Entity
      */
     public function getDisplayName()
     {
-        return $this->properties[self::NAME];
+        return $this->properties[self::PROP_NAME];
     }
 
     /**

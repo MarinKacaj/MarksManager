@@ -11,6 +11,7 @@ namespace fti\adv_db\entity;
 
 use fti\adv_db\property\BasicProperty;
 use InvalidArgumentException;
+use ReflectionClass;
 
 require_once dirname(dirname(__FILE__)) . '/functions/auto_loader.php';
 
@@ -27,6 +28,14 @@ abstract class Entity
      * @var int
      */
     const ALL_PROPERTIES = 1;
+    /**
+     * @var string
+     */
+    const PROP_ID = 'id';
+    /**
+     * @var string
+     */
+    const PROPERTY_PREFIX = 'PROP_';
 
     /**
      * @var int
@@ -80,12 +89,36 @@ abstract class Entity
      */
     public function setId($id)
     {
-        if ($id >= 0) {
+        if ($id >= self::UNSAVED_INSTANCE_ID) {
             $this->id = $id;
         } else {
             throw new InvalidArgumentException();
         }
     }
+
+    /**
+     * @param string $class
+     * @return string[]
+     */
+    protected static function getPropertyNames($class)
+    {
+        $metaEntity = new ReflectionClass($class);
+        $propertyNames = $metaEntity->getConstants();
+        foreach ($propertyNames as $index => $property) {
+            if (strpos($property, self::PROPERTY_PREFIX) !== 0) {
+                unset($propertyNames[$index]);
+            }
+        }
+        unset($index);
+        unset($property);
+        return $propertyNames;
+    }
+
+    /**
+     * @param string[] $propertiesMap
+     * @return Entity
+     */
+    abstract public function createFromMap($propertiesMap);
 
     /**
      * @return BasicProperty[]
