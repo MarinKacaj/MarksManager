@@ -11,6 +11,7 @@ namespace fti\adv_db\aggregator;
 use fti\adv_db\entity\Entity;
 use fti\adv_db\view\FormViewGenerator;
 
+require_once dirname(dirname(__FILE__)) . '/constants/labels.php';
 require_once dirname(dirname(__FILE__)) . '/functions/auto_loader.php';
 
 spl_autoload_register('class_auto_loader');
@@ -39,12 +40,12 @@ class FormViewAggregator extends ViewAggregator
         $this->entityInstance = $entityInstance;
 
         if ($this->entityInstance->getId() === Entity::UNSAVED_INSTANCE_ID) {
-            $defaultFileName = 'save.php';
+            $actionFileName = SAVE_DEFAULT_FILE_NAME;
         } else {
-            $defaultFileName = 'update.php';
+            $actionFileName = UPDATE_DEFAULT_FILE_NAME;
         }
         $title = $this->entityInstance->getEntityName();
-        $this->formViewGenerator = new FormViewGenerator($title, $defaultFileName);
+        $this->formViewGenerator = new FormViewGenerator($title, $actionFileName);
     }
 
 
@@ -59,7 +60,7 @@ class FormViewAggregator extends ViewAggregator
         }
         unset($property);
 
-        $this->formViewGenerator->appendSubmitButton('Ruaj');
+        $this->formViewGenerator->appendSubmitButton(CREATE_BUTTON_TEXT);
         return $this->formViewGenerator->getBuiltHTML();
     }
 
