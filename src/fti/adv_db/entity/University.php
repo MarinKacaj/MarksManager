@@ -26,7 +26,7 @@ class University extends Entity
     const PROP_CITY = 'city';
 
     /**
-     * @param string[] $params
+     * @param array $params
      */
     function __construct($params)
     {
@@ -35,6 +35,16 @@ class University extends Entity
         $this->setIdFromParams($params);
         $this->properties[self::PROP_NAME] = new StringProperty(self::PROP_NAME, 'Em_IAL', 'Emri', $params[self::PROP_NAME]);
         $this->properties[self::PROP_CITY] = new StringProperty(self::PROP_CITY, 'Qytet', 'Qyteti', $params[self::PROP_CITY]);
+    }
+
+
+    /**
+     * @param array $params
+     * @return University
+     */
+    public function create($params)
+    {
+        return new University($params);
     }
 
     /**
@@ -48,7 +58,7 @@ class University extends Entity
     /**
      * @return string
      */
-    public static function getClassName()
+    public static function getEntityClassName()
     {
         return __CLASS__;
     }
@@ -59,14 +69,6 @@ class University extends Entity
     public function getDisplayName()
     {
         return $this->properties[self::PROP_NAME];
-    }
-
-    /**
-     * @return University[]
-     */
-    public function getList()
-    {
-        return array($this); // TODO - Get list from query result
     }
 
 

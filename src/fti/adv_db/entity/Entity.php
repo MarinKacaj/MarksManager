@@ -48,6 +48,12 @@ abstract class Entity
     abstract public function getEntityName();
 
     /**
+     * @param array $params
+     * @return Entity
+     */
+    abstract public function create($params);
+
+    /**
      * @return int
      */
     public function getId()
@@ -119,7 +125,17 @@ abstract class Entity
     /**
      * @return Entity[]
      */
-    abstract public function getList();
+    public function getList()
+    {
+        return EntityQueryBuilder::retrieveList($this);
+    }
 
+    /**
+     * @return string
+     */
+    public function getTableName()
+    {
+        return $this->tableName;
+    }
 
 }

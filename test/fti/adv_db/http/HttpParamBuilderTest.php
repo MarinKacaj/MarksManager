@@ -39,7 +39,7 @@ class HttpParamBuilderTest extends PHPUnit_Framework_TestCase
         $_POST = $this->properties;
         $this->idName = Entity::PROP_ID;
         $this->idVal = 5;
-        $this->paramBuilder = new HttpEntityParamBuilder(University::getClassName());
+        $this->paramBuilder = new HttpEntityParamBuilder(University::getEntityClassName());
     }
 
     public function testGetPropertiesMap()

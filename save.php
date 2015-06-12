@@ -13,7 +13,7 @@ require_once 'src/fti/adv_db/functions/auto_loader.php';
 
 spl_autoload_register('class_auto_loader');
 
-$httpParamBuilder = new HttpEntityParamBuilder(University::getClassName());
+$httpParamBuilder = new HttpEntityParamBuilder(University::getEntityClassName());
 $params = $httpParamBuilder->buildParamMap();
 $universityInstance = new University($params);
 
