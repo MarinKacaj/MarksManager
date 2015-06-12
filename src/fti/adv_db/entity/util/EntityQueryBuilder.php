@@ -27,7 +27,7 @@ class EntityQueryBuilder
         $entityInstancesList = array();
 
         $tableNames = array($entityInstance->getTableName());
-        $colNames = array_keys($entityInstance->getProperties());
+        $colNames = array_keys($entityInstance->getPropertiesColNames());
         $selectQuery = new SelectQuery($colNames, $tableNames);
 
         $listResult = $selectQuery->exec();

@@ -29,7 +29,7 @@ abstract class Entity
      */
     protected $id;
     /**
-     * @var array
+     * @var BasicProperty[]
      */
     protected $properties;
     /**
@@ -85,6 +85,15 @@ abstract class Entity
     }
 
     /**
+     * @param string $propertyName
+     * @return BasicProperty
+     */
+    public function getProperty($propertyName)
+    {
+        return $this->properties[$propertyName];
+    }
+
+    /**
      * @return BasicProperty[]
      */
     public function getProperties()
@@ -93,12 +102,16 @@ abstract class Entity
     }
 
     /**
-     * @param string $propertyName
-     * @return BasicProperty
+     * @return string[]
      */
-    public function getProperty($propertyName)
+    public function getPropertiesColNames()
     {
-        return $this->properties[$propertyName];
+        $propertiesColNames = array();
+        foreach ($this->properties as $property) {
+            array_push($propertiesColNames, $property->getColName());
+        }
+        unset($property);
+        return $propertiesColNames;
     }
 
     /**
