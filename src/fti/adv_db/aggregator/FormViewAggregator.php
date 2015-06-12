@@ -56,7 +56,7 @@ class FormViewAggregator extends ViewAggregator
     {
         $properties = $this->entityInstance->getProperties();
         foreach ($properties as $property) {
-            $property->buildFormBlock($this->formViewGenerator, $property->getColName());
+            $property->buildFormBlock($this->formViewGenerator, $property->getName());
         }
         unset($property);
 

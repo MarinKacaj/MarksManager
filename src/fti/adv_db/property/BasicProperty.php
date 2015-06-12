@@ -24,6 +24,10 @@ abstract class BasicProperty implements Property
     /**
      * @var string
      */
+    protected $name;
+    /**
+     * @var string
+     */
     protected $colName;
     /**
      * @var int
@@ -35,12 +39,14 @@ abstract class BasicProperty implements Property
     protected $label;
 
     /**
+     * @param string $name
      * @param string $colName
      * @param string $type
      * @param string $label
      */
-    function __construct($colName, $type, $label)
+    function __construct($name, $colName, $type, $label)
     {
+        $this->name = $name;
         $this->colName = $colName;
         $this->type = $type;
         $this->label = $label;
@@ -64,6 +70,11 @@ abstract class BasicProperty implements Property
     public function getType()
     {
         return $this->type;
+    }
+
+    public function getName()
+    {
+        return $this->name;
     }
 
     /**

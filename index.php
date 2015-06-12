@@ -14,6 +14,9 @@ require_once 'src/fti/adv_db/functions/auto_loader.php';
 spl_autoload_register('class_auto_loader');
 
 
-$universityInstance = new University('UPT', 'Tirana');
+$universityInstance = new University(array(
+    University::PROP_NAME => 'UPT',
+    University::PROP_CITY => 'Tirana'
+));
 $formViewAggregator = new FormViewAggregator($universityInstance);
 echo $formViewAggregator->buildEntityFormHTML();

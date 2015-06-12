@@ -14,7 +14,16 @@ use fti\adv_db\view\DetailViewGenerator;
 use fti\adv_db\view\FormViewGenerator;
 use fti\adv_db\view\ListViewGenerator;
 
-class StringProperty extends BasicProperty {
+require_once dirname(dirname(__FILE__)) . '/functions/auto_loader.php';
+
+spl_autoload_register('class_auto_loader');
+
+/**
+ * Class StringProperty
+ * @package fti\adv_db\property
+ */
+class StringProperty extends BasicProperty
+{
 
     /**
      * @var string
@@ -22,13 +31,14 @@ class StringProperty extends BasicProperty {
     private $value;
 
     /**
+     * @param string $name
      * @param string $colName
      * @param string $label
      * @param string $value
      */
-    function __construct($colName, $label, $value)
+    function __construct($name, $colName, $label, $value)
     {
-        parent::__construct($colName, BasicProperty::STRING, $label);
+        parent::__construct($name, $colName, BasicProperty::STRING, $label);
 
         $this->value = $value;
     }

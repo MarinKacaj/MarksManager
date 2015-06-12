@@ -15,41 +15,35 @@ require_once dirname(dirname(__FILE__)) . '/functions/auto_loader.php';
 
 spl_autoload_register('class_auto_loader');
 
+/**
+ * Class University
+ * @package fti\adv_db\entity
+ */
 class University extends Entity
 {
 
     const PROP_NAME = 'name';
     const PROP_CITY = 'city';
 
-    /**
-     * @param string $name
-     * @param string $city
-     * @param int $id
-     */
-    function __construct($name, $city, $id = Entity::UNSAVED_INSTANCE_ID)
+    function __construct($map, $id = Entity::UNSAVED_INSTANCE_ID)
     {
-        parent::__construct($id, 'IAL');
-
-        $this->properties[self::PROP_NAME] = new StringProperty('Em_IAL', 'Emri', $name);
-        $this->properties[self::PROP_CITY] = new StringProperty('Qytet', 'Qyteti', $city);
+        $this->label = 'IAL';
+        $this->setId($id);
+        $this->properties[self::PROP_NAME] = new StringProperty(self::PROP_NAME, 'Em_IAL', 'Emri', $map[self::PROP_NAME]);
+        $this->properties[self::PROP_CITY] = new StringProperty(self::PROP_CITY, 'Qytet', 'Qyteti', $map[self::PROP_CITY]);
     }
 
-
-    public function createFromMap($propertiesMap)
+    /**
+     * @return string
+     */
+    public function getEntityName()
     {
-        $properties = array();
+        return get_class();
+    }
 
-        $entityPropertyNames = Entity::getPropertyNames(__CLASS__);
-        $receivedPropertyNames = array_keys($propertiesMap);
-        $legitPropertyNames = array_intersect($entityPropertyNames, $receivedPropertyNames);
-
-        foreach ($legitPropertyNames as $legitPropertyName)
-        {
-            $properties[$legitPropertyName] = $propertiesMap[$legitPropertyName];
-        }
-        unset($legitPropertyName);
-
-        return $properties;
+    public static function getClassName()
+    {
+        return __CLASS__;
     }
 
     /**

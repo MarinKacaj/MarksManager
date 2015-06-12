@@ -20,21 +20,9 @@ spl_autoload_register('class_auto_loader');
 abstract class Entity
 {
 
-    /**
-     * @var int
-     */
     const UNSAVED_INSTANCE_ID = 0;
-    /**
-     * @var int
-     */
     const ALL_PROPERTIES = 1;
-    /**
-     * @var string
-     */
     const PROP_ID = 'id';
-    /**
-     * @var string
-     */
     const PROPERTY_PREFIX = 'PROP_';
 
     /**
@@ -49,32 +37,12 @@ abstract class Entity
      * @var string
      */
     protected $label;
-    /**
-     * @var string
-     */
-    protected $entityName;
-
-    /**
-     * @param int $id
-     * @param string $label
-     */
-    function __construct($id, $label)
-    {
-        $this->setId($id);
-        $this->properties = array();
-        $this->entityName = get_class();
-
-        $this->label = $label;
-    }
 
 
     /**
      * @return string
      */
-    public function getEntityName()
-    {
-        return $this->entityName;
-    }
+    abstract public function getEntityName();
 
     /**
      * @return int
@@ -95,30 +63,6 @@ abstract class Entity
             throw new InvalidArgumentException();
         }
     }
-
-    /**
-     * @param string $class
-     * @return string[]
-     */
-    protected static function getPropertyNames($class)
-    {
-        $metaEntity = new ReflectionClass($class);
-        $propertyNames = $metaEntity->getConstants();
-        foreach ($propertyNames as $index => $property) {
-            if (strpos($property, self::PROPERTY_PREFIX) !== 0) {
-                unset($propertyNames[$index]);
-            }
-        }
-        unset($index);
-        unset($property);
-        return $propertyNames;
-    }
-
-    /**
-     * @param string[] $propertiesMap
-     * @return Entity
-     */
-    abstract public function createFromMap($propertiesMap);
 
     /**
      * @return BasicProperty[]
@@ -143,6 +87,14 @@ abstract class Entity
     public function getLabel()
     {
         return $this->label;
+    }
+
+    /**
+     * @param string $label
+     */
+    public function setLabel($label)
+    {
+        $this->label = $label;
     }
 
     /**
