@@ -11,7 +11,6 @@ namespace fti\adv_db\entity;
 
 use fti\adv_db\property\BasicProperty;
 use InvalidArgumentException;
-use ReflectionClass;
 
 require_once dirname(dirname(__FILE__)) . '/functions/auto_loader.php';
 
@@ -61,6 +60,17 @@ abstract class Entity
             $this->id = $id;
         } else {
             throw new InvalidArgumentException();
+        }
+    }
+
+    /**
+     * @param string[] $params
+     */
+    protected function setIdFromParams($params)
+    {
+        if (isset($params[self::PROP_ID])) {
+            $id = $params[self::PROP_ID];
+            $this->setId($id);
         }
     }
 

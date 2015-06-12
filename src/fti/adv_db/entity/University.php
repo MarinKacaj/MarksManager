@@ -25,12 +25,13 @@ class University extends Entity
     const PROP_NAME = 'name';
     const PROP_CITY = 'city';
 
+    /**
+     * @param string[] $params
+     */
     function __construct($params)
     {
         $this->label = 'IAL';
-        if (isset($params[self::PROP_ID])) {
-            $this->setId($params[self::PROP_ID]);
-        }
+        $this->setIdFromParams($params);
         $this->properties[self::PROP_NAME] = new StringProperty(self::PROP_NAME, 'Em_IAL', 'Emri', $params[self::PROP_NAME]);
         $this->properties[self::PROP_CITY] = new StringProperty(self::PROP_CITY, 'Qytet', 'Qyteti', $params[self::PROP_CITY]);
     }
