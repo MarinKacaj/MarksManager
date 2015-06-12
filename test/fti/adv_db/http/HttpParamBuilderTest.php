@@ -16,7 +16,7 @@ use PHPUnit_Framework_TestCase;
 require_once dirname(dirname(dirname(dirname(dirname(__FILE__))))) . '/vendor/phpunit.phar';
 require_once dirname(dirname(dirname(dirname(dirname(__FILE__))))) . '/src/fti/adv_db/entity/Entity.php';
 require_once dirname(dirname(dirname(dirname(dirname(__FILE__))))) . '/src/fti/adv_db/entity/University.php';
-require_once dirname(dirname(dirname(dirname(dirname(__FILE__))))) . '/src/fti/adv_db/http/HttpParamBuilder.php';
+require_once dirname(dirname(dirname(dirname(dirname(__FILE__))))) . '/src/fti/adv_db/http/HttpEntityParamBuilder.php';
 
 /**
  * Class HttpParamBuilderTest
@@ -39,7 +39,7 @@ class HttpParamBuilderTest extends PHPUnit_Framework_TestCase
         $_POST = $this->properties;
         $this->idName = Entity::PROP_ID;
         $this->idVal = 5;
-        $this->paramBuilder = new HttpParamBuilder();
+        $this->paramBuilder = new HttpEntityParamBuilder(University::getClassName());
     }
 
     public function testGetPropertiesMap()

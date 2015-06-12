@@ -25,12 +25,14 @@ class University extends Entity
     const PROP_NAME = 'name';
     const PROP_CITY = 'city';
 
-    function __construct($map, $id = Entity::UNSAVED_INSTANCE_ID)
+    function __construct($params)
     {
         $this->label = 'IAL';
-        $this->setId($id);
-        $this->properties[self::PROP_NAME] = new StringProperty(self::PROP_NAME, 'Em_IAL', 'Emri', $map[self::PROP_NAME]);
-        $this->properties[self::PROP_CITY] = new StringProperty(self::PROP_CITY, 'Qytet', 'Qyteti', $map[self::PROP_CITY]);
+        if (isset($params[self::PROP_ID])) {
+            $this->setId($params[self::PROP_ID]);
+        }
+        $this->properties[self::PROP_NAME] = new StringProperty(self::PROP_NAME, 'Em_IAL', 'Emri', $params[self::PROP_NAME]);
+        $this->properties[self::PROP_CITY] = new StringProperty(self::PROP_CITY, 'Qytet', 'Qyteti', $params[self::PROP_CITY]);
     }
 
     /**

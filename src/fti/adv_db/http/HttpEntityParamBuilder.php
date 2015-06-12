@@ -17,24 +17,30 @@ require_once dirname(dirname(__FILE__)) . '/functions/auto_loader.php';
 spl_autoload_register('class_auto_loader');
 
 /**
- * Class HttpParamBuilder
+ * Class HttpEntityParamBuilder
  * @package fti\adv_db\http
  */
-class HttpParamBuilder
+class HttpEntityParamBuilder
 {
 
     const NO_IDENTIFIER_REQ_FOR_ACTION = -1;
 
+    /**
+     * @var string
+     */
+    private $entityClassName;
     /**
      * @var string[]
      */
     private $propertiesMap;
 
     /**
+     * @param string $entityClassName
      * @param string $parentIdName [optional]
      */
-    function __construct($parentIdName = '')
+    function __construct($entityClassName, $parentIdName = '')
     {
+        $this->entityClassName = $entityClassName;
         $this->propertiesMap = $_POST;
         if (isset($_GET[Entity::PROP_ID])) {
             $this->propertiesMap[Entity::PROP_ID] = intval($_GET[Entity::PROP_ID]);
@@ -86,14 +92,13 @@ class HttpParamBuilder
     }
 
     /**
-     * @param string $entityClassName
      * @return string[]
      */
-    public function buildEntityParamMap($entityClassName)
+    public function buildParamMap()
     {
         $properties = array();
 
-        $entityPropertyNames = self::getPropertyNames($entityClassName);
+        $entityPropertyNames = self::getPropertyNames($this->entityClassName);
         $receivedPropertyNames = array_keys($this->propertiesMap);
         $legitPropertyNames = array_intersect($entityPropertyNames, $receivedPropertyNames);
 
