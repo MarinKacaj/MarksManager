@@ -35,6 +35,10 @@ abstract class Entity
     /**
      * @var string
      */
+    protected $tableName;
+    /**
+     * @var string
+     */
     protected $label;
 
 

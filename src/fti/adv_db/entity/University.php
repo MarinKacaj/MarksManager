@@ -30,6 +30,7 @@ class University extends Entity
      */
     function __construct($params)
     {
+        $this->tableName = 'ial';
         $this->label = 'IAL';
         $this->setIdFromParams($params);
         $this->properties[self::PROP_NAME] = new StringProperty(self::PROP_NAME, 'Em_IAL', 'Emri', $params[self::PROP_NAME]);
