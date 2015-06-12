@@ -44,6 +44,9 @@ class University extends Entity
         return get_class();
     }
 
+    /**
+     * @return string
+     */
     public static function getClassName()
     {
         return __CLASS__;
