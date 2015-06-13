@@ -20,6 +20,12 @@ interface Entity
     const ALL_PROPERTIES = 1;
     const PROPERTY_PREFIX = 'PROP_';
 
+
+    /**
+     * @return Entity
+     */
+    public static function createEmpty();
+
     /**
      * @param $id
      * @return Entity

@@ -24,6 +24,7 @@ abstract class BasicEntity implements Entity
     const LABEL = '';
     const PROP_ID = 'id';
 
+
     /**
      * @var int
      */
@@ -80,6 +81,8 @@ abstract class BasicEntity implements Entity
         if (isset($params[$primaryKeyColName])) {
             $id = $params[$primaryKeyColName];
             $this->setId($id);
+        } else {
+            $this->setId(self::UNSAVED_INSTANCE_ID);
         }
     }
 

@@ -9,6 +9,7 @@
 namespace fti\adv_db\entity;
 
 
+use fti\adv_db\entity\util\EmptyEntityBuilder;
 use fti\adv_db\property\IntegerProperty;
 use fti\adv_db\property\StringProperty;
 
@@ -40,6 +41,18 @@ class University extends BasicEntity
         $this->properties[self::PROP_NAME] = new StringProperty(self::PROP_NAME, 'Emri', $params[self::PROP_NAME], true);
     }
 
+
+    /**
+     * @return University
+     */
+    public static function createEmpty()
+    {
+        $emptyEntityBuilder = new EmptyEntityBuilder(self::getEntityClassName());
+        $emptyInstance = $emptyEntityBuilder->buildFromParamNames(array(
+            self::PROP_NAME
+        ), self::PROP_ID);
+        return $emptyInstance;
+    }
 
     /**
      * @return string
