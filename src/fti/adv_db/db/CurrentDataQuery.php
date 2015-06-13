@@ -25,11 +25,11 @@ abstract class CurrentDataQuery extends BasicQuery
     protected $selection;
 
     /**
-     * @param string $booleanOperand
      * @param string $colName
      * @param string $value
+     * @param string $booleanOperand [optional]
      */
-    private function appendFilter($booleanOperand, $colName, $value)
+    private function appendFilter($colName, $value, $booleanOperand = '')
     {
         $filterToAppend = ' ' . $booleanOperand . ' ' . $colName . '=' . $value;
         $this->selection .= $filterToAppend;
@@ -41,7 +41,7 @@ abstract class CurrentDataQuery extends BasicQuery
      */
     public function appendFirstFilter($colName, $value)
     {
-        $this->appendFilter('', $colName, $value);
+        $this->appendFilter($colName, $value);
     }
 
     /**
@@ -50,7 +50,7 @@ abstract class CurrentDataQuery extends BasicQuery
      */
     public function appendAndFilter($colName, $value)
     {
-        $this->appendFilter('AND', $colName, $value);
+        $this->appendFilter($colName, $value, 'AND');
     }
 
     /**
@@ -59,6 +59,24 @@ abstract class CurrentDataQuery extends BasicQuery
      */
     public function appendOrFilter($colName, $value)
     {
-        $this->appendFilter('OR', $colName, $value);
+        $this->appendFilter($colName, $value, 'OR');
+    }
+
+    /**
+     * @param string[] $filters
+     */
+    public function buildConjunctionWhereClause($filters)
+    {
+        $isFirstFilter = true;
+        foreach ($filters as $name => $value) {
+            if ($isFirstFilter) {
+                $this->appendFirstFilter($name, $value);
+                $isFirstFilter = false;
+            } else {
+                $this->appendAndFilter($name, $value);
+            }
+        }
+        unset($name);
+        unset($value);
     }
 }

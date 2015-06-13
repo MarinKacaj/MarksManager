@@ -9,7 +9,6 @@
 namespace fti\adv_db\db;
 
 
-use fti\adv_db\query\DefaultDatabase;
 use mysqli_result;
 
 require_once dirname(dirname(__FILE__)) . '/functions/auto_loader.php';

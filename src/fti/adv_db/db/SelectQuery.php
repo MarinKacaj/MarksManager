@@ -42,18 +42,7 @@ class SelectQuery extends CurrentDataQuery
 
         $this->projection = (empty($colNames)) ? '*' : QueryPartsBuilder::buildCSVString($colNames);
         $this->tableNames = QueryPartsBuilder::buildCSVString($tableNames);
-
-        $isFirstFilter = true;
-        foreach ($filters as $name => $value) {
-            if ($isFirstFilter) {
-                $this->appendFirstFilter($name, $value);
-                $isFirstFilter = false;
-            } else {
-                $this->appendAndFilter($name, $value);
-            }
-        }
-        unset($name);
-        unset($value);
+        $this->buildConjunctionWhereClause($filters);
     }
 
     /**
