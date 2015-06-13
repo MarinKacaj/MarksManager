@@ -9,6 +9,7 @@
 namespace fti\adv_db\aggregator;
 
 use fti\adv_db\entity\BasicEntity;
+use fti\adv_db\http\HttpEntityParamBuilder;
 use fti\adv_db\view\FormViewGenerator;
 
 require_once dirname(dirname(__FILE__)) . '/constants/labels.php';
@@ -20,7 +21,7 @@ spl_autoload_register('class_auto_loader');
  * Class FormViewAggregator
  * @package fti\adv_db\aggregator
  */
-class FormViewAggregator extends ViewAggregator
+class FormViewAggregator
 {
 
     /**
@@ -39,13 +40,9 @@ class FormViewAggregator extends ViewAggregator
     {
         $this->entityInstance = $entityInstance;
 
-        if ($this->entityInstance->getId() === BasicEntity::UNSAVED_INSTANCE_ID) {
-            $actionFileName = SAVE_DEFAULT_FILE_NAME;
-        } else {
-            $actionFileName = UPDATE_DEFAULT_FILE_NAME;
-        }
+        $action = HttpEntityParamBuilder::buildFormAction($entityInstance);
         $title = $this->entityInstance->getEntityName();
-        $this->formViewGenerator = new FormViewGenerator($title, $actionFileName);
+        $this->formViewGenerator = new FormViewGenerator($title, $action);
     }
 
 

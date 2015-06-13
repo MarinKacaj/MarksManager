@@ -2,8 +2,8 @@
 /**
  * Created by PhpStorm.
  * User: Marin Kaçaj
- * Date: 6/12/2015
- * Time: 12:08 PM
+ * Date: 6/13/2015
+ * Time: 7:29 PM
  */
 
 use fti\adv_db\entity\University;
@@ -17,4 +17,4 @@ $params = HttpEntityParamBuilder::buildParams();
 $universityInstance = new University($params);
 
 // TODO - For demo purposes only: delete the code below on stable release
-echo $universityInstance->getProperty(University::PROP_NAME)->getValue();
+var_dump($universityInstance);

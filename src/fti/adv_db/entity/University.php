@@ -35,11 +35,19 @@ class University extends BasicEntity
     function __construct($params)
     {
         $this->label = self::LABEL;
-        $this->setIdFromParams($params);
+        $this->setIdFromParams(self::PROP_ID, $params);
         $this->properties[self::PROP_ID] = new IntegerProperty(self::PROP_ID, 'ID', $this->id, false);
         $this->properties[self::PROP_NAME] = new StringProperty(self::PROP_NAME, 'Emri', $params[self::PROP_NAME], true);
     }
 
+
+    /**
+     * @return string
+     */
+    public function getPrimaryKeyColName()
+    {
+        return self::PROP_ID;
+    }
 
     /**
      * @return string

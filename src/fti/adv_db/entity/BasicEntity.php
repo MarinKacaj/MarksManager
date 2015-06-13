@@ -20,12 +20,9 @@ spl_autoload_register('class_auto_loader');
 abstract class BasicEntity implements Entity
 {
 
-    const UNSAVED_INSTANCE_ID = 0;
-    const ALL_PROPERTIES = 1;
     const TABLE_NAME = '';
     const LABEL = '';
     const PROP_ID = 'id';
-    const PROPERTY_PREFIX = 'PROP_';
 
     /**
      * @var int
@@ -47,6 +44,14 @@ abstract class BasicEntity implements Entity
     abstract public function getEntityName();
 
     /**
+     * @return string
+     */
+    public function getPrimaryKeyColName()
+    {
+        return self::PROP_ID;
+    }
+
+    /**
      * @return int
      */
     public function getId()
@@ -60,19 +65,20 @@ abstract class BasicEntity implements Entity
     public function setId($id)
     {
         if ($id >= self::UNSAVED_INSTANCE_ID) {
-            $this->id = $id;
+            $this->id = intval($id);
         } else {
             throw new InvalidArgumentException();
         }
     }
 
     /**
+     * @param string $primaryKeyColName
      * @param string[] $params
      */
-    protected function setIdFromParams($params)
+    protected function setIdFromParams($primaryKeyColName, $params)
     {
-        if (isset($params[self::PROP_ID])) {
-            $id = $params[self::PROP_ID];
+        if (isset($params[$primaryKeyColName])) {
+            $id = $params[$primaryKeyColName];
             $this->setId($id);
         }
     }

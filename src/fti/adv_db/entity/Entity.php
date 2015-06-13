@@ -16,6 +16,10 @@ namespace fti\adv_db\entity;
 interface Entity
 {
 
+    const UNSAVED_INSTANCE_ID = 0;
+    const ALL_PROPERTIES = 1;
+    const PROPERTY_PREFIX = 'PROP_';
+
     /**
      * @param $id
      * @return Entity
