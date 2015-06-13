@@ -29,7 +29,7 @@ class EntityProperty extends BasicProperty
     /**
      * @var int
      */
-    private $value;
+    protected $value;
     /**
      * @var BasicEntity[]
      */

@@ -50,7 +50,12 @@ class SelectQuery extends CurrentDataQuery
      */
     public function getQuery()
     {
-        return "SELECT {$this->projection} FROM {$this->tableNames} WHERE {$this->selection}";
+        $selection = trim($this->selection);
+        if (empty($selection)) {
+            return "SELECT {$this->projection} FROM {$this->tableNames}";
+        } else {
+            return "SELECT {$this->projection} FROM {$this->tableNames} WHERE {$this->selection}";
+        }
     }
 
 

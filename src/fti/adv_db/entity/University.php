@@ -44,7 +44,7 @@ class University extends BasicEntity
     /**
      * @return string
      */
-    public function getPrimaryKeyColName()
+    public static function getPrimaryKeyColName()
     {
         return self::PROP_ID;
     }
@@ -70,7 +70,7 @@ class University extends BasicEntity
      */
     public function getDisplayName()
     {
-        return $this->properties[self::PROP_NAME];
+        return $this->properties[self::PROP_NAME]->getValue();
     }
 
     /**

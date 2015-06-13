@@ -46,7 +46,7 @@ abstract class BasicEntity implements Entity
     /**
      * @return string
      */
-    public function getPrimaryKeyColName()
+    public static function getPrimaryKeyColName()
     {
         return self::PROP_ID;
     }
@@ -142,7 +142,10 @@ abstract class BasicEntity implements Entity
      */
     public static function retrieveByID($entityClassName, $entityTableName, $id)
     {
-        $selectQuery = new SelectQuery(array(), array($entityTableName), array(self::PROP_ID => $id));
+        $selectQuery = new SelectQuery(
+            array(),
+            array($entityTableName),
+            array(call_user_func($entityClassName . '::getPrimaryKeyColName') => $id));
         $singleResultList = $selectQuery->exec();
         $params = $singleResultList->fetch_assoc();
         $entityInstance = new $entityClassName($params);
