@@ -9,7 +9,7 @@
 namespace fti\adv_db\aggregator;
 
 
-use fti\adv_db\entity\Entity;
+use fti\adv_db\entity\BasicEntity;
 
 require_once dirname(dirname(__FILE__)) . '/functions/auto_loader.php';
 
@@ -22,12 +22,12 @@ spl_autoload_register('class_auto_loader');
 class ViewAggregator {
 
     /**
-     * @var Entity
+     * @var BasicEntity
      */
     protected $entityInstance;
 
     /**
-     * @param Entity $entityInstance
+     * @param BasicEntity $entityInstance
      */
     public function __construct($entityInstance)
     {

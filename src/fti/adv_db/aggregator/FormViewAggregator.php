@@ -8,7 +8,7 @@
 
 namespace fti\adv_db\aggregator;
 
-use fti\adv_db\entity\Entity;
+use fti\adv_db\entity\BasicEntity;
 use fti\adv_db\view\FormViewGenerator;
 
 require_once dirname(dirname(__FILE__)) . '/constants/labels.php';
@@ -28,18 +28,18 @@ class FormViewAggregator extends ViewAggregator
      */
     private $formViewGenerator;
     /**
-     * @var Entity
+     * @var BasicEntity
      */
     protected $entityInstance;
 
     /**
-     * @param Entity $entityInstance
+     * @param BasicEntity $entityInstance
      */
     function __construct($entityInstance)
     {
         $this->entityInstance = $entityInstance;
 
-        if ($this->entityInstance->getId() === Entity::UNSAVED_INSTANCE_ID) {
+        if ($this->entityInstance->getId() === BasicEntity::UNSAVED_INSTANCE_ID) {
             $actionFileName = SAVE_DEFAULT_FILE_NAME;
         } else {
             $actionFileName = UPDATE_DEFAULT_FILE_NAME;
@@ -56,7 +56,9 @@ class FormViewAggregator extends ViewAggregator
     {
         $properties = $this->entityInstance->getProperties();
         foreach ($properties as $property) {
-            $property->buildFormBlock($this->formViewGenerator, $property->getName());
+            if ($property->isShown()) {
+                $property->buildFormBlock($this->formViewGenerator, $property->getName());
+            }
         }
         unset($property);
 

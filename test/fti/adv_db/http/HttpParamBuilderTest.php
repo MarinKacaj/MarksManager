@@ -9,12 +9,12 @@
 namespace fti\adv_db\http;
 
 
-use fti\adv_db\entity\Entity;
+use fti\adv_db\entity\BasicEntity;
 use fti\adv_db\entity\University;
 use PHPUnit_Framework_TestCase;
 
 require_once dirname(dirname(dirname(dirname(dirname(__FILE__))))) . '/vendor/phpunit.phar';
-require_once dirname(dirname(dirname(dirname(dirname(__FILE__))))) . '/src/fti/adv_db/entity/Entity.php';
+require_once dirname(dirname(dirname(dirname(dirname(__FILE__))))) . '/src/fti/adv_db/entity/BasicEntity.php';
 require_once dirname(dirname(dirname(dirname(dirname(__FILE__))))) . '/src/fti/adv_db/entity/University.php';
 require_once dirname(dirname(dirname(dirname(dirname(__FILE__))))) . '/src/fti/adv_db/http/HttpEntityParamBuilder.php';
 
@@ -37,13 +37,13 @@ class HttpParamBuilderTest extends PHPUnit_Framework_TestCase
             University::PROP_CITY => 'Tirana'
         );
         $_POST = $this->properties;
-        $this->idName = Entity::PROP_ID;
+        $this->idName = BasicEntity::PROP_ID;
         $this->idVal = 5;
         $this->paramBuilder = new HttpEntityParamBuilder(University::getEntityClassName());
     }
 
     public function testGetPropertiesMap()
     {
-        $this->assertArrayHasKey(Entity::PROP_ID, $this->properties);
+        $this->assertArrayHasKey(BasicEntity::PROP_ID, $this->properties);
     }
 }

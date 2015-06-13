@@ -9,7 +9,6 @@
 namespace fti\adv_db\property;
 
 
-use DOMElement;
 use fti\adv_db\view\DetailViewGenerator;
 use fti\adv_db\view\FormViewGenerator;
 use fti\adv_db\view\ListViewGenerator;
@@ -37,32 +36,64 @@ abstract class BasicProperty implements Property
      * @var string
      */
     protected $label;
+    /**
+     * @var mixed
+     */
+    protected $value;
+    /**
+     * @var boolean
+     */
+    protected $show;
 
     /**
      * @param string $name
      * @param string $colName
      * @param string $type
      * @param string $label
+     * @param bool $show
      */
-    function __construct($name, $colName, $type, $label)
+    function __construct($name, $colName, $type, $label, $show)
     {
         $this->name = $name;
         $this->colName = $colName;
         $this->type = $type;
         $this->label = $label;
+        $this->show = $show;
     }
 
 
     /**
      * @return mixed
      */
-    abstract public function getValue();
+    public function getValue()
+    {
+        return $this->value;
+    }
 
     /**
      * @param mixed $value
      * @return void
      */
-    abstract public function setValue($value);
+    public function setValue($value)
+    {
+        $this->value = $value;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isShown()
+    {
+        return $this->show;
+    }
+
+    /**
+     * @param boolean $show
+     */
+    public function setShown($show)
+    {
+        $this->show = $show;
+    }
 
     /**
      * @return int

@@ -1,7 +1,7 @@
 <?php
 /**
  * Created by PhpStorm.
- * User: HP
+ * User: Marin Kaçaj
  * Date: 6/11/2015
  * Time: 12:12 PM
  */
@@ -10,7 +10,7 @@ namespace fti\adv_db\property;
 
 
 use DOMElement;
-use fti\adv_db\entity\Entity;
+use fti\adv_db\entity\BasicEntity;
 use fti\adv_db\view\DetailViewGenerator;
 use fti\adv_db\view\FormViewGenerator;
 use fti\adv_db\view\ListViewGenerator;
@@ -19,29 +19,40 @@ require_once dirname(dirname(__FILE__)) . '/functions/auto_loader.php';
 
 spl_autoload_register('class_auto_loader');
 
+/**
+ * Class EntityProperty
+ * @package fti\adv_db\property
+ */
 class EntityProperty extends BasicProperty
 {
 
     /**
-     * @var Entity
+     * @var int
      */
     private $value;
+    /**
+     * @var BasicEntity[]
+     */
+    private $entityInstances;
 
     /**
-     * @param string $colName
+     * @param string $name
      * @param string $label
-     * @param string $value
+     * @param int $value
+     * @param BasicEntity[] $entityInstances
+     * @param bool $show
      */
-    function __construct($colName, $label, $value)
+    function __construct($name, $label, $value, $entityInstances, $show)
     {
-        parent::__construct($colName, BasicProperty::ENTITY, $label);
+        parent::__construct($name, $name, BasicProperty::ENTITY, $label, $show);
 
         $this->value = $value;
+        $this->entityInstances = $entityInstances;
     }
 
 
     /**
-     * @return Entity
+     * @return BasicEntity
      */
     public function getValue()
     {
@@ -49,7 +60,7 @@ class EntityProperty extends BasicProperty
     }
 
     /**
-     * @param Entity $value
+     * @param BasicEntity $value
      * @return void
      */
     public function setValue($value)
@@ -64,10 +75,9 @@ class EntityProperty extends BasicProperty
     public function buildFormBlock($formViewGenerator, $name)
     {
         $valueTextPairs = array();
-        $entityInstances = $this->value->getList();
+        $entityInstances = $this->entityInstances;
 
-        foreach ($entityInstances as $entityInstance)
-        {
+        foreach ($entityInstances as $entityInstance) {
             $value = $entityInstance->getId();
             $text = $entityInstance->getDisplayName();
             $valueTextPairs[$value] = $text;

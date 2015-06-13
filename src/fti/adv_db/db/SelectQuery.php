@@ -10,7 +10,6 @@ namespace fti\adv_db\db;
 
 
 use fti\adv_db\db\util\QueryPartsBuilder;
-use fti\adv_db\query\DefaultDatabase;
 
 require_once dirname(dirname(__FILE__)) . '/functions/auto_loader.php';
 
@@ -41,10 +40,17 @@ class SelectQuery extends CurrentDataQuery
     {
         $this->db = new DefaultDatabase();
 
-        $this->projection = QueryPartsBuilder::buildCSVString($colNames);
+        $this->projection = (empty($colNames)) ? '*' : QueryPartsBuilder::buildCSVString($colNames);
         $this->tableNames = QueryPartsBuilder::buildCSVString($tableNames);
+
+        $isFirstFilter = true;
         foreach ($filters as $name => $value) {
-            $this->appendAndFilter($name, $value);
+            if ($isFirstFilter) {
+                $this->appendFirstFilter($name, $value);
+                $isFirstFilter = false;
+            } else {
+                $this->appendAndFilter($name, $value);
+            }
         }
         unset($name);
         unset($value);

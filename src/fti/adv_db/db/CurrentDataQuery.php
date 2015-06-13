@@ -8,8 +8,6 @@
 
 namespace fti\adv_db\db;
 
-use fti\adv_db\db\util\QueryPartsBuilder;
-
 require_once dirname(dirname(__FILE__)) . '/functions/auto_loader.php';
 
 spl_autoload_register('class_auto_loader');
@@ -33,8 +31,17 @@ abstract class CurrentDataQuery extends BasicQuery
      */
     private function appendFilter($booleanOperand, $colName, $value)
     {
-        $filterToAppend = ' ' . $booleanOperand . ' ' . QueryPartsBuilder::buildNameValuePairStrings(array($colName => $value));
+        $filterToAppend = ' ' . $booleanOperand . ' ' . $colName . '=' . $value;
         $this->selection .= $filterToAppend;
+    }
+
+    /**
+     * @param string $colName
+     * @param string $value
+     */
+    public function appendFirstFilter($colName, $value)
+    {
+        $this->appendFilter('', $colName, $value);
     }
 
     /**

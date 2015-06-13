@@ -9,6 +9,7 @@
 namespace fti\adv_db\entity;
 
 
+use fti\adv_db\property\IntegerProperty;
 use fti\adv_db\property\StringProperty;
 
 require_once dirname(dirname(__FILE__)) . '/functions/auto_loader.php';
@@ -19,40 +20,33 @@ spl_autoload_register('class_auto_loader');
  * Class University
  * @package fti\adv_db\entity
  */
-class University extends Entity
+class University extends BasicEntity
 {
 
-    const PROP_NAME = 'name';
-    const PROP_CITY = 'city';
+    const TABLE_NAME = 'ial';
+    const LABEL = 'IAL';
+    const PROP_ID = 'ID';
+
+    const PROP_NAME = 'em_ial';
 
     /**
      * @param array $params
      */
     function __construct($params)
     {
-        $this->tableName = 'ial';
-        $this->label = 'IAL';
+        $this->label = self::LABEL;
         $this->setIdFromParams($params);
-        $this->properties[self::PROP_NAME] = new StringProperty(self::PROP_NAME, 'Em_IAL', 'Emri', $params[self::PROP_NAME]);
-        $this->properties[self::PROP_CITY] = new StringProperty(self::PROP_CITY, 'Qytet', 'Qyteti', $params[self::PROP_CITY]);
+        $this->properties[self::PROP_ID] = new IntegerProperty(self::PROP_ID, 'ID', $this->id, false);
+        $this->properties[self::PROP_NAME] = new StringProperty(self::PROP_NAME, 'Emri', $params[self::PROP_NAME], true);
     }
 
-
-    /**
-     * @param array $params
-     * @return University
-     */
-    public function create($params)
-    {
-        return new University($params);
-    }
 
     /**
      * @return string
      */
     public function getEntityName()
     {
-        return get_class();
+        return self::getEntityClassName();
     }
 
     /**
@@ -69,6 +63,23 @@ class University extends Entity
     public function getDisplayName()
     {
         return $this->properties[self::PROP_NAME];
+    }
+
+    /**
+     * @param int $id
+     * @return University
+     */
+    public static function retrieve($id)
+    {
+        return parent::retrieveByID(self::getEntityClassName(), self::TABLE_NAME, $id);
+    }
+
+    /**
+     * @return University[]
+     */
+    public static function getList()
+    {
+        return parent::getFullList(self::getEntityClassName(), self::TABLE_NAME);
     }
 
 

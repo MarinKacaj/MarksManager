@@ -6,7 +6,7 @@
  * Time: 2:22 PM
  */
 
-namespace fti\adv_db\query;
+namespace fti\adv_db\db;
 
 
 use mysqli;
@@ -19,7 +19,7 @@ spl_autoload_register('class_auto_loader');
 
 /**
  * Class DefaultDatabase
- * @package fti\adv_db\query
+ * @package fti\adv_db\db
  */
 class DefaultDatabase
 {
