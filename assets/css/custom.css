@@ -7,11 +7,21 @@ body {
 }
 .navbar {
 }
+.navbar-brand #logo {
+    color: #269abc;
+}
+
 #kerkoStudentetSezon {
 }
 input[type="checkbox"] {
     margin-left: 0px !important;
 }
+#mainTitle {
+    padding-bottom: 0px;
+    padding-top: 0px;
+    color: #269abc;
+}
+
 /********************************************************************************************************************/
 
 

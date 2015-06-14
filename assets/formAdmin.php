@@ -39,6 +39,7 @@
     </div><!-- /.container-fluid -->
 </nav>
 <div class="container">
+    <div class="well">TITULL</div>
     <form id="kerkoStudentetSezon" class="form-horizontal">
         <div class="well col-sm-4 col-sm-offset-4">
             <div class="form-group">
