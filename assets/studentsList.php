@@ -59,7 +59,7 @@
                             <form class="form-inline">
                                 <td>
                                     <a href="#"><i class="fa fa-user-times fa-2x pull-left"></i></a>
-                                    <a href="#"><i class="fa fa-user fa-2x pull-right"></i></a>
+                                    <a href="editStudent.php"><i class="fa fa-user fa-2x pull-right"></i></a>
                                 </td>
                                 <td>
                                     <h5>Mbiemri1</h5>
