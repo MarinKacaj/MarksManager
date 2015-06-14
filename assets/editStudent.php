@@ -2,16 +2,17 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Logged in: Admin</title>
+    <title>Logged in: Profesor filani</title>
 
     <meta name="viewport" content="width = device-width, initial-scale=1.0">
     <link href="css/bootstrap.css" rel="stylesheet">
     <link href="css/custom.css" rel="stylesheet">
+    <link href="css/font-awesome.min.css" rel="stylesheet">
+    <link href="fonts/fontawesome-webfont.ttf" rel="stylesheet">
 
     <script src="js/jquery-1.11.0.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/custom.js"></script>
-
 </head>
 <body>
 <nav class="navbar navbar-default">
@@ -43,27 +44,13 @@
     <form id="kerkoStudentetSezon" class="form-horizontal">
         <div class="well col-sm-4 col-sm-offset-4">
             <div class="form-group">
-                <label class="col-sm-2 control-label" for="">Sezoni</label>
-                <div class="col-sm-10">
-                    <input type="text" class="form-control" id="" placeholder="Sezoni">
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-sm-2 control-label" for="">Lenda</label>
-                <div class="col-sm-10">
-                    <input type="text" class="form-control" id="" placeholder="Lenda">
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-sm-2 control-label" for="">Dega</label>
-                <div class="col-sm-10">
-                    <input type="datetime" class="form-control" id="" placeholder="Dega">
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-sm-2 control-label" for="">Viti</label>
-                <div class="col-sm-10">
-                    <input type="number" class="form-control" id="" placeholder="Viti">
+                <label class="col-sm-2 control-label" for="">Emer</label>
+                <h5 class="col-sm-8">
+                    Emri-real
+                </h5>
+                <label class="col-sm-2"><a data-toggle="collapse" href="#collapseEmer" aria-expanded="false" aria-controls="collapseEmer"><i class="fa fa-edit"></i></a></label>
+                <div id="collapseEmer" class="col-sm-10 col-sm-offset-2 collapse">
+                    <input type="text" class="form-control" placeholder="Emer">
                 </div>
             </div>
             <button type="submit" id="execKerkoStudentet" class="btn btn-primary pull-right">PUSH</button>
