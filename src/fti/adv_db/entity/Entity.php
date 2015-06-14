@@ -37,6 +37,11 @@ interface Entity
     public function update();
 
     /**
+     * @return bool
+     */
+    public function delete();
+
+    /**
      * @param $id
      * @return Entity
      */

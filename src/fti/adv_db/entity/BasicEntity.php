@@ -181,5 +181,23 @@ abstract class BasicEntity implements Entity
         return $entityInstances;
     }
 
+    /**
+     * @return BasicEntity
+     */
+    public function update()
+    {
+        $this->actionHelper->update();
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function delete()
+    {
+        $result = $this->actionHelper->delete();
+        return $result;
+    }
+
 
 }

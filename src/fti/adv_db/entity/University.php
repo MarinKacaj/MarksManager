@@ -116,14 +116,5 @@ class University extends BasicEntity
         return $this;
     }
 
-    /**
-     * @return University
-     */
-    public function update()
-    {
-        $this->actionHelper->update();
-        return $this;
-    }
-
 
 }

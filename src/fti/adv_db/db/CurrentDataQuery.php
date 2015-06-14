@@ -31,6 +31,9 @@ abstract class CurrentDataQuery extends BasicQuery
      */
     private function appendFilter($colName, $value, $booleanOperand = '')
     {
+        if (!is_numeric($value) && is_string($value)) {
+            $value = "'$value'";
+        }
         $filterToAppend = ' ' . $booleanOperand . ' ' . $colName . '=' . $value;
         $this->selection .= $filterToAppend;
     }
@@ -69,8 +72,6 @@ abstract class CurrentDataQuery extends BasicQuery
     {
         $isFirstFilter = true;
         foreach ($filters as $name => $value) {
-            $name = $this->db->escape($name);
-            $value = $this->db->escape($value);
             if ($isFirstFilter) {
                 $this->appendFirstFilter($name, $value);
                 $isFirstFilter = false;

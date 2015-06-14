@@ -3,63 +3,51 @@
  * Created by PhpStorm.
  * User: Marin Kaçaj
  * Date: 6/14/2015
- * Time: 12:33 PM
+ * Time: 3:43 PM
  */
 
 namespace fti\adv_db\db;
 
-
-use fti\adv_db\db\util\QueryPartsBuilder;
 
 require_once dirname(dirname(__FILE__)) . '/functions/auto_loader.php';
 
 spl_autoload_register('class_auto_loader');
 
 /**
- * Class UpdateQuery
+ * Class DeleteQuery
  * @package fti\adv_db\db
  */
-class UpdateQuery extends CurrentDataQuery
+class DeleteQuery extends CurrentDataQuery
 {
 
     /**
      * @var string
      */
     private $tableName;
-    /**
-     * @var array
-     */
-    private $nameValuePairs;
 
     /**
      * @param string $tableName
-     * @param array $nameValuePairs
      * @param array $filters
      */
-    function __construct($tableName, $nameValuePairs, $filters)
+    function __construct($tableName, $filters)
     {
         $this->db = new DefaultDatabase();
-        $nameValuePairs = $this->db->sanitizeNameValuePairs($nameValuePairs);
         $filters = $this->db->sanitizeNameValuePairs($filters);
 
         $this->tableName = $tableName;
-        $this->nameValuePairs = $nameValuePairs;
         $this->buildConjunctionWhereClause($filters);
     }
-
 
     /**
      * @return string
      */
     public function getQuery()
     {
-        $setQueryPart = QueryPartsBuilder::buildNameValuePairStrings($this->nameValuePairs);
-        $setQueryPart = QueryPartsBuilder::buildCSVString($setQueryPart);
         $selection = trim($this->selection);
         if (empty($selection)) {
-            $query = "UPDATE {$this->tableName} SET $setQueryPart";
+            $query = "DELETE FROM {$this->tableName}";
         } else {
-            $query = "UPDATE {$this->tableName} SET $setQueryPart WHERE {$this->selection}";
+            $query = "DELETE FROM {$this->tableName} WHERE $selection";
         }
         return $query;
     }

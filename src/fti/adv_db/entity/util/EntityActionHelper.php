@@ -9,6 +9,7 @@
 namespace fti\adv_db\entity\util;
 
 
+use fti\adv_db\db\DeleteQuery;
 use fti\adv_db\db\InsertQuery;
 use fti\adv_db\db\UpdateQuery;
 use fti\adv_db\entity\BasicEntity;
@@ -81,10 +82,22 @@ class EntityActionHelper
         }
         unset($property);
 
-        $filter = array($this->entityInstance->getPrimaryKeyColName() => $this->entityInstance->getID());
+        $filters = array($this->entityInstance->getPrimaryKeyColName() => $this->entityInstance->getID());
 
-        $updateQuery = new UpdateQuery($this->tableName, $nameValuePairsToSet, $filter);
+        $updateQuery = new UpdateQuery($this->tableName, $nameValuePairsToSet, $filters);
         $result = $updateQuery->exec();
+        return $result;
+    }
+
+    /**
+     * @return bool
+     */
+    public function delete()
+    {
+        $filters = array($this->entityInstance->getPrimaryKeyColName() => $this->entityInstance->getID());
+
+        $deleteQuery = new DeleteQuery($this->tableName, $filters);
+        $result = $deleteQuery->exec();
         return $result;
     }
 

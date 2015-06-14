@@ -65,6 +65,23 @@ class DefaultDatabase
     }
 
     /**
+     * @param array $nameValuePairs
+     * @return array
+     */
+    public function sanitizeNameValuePairs($nameValuePairs)
+    {
+        $sanitizedNameValuePairs = array();
+        foreach ($nameValuePairs as $name => $value) {
+            $name = $this->escape($name);
+            $value = $this->escape($value);
+            $sanitizedNameValuePairs[$name] = $value;
+        }
+        unset($name);
+        unset($value);
+        return $sanitizedNameValuePairs;
+    }
+
+    /**
      * @return mixed
      */
     public function getLastInsertedID()

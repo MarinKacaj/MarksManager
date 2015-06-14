@@ -138,14 +138,5 @@ class Faculty extends BasicEntity
         return $this;
     }
 
-    /**
-     * @return Faculty
-     */
-    public function update()
-    {
-        $this->actionHelper->update();
-        return $this;
-    }
-
 
 }
