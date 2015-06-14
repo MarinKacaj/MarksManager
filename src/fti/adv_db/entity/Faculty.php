@@ -10,6 +10,7 @@ namespace fti\adv_db\entity;
 
 
 use fti\adv_db\entity\util\EmptyEntityBuilder;
+use fti\adv_db\entity\util\EntityActionHelper;
 use fti\adv_db\property\EntityProperty;
 use fti\adv_db\property\IntegerProperty;
 use fti\adv_db\property\StringProperty;
@@ -56,6 +57,8 @@ class Faculty extends BasicEntity
         $this->properties[self::PROP_UNIVERSITY_ID] = new EntityProperty(
             self::PROP_UNIVERSITY_ID, 'Universiteti', $params[self::PROP_UNIVERSITY_ID], University::getList(), true
         );
+
+        $this->actionHelper = new EntityActionHelper(self::TABLE_NAME, $this);
     }
 
 
@@ -106,7 +109,7 @@ class Faculty extends BasicEntity
      */
     public static function retrieve($id)
     {
-        return parent::retrieveByID(self::getEntityClassName(), self::TABLE_NAME, $id);
+        return parent::retrieveByID(self::getEntityClassName(), self::TABLE_NAME, self::getPrimaryKeyColName(), $id);
     }
 
     /**
@@ -123,6 +126,16 @@ class Faculty extends BasicEntity
     public static function getList()
     {
         return parent::getFullList(University::getEntityClassName(), University::TABLE_NAME);
+    }
+
+    /**
+     * @return Faculty
+     */
+    public function save()
+    {
+        $excludedProperties = array(self::PROP_ID);
+        $this->actionHelper->insert($excludedProperties);
+        return $this;
     }
 
 

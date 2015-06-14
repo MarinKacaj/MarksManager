@@ -52,10 +52,12 @@ class SelectQuery extends CurrentDataQuery
     {
         $selection = trim($this->selection);
         if (empty($selection)) {
-            return "SELECT {$this->projection} FROM {$this->tableNames}";
+            $query = "SELECT {$this->projection} FROM {$this->tableNames}";
         } else {
-            return "SELECT {$this->projection} FROM {$this->tableNames} WHERE {$this->selection}";
+            $query = "SELECT {$this->projection} FROM {$this->tableNames} WHERE {$this->selection}";
         }
+        $query = $this->db->escape($query);
+        return $query;
     }
 
 

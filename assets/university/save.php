@@ -15,6 +15,7 @@ spl_autoload_register('class_auto_loader');
 
 $params = HttpEntityParamBuilder::buildParams();
 $universityInstance = new University($params);
+$universityInstance->save();
 
 // TODO - For demo purposes only: delete the code below on stable release
 echo $universityInstance->getProperty(University::PROP_NAME)->getValue();

@@ -27,6 +27,11 @@ interface Entity
     public static function createEmpty();
 
     /**
+     * @return Entity
+     */
+    public function save();
+
+    /**
      * @param $id
      * @return Entity
      */
