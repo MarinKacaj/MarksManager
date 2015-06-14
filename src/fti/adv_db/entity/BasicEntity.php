@@ -60,7 +60,7 @@ abstract class BasicEntity implements Entity
     /**
      * @return int
      */
-    public function getId()
+    public function getID()
     {
         return $this->id;
     }

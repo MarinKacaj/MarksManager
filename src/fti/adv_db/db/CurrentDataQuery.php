@@ -69,6 +69,8 @@ abstract class CurrentDataQuery extends BasicQuery
     {
         $isFirstFilter = true;
         foreach ($filters as $name => $value) {
+            $name = $this->db->escape($name);
+            $value = $this->db->escape($value);
             if ($isFirstFilter) {
                 $this->appendFirstFilter($name, $value);
                 $isFirstFilter = false;

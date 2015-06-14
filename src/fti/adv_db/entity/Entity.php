@@ -32,6 +32,11 @@ interface Entity
     public function save();
 
     /**
+     * @return Entity
+     */
+    public function update();
+
+    /**
      * @param $id
      * @return Entity
      */

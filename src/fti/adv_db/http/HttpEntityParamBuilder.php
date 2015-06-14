@@ -45,12 +45,22 @@ class HttpEntityParamBuilder
     }
 
     /**
+     * @param string $primaryKeyColName
+     * @return int
+     */
+    public static function retrieveID($primaryKeyColName)
+    {
+        $id = intval($_GET[$primaryKeyColName]);
+        return $id;
+    }
+
+    /**
      * @param BasicEntity $entityInstance
      * @return string
      */
     public static function buildFormAction($entityInstance)
     {
-        $id = $entityInstance->getId();
+        $id = $entityInstance->getID();
         if ($id === BasicEntity::UNSAVED_INSTANCE_ID) {
             $action = SAVE_DEFAULT_FILE_NAME;
         } else {
