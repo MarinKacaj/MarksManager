@@ -38,7 +38,7 @@ class IntegerProperty extends BasicProperty
     function __construct($name, $label, $value, $show)
     {
         parent::__construct($name, $name, BasicProperty::INTEGER, $label, $show);
-        $this->value = $value;
+        $this->value = intval($value);
     }
 
     /**

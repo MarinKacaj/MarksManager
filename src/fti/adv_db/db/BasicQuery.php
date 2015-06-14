@@ -38,6 +38,9 @@ abstract class BasicQuery
     public function exec()
     {
         $query = $this->getQuery();
-        return $this->db->query($query);
+        $result = $this->db->query($query);
+        return $result;
     }
+
+
 }

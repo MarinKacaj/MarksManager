@@ -27,12 +27,12 @@ class DefaultDatabase
     /**
      * @var mysqli
      */
-    private $db;
+    private $connection;
 
     public function __construct()
     {
-        $this->db = new mysqli(DB_HOST, DB_USERNAME, DB_PASSWORD, DB_NAME);
-        $this->db->set_charset(DB_CHARSET);
+        $this->connection = new mysqli(DB_HOST, DB_USERNAME, DB_PASSWORD, DB_NAME);
+        $this->connection->set_charset(DB_CHARSET);
     }
 
 
@@ -42,8 +42,34 @@ class DefaultDatabase
      */
     public function query($query)
     {
-        $query = $this->db->real_escape_string($query);
-        return $this->db->query($query);
+        $result = $this->connection->query($query);
+        return $result;
+    }
+
+    /**
+     * @return mysqli
+     */
+    public function getConnection()
+    {
+        return $this->connection;
+    }
+
+    /**
+     * @param string $value
+     * @return string
+     */
+    public function escape($value)
+    {
+        $value = $this->connection->real_escape_string($value);
+        return $value;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getLastInsertedID()
+    {
+        return $this->connection->insert_id;
     }
 
 

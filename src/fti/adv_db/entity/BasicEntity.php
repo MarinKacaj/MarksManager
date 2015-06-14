@@ -10,6 +10,7 @@ namespace fti\adv_db\entity;
 
 
 use fti\adv_db\db\SelectQuery;
+use fti\adv_db\entity\util\EntityActionHelper;
 use fti\adv_db\property\BasicProperty;
 use InvalidArgumentException;
 
@@ -37,6 +38,10 @@ abstract class BasicEntity implements Entity
      * @var string
      */
     protected $label;
+    /**
+     * @var EntityActionHelper
+     */
+    protected $actionHelper;
 
 
     /**
@@ -137,18 +142,20 @@ abstract class BasicEntity implements Entity
      */
     abstract public function getDisplayName();
 
+    // TODO - move the following two functions to a more appropriate class
     /**
      * @param string $entityClassName
      * @param string $entityTableName
+     * @param string $entityPrimaryKeyColName
      * @param int $id
      * @return BasicEntity
      */
-    public static function retrieveByID($entityClassName, $entityTableName, $id)
+    public static function retrieveByID($entityClassName, $entityTableName, $entityPrimaryKeyColName, $id)
     {
         $selectQuery = new SelectQuery(
             array(),
             array($entityTableName),
-            array(call_user_func($entityClassName . '::getPrimaryKeyColName') => $id));
+            array($entityPrimaryKeyColName => $id));
         $singleResultList = $selectQuery->exec();
         $params = $singleResultList->fetch_assoc();
         $entityInstance = new $entityClassName($params);
@@ -167,8 +174,8 @@ abstract class BasicEntity implements Entity
         $selectQuery = new SelectQuery(array(), array($entityTableName));
         $resultList = $selectQuery->exec();
         while (($params = $resultList->fetch_assoc()) !== NULL) {
-            $universityInstance = new $entityClassName($params);
-            array_push($entityInstances, $universityInstance);
+            $entityInstance = new $entityClassName($params);
+            array_push($entityInstances, $entityInstance);
         }
 
         return $entityInstances;
