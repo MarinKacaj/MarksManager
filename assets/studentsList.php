@@ -46,7 +46,7 @@
             <div class="table-responsive">
                 <table class="table table-bordered table-hover">
                     <thead>
-                        <th>Edit</th>
+                        <th>Actions</th>
                         <th>Emer</th>
                         <th>Mbiemer</th>
                         <th>Grupi</th>
@@ -58,7 +58,8 @@
                         <tr>
                             <form class="form-inline">
                                 <td>
-                                    <a href="#"><i class="fa fa-user fa-2x"></i></a>
+                                    <a href="#"><i class="fa fa-user-times fa-2x pull-left"></i></a>
+                                    <a href="#"><i class="fa fa-user fa-2x pull-right"></i></a>
                                 </td>
                                 <td>
                                     <h5>Mbiemri1</h5>
