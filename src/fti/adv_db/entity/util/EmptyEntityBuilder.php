@@ -10,6 +10,7 @@ namespace fti\adv_db\entity\util;
 
 
 use fti\adv_db\entity\Entity;
+use ReflectionClass;
 
 require_once dirname(dirname(dirname(__FILE__))) . '/functions/auto_loader.php';
 
@@ -23,25 +24,18 @@ class EmptyEntityBuilder
 {
 
     /**
-     * @var string
-     */
-    private $entityClassName;
-
-    /**
      * @param string $entityClassName
-     */
-    function __construct($entityClassName)
-    {
-        $this->entityClassName = $entityClassName;
-    }
-
-    /**
-     * @param string[] $paramNames
-     * @param string $primaryKeyColName
+     * @param string[]|NULL $paramNames [optional]
+     * @param string $primaryKeyColName [optional]
      * @return Entity
      */
-    public function buildFromParamNames($paramNames, $primaryKeyColName)
+    public static function buildFromParamNames($entityClassName, $paramNames = NULL, $primaryKeyColName = Entity::PROP_ID)
     {
+        if (is_null($paramNames)) {
+            $entityReflection = new ReflectionClass($entityClassName);
+            $paramNames = $entityReflection->getConstants();
+            unset($paramNames[$primaryKeyColName]);
+        }
         $params = array($primaryKeyColName => Entity::UNSAVED_INSTANCE_ID);
 
         foreach ($paramNames as $paramName) {
@@ -49,7 +43,7 @@ class EmptyEntityBuilder
         }
         unset($paramName);
 
-        return new $this->entityClassName($params);
+        return new $entityClassName($params);
     }
 
 

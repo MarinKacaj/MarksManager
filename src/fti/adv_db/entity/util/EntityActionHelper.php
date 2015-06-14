@@ -11,8 +11,10 @@ namespace fti\adv_db\entity\util;
 
 use fti\adv_db\db\DeleteQuery;
 use fti\adv_db\db\InsertQuery;
+use fti\adv_db\db\SelectQuery;
 use fti\adv_db\db\UpdateQuery;
 use fti\adv_db\entity\BasicEntity;
+use fti\adv_db\entity\Entity;
 
 require_once dirname(dirname(dirname(__FILE__))) . '/functions/auto_loader.php';
 
@@ -42,6 +44,44 @@ class EntityActionHelper
         $this->entityInstance = $entityInstance;
     }
 
+
+    /**
+     * @param string $entityClassName
+     * @param string $entityTableName
+     * @param array $filter
+     * @return Entity
+     */
+    public static function retrieve($entityClassName, $entityTableName, $filter)
+    {
+        $selectQuery = new SelectQuery(
+            array(),
+            array($entityTableName),
+            $filter
+        );
+        $singleResultList = $selectQuery->exec();
+        $params = $singleResultList->fetch_assoc();
+        $entityInstance = new $entityClassName($params);
+        return $entityInstance;
+    }
+
+    /**
+     * @param string $entityClassName
+     * @param string $entityTableName
+     * @return BasicEntity[]
+     */
+    public static function getFullList($entityClassName, $entityTableName)
+    {
+        $entityInstances = array();
+
+        $selectQuery = new SelectQuery(array(), array($entityTableName));
+        $resultList = $selectQuery->exec();
+        while (($params = $resultList->fetch_assoc()) !== NULL) {
+            $entityInstance = new $entityClassName($params);
+            array_push($entityInstances, $entityInstance);
+        }
+
+        return $entityInstances;
+    }
 
     /**
      * @param array $excludedPropertyNames

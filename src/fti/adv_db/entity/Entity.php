@@ -19,6 +19,7 @@ interface Entity
     const UNSAVED_INSTANCE_ID = 0;
     const ALL_PROPERTIES = 1;
     const PROPERTY_PREFIX = 'PROP_';
+    const PROP_ID = 'ID';
 
 
     /**
@@ -42,15 +43,10 @@ interface Entity
     public function delete();
 
     /**
-     * @param $id
+     * @param array|int $uniqueIdentifier
      * @return Entity
      */
-    public static function retrieve($id);
-
-    /**
-     * @return string
-     */
-    public static function getEntityClassName();
+    public static function retrieve($uniqueIdentifier);
 
     /**
      * @return Entity[]

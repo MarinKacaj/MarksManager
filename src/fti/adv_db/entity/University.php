@@ -50,35 +50,8 @@ class University extends BasicEntity
      */
     public static function createEmpty()
     {
-        $emptyEntityBuilder = new EmptyEntityBuilder(self::getEntityClassName());
-        $emptyInstance = $emptyEntityBuilder->buildFromParamNames(array(
-            self::PROP_NAME
-        ), self::PROP_ID);
+        $emptyInstance = EmptyEntityBuilder::buildFromParamNames(__CLASS__);
         return $emptyInstance;
-    }
-
-    /**
-     * @return string
-     */
-    public static function getPrimaryKeyColName()
-    {
-        return self::PROP_ID;
-    }
-
-    /**
-     * @return string
-     */
-    public function getEntityName()
-    {
-        return self::getEntityClassName();
-    }
-
-    /**
-     * @return string
-     */
-    public static function getEntityClassName()
-    {
-        return __CLASS__;
     }
 
     /**
@@ -90,12 +63,16 @@ class University extends BasicEntity
     }
 
     /**
-     * @param int $id
+     * @param int $uniqueIdentifier
      * @return University
      */
-    public static function retrieve($id)
+    public static function retrieve($uniqueIdentifier)
     {
-        return parent::retrieveByID(self::getEntityClassName(), self::TABLE_NAME, self::getPrimaryKeyColName(), $id);
+        return EntityActionHelper::retrieve(
+            __CLASS__,
+            self::TABLE_NAME,
+            array(self::getPrimaryKeyColName() => $uniqueIdentifier)
+        );
     }
 
     /**
@@ -103,17 +80,7 @@ class University extends BasicEntity
      */
     public static function getList()
     {
-        return parent::getFullList(self::getEntityClassName(), self::TABLE_NAME);
-    }
-
-    /**
-     * @return University
-     */
-    public function save()
-    {
-        $excludedProperties = array(self::PROP_ID);
-        $this->actionHelper->insert($excludedProperties);
-        return $this;
+        return EntityActionHelper::getFullList(__CLASS__, self::TABLE_NAME);
     }
 
 

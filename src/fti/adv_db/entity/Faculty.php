@@ -28,7 +28,6 @@ class Faculty extends BasicEntity
 
     const TABLE_NAME = 'njk';
     const LABEL = 'NJK';
-    const PROP_ID = 'ID';
 
     const PROP_NAME = 'em_njk';
     const PROP_ADDRESS = 'adrese';
@@ -42,7 +41,9 @@ class Faculty extends BasicEntity
      */
     function __construct($params)
     {
+        $this->entityName = __CLASS__;
         $this->label = self::LABEL;
+
         $this->setIdFromParams(self::PROP_ID, $params);
         $this->properties[self::PROP_ID] = new IntegerProperty(self::PROP_ID, 'ID', $this->id, false);
         $this->properties[self::PROP_NAME] = new StringProperty(self::PROP_NAME, 'Emri', $params[self::PROP_NAME], true);
@@ -67,32 +68,8 @@ class Faculty extends BasicEntity
      */
     public static function createEmpty()
     {
-        $emptyEntityBuilder = new EmptyEntityBuilder(self::getEntityClassName());
-        $emptyInstance = $emptyEntityBuilder->buildFromParamNames(array(
-            self::PROP_NAME,
-            self::PROP_ADDRESS,
-            self::PROP_DEAN_ID,
-            self::PROP_HEAD_SECRETARY_ID,
-            self::PROP_SECRETARY_ID,
-            self::PROP_UNIVERSITY_ID
-        ), self::PROP_ID);
+        $emptyInstance = EmptyEntityBuilder::buildFromParamNames(__CLASS__);
         return $emptyInstance;
-    }
-
-    /**
-     * @return string
-     */
-    public static function getPrimaryKeyColName()
-    {
-        return self::PROP_ID;
-    }
-
-    /**
-     * @return string
-     */
-    public function getEntityName()
-    {
-        return self::getEntityClassName();
     }
 
     /**
@@ -104,20 +81,16 @@ class Faculty extends BasicEntity
     }
 
     /**
-     * @param int $id
+     * @param int $uniqueIdentifier
      * @return Faculty
      */
-    public static function retrieve($id)
+    public static function retrieve($uniqueIdentifier)
     {
-        return parent::retrieveByID(self::getEntityClassName(), self::TABLE_NAME, self::getPrimaryKeyColName(), $id);
-    }
-
-    /**
-     * @return string
-     */
-    public static function getEntityClassName()
-    {
-        return __CLASS__;
+        return EntityActionHelper::retrieve(
+            __CLASS__,
+            self::TABLE_NAME,
+            array(self::getPrimaryKeyColName() => $uniqueIdentifier)
+        );
     }
 
     /**
@@ -125,17 +98,7 @@ class Faculty extends BasicEntity
      */
     public static function getList()
     {
-        return parent::getFullList(University::getEntityClassName(), University::TABLE_NAME);
-    }
-
-    /**
-     * @return Faculty
-     */
-    public function save()
-    {
-        $excludedProperties = array(self::PROP_ID);
-        $this->actionHelper->insert($excludedProperties);
-        return $this;
+        return EntityActionHelper::getFullList(__CLASS__, self::TABLE_NAME);
     }
 
 

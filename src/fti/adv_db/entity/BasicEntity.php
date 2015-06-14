@@ -9,7 +9,6 @@
 namespace fti\adv_db\entity;
 
 
-use fti\adv_db\db\SelectQuery;
 use fti\adv_db\entity\util\EntityActionHelper;
 use fti\adv_db\property\BasicProperty;
 use InvalidArgumentException;
@@ -21,11 +20,17 @@ spl_autoload_register('class_auto_loader');
 abstract class BasicEntity implements Entity
 {
 
-    const TABLE_NAME = '';
-    const LABEL = '';
-    const PROP_ID = 'id';
+    const TABLE_NAME = 'ial';
+    const LABEL = 'IAL';
 
-
+    /**
+     * @var string
+     */
+    protected $tableName;
+    /**
+     * @var string
+     */
+    protected $entityName;
     /**
      * @var int
      */
@@ -47,7 +52,10 @@ abstract class BasicEntity implements Entity
     /**
      * @return string
      */
-    abstract public function getEntityName();
+    public function getEntityName()
+    {
+        return $this->entityName;
+    }
 
     /**
      * @return string
@@ -142,43 +150,14 @@ abstract class BasicEntity implements Entity
      */
     abstract public function getDisplayName();
 
-    // TODO - move the following two functions to a more appropriate class
     /**
-     * @param string $entityClassName
-     * @param string $entityTableName
-     * @param string $entityPrimaryKeyColName
-     * @param int $id
      * @return BasicEntity
      */
-    public static function retrieveByID($entityClassName, $entityTableName, $entityPrimaryKeyColName, $id)
+    public function save()
     {
-        $selectQuery = new SelectQuery(
-            array(),
-            array($entityTableName),
-            array($entityPrimaryKeyColName => $id));
-        $singleResultList = $selectQuery->exec();
-        $params = $singleResultList->fetch_assoc();
-        $entityInstance = new $entityClassName($params);
-        return $entityInstance;
-    }
-
-    /**
-     * @param string $entityClassName
-     * @param string $entityTableName
-     * @return BasicEntity[]
-     */
-    public static function getFullList($entityClassName, $entityTableName)
-    {
-        $entityInstances = array();
-
-        $selectQuery = new SelectQuery(array(), array($entityTableName));
-        $resultList = $selectQuery->exec();
-        while (($params = $resultList->fetch_assoc()) !== NULL) {
-            $entityInstance = new $entityClassName($params);
-            array_push($entityInstances, $entityInstance);
-        }
-
-        return $entityInstances;
+        $excludedProperties = array(self::PROP_ID);
+        $this->actionHelper->insert($excludedProperties);
+        return $this;
     }
 
     /**
