@@ -57,9 +57,23 @@
             </div>
             <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">
-                    <div class="checkbox">
+                    <div class="radio">
                         <label>
-                            <input type="checkbox">Remember me
+                            <input type="radio" name="actor">Student
+                        </label>
+                    </div>
+                </div>
+                <div class="col-sm-offset-2 col-sm-10">
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="actor">Profesor
+                        </label>
+                    </div>
+                </div>
+                <div class="col-sm-offset-2 col-sm-10">
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="actor">Admin
                         </label>
                     </div>
                 </div>
