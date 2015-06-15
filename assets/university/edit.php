@@ -16,6 +16,6 @@ spl_autoload_register('class_auto_loader');
 
 
 $id = HttpEntityParamBuilder::retrieveID(University::PROP_ID);
-$universityInstance = University::retrieve($id);
+$universityInstance = University::getBuilder()->getByIdentifier($id);
 $formViewAggregator = new FormViewAggregator($universityInstance);
 echo $formViewAggregator->buildEntityFormHTML();

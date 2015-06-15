@@ -9,8 +9,8 @@
 namespace fti\adv_db\entity;
 
 
-use fti\adv_db\entity\util\EmptyEntityBuilder;
 use fti\adv_db\entity\util\EntityActionHelper;
+use fti\adv_db\entity\util\EntityBuilderHelper;
 use fti\adv_db\property\EntityProperty;
 use fti\adv_db\property\IntegerProperty;
 use fti\adv_db\property\StringProperty;
@@ -42,8 +42,10 @@ class Faculty extends BasicEntity
     function __construct($params)
     {
         $this->entityName = __CLASS__;
+        $this->tableName = self::TABLE_NAME;
         $this->label = self::LABEL;
 
+        $this->properties = array();
         $this->setIdFromParams(self::PROP_ID, $params);
         $this->properties[self::PROP_ID] = new IntegerProperty(self::PROP_ID, 'ID', $this->id, false);
         $this->properties[self::PROP_NAME] = new StringProperty(self::PROP_NAME, 'Emri', $params[self::PROP_NAME], true);
@@ -56,7 +58,7 @@ class Faculty extends BasicEntity
             self::PROP_SECRETARY_ID, 'Sekretarja', $params[self::PROP_SECRETARY_ID], true
         );
         $this->properties[self::PROP_UNIVERSITY_ID] = new EntityProperty(
-            self::PROP_UNIVERSITY_ID, 'Universiteti', $params[self::PROP_UNIVERSITY_ID], University::getList(), true
+            self::PROP_UNIVERSITY_ID, 'Universiteti', $params[self::PROP_UNIVERSITY_ID], University::getBuilder()->getList(), true
         );
 
         $this->actionHelper = new EntityActionHelper(self::TABLE_NAME, $this);
@@ -64,12 +66,11 @@ class Faculty extends BasicEntity
 
 
     /**
-     * @return Faculty
+     * @return EntityBuilderHelper
      */
-    public static function createEmpty()
+    public static function getBuilder()
     {
-        $emptyInstance = EmptyEntityBuilder::buildFromParamNames(__CLASS__);
-        return $emptyInstance;
+        return new EntityBuilderHelper(__CLASS__, self::getPrimaryKeyColName(), self::TABLE_NAME, self::LABEL);
     }
 
     /**
@@ -78,27 +79,6 @@ class Faculty extends BasicEntity
     public function getDisplayName()
     {
         return $this->properties[self::PROP_NAME]->getValue();
-    }
-
-    /**
-     * @param int $uniqueIdentifier
-     * @return Faculty
-     */
-    public static function retrieve($uniqueIdentifier)
-    {
-        return EntityActionHelper::retrieve(
-            __CLASS__,
-            self::TABLE_NAME,
-            array(self::getPrimaryKeyColName() => $uniqueIdentifier)
-        );
-    }
-
-    /**
-     * @return Faculty[]
-     */
-    public static function getList()
-    {
-        return EntityActionHelper::getFullList(__CLASS__, self::TABLE_NAME);
     }
 
 

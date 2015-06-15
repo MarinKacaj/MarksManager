@@ -389,6 +389,7 @@ class FormViewGenerator extends ViewGenerator
     private function createOptionsFragment($valueTextPairs)
     {
         $optionsFragment = $this->domDocument->createDocumentFragment();
+        $valueTextPairs[''] = '';
 
         foreach ($valueTextPairs as $value => $text) {
             $optionEl = $this->createOptionElement($value, $text);

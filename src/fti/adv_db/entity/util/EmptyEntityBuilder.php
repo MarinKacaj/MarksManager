@@ -34,14 +34,13 @@ class EmptyEntityBuilder
         if (is_null($paramNames)) {
             $entityReflection = new ReflectionClass($entityClassName);
             $paramNames = $entityReflection->getConstants();
-            foreach ($paramNames as $index => $paramName) {
-                if (strpos($paramName, Entity::PROPERTY_PREFIX) !== 0) {
-                    unset($paramNames[$index]);
+            foreach ($paramNames as $constName => $paramName) {
+                if (strpos($constName, Entity::PROPERTY_PREFIX) !== 0) {
+                    unset($paramNames[$constName]);
                 }
             }
             unset($index);
             unset($paramName);
-            unset($paramNames[$primaryKeyColName]);
         }
         $params = array($primaryKeyColName => Entity::UNSAVED_INSTANCE_ID);
 
