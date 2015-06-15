@@ -14,6 +14,6 @@ require_once dirname(dirname(dirname(__FILE__))) . '/src/fti/adv_db/functions/au
 spl_autoload_register('class_auto_loader');
 
 
-$universityInstance = University::createEmpty();
+$universityInstance = University::getBuilder()->createEmpty();
 $formViewAggregator = new FormViewAggregator($universityInstance);
 echo $formViewAggregator->buildEntityFormHTML();

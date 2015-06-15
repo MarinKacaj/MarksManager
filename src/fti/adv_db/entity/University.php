@@ -9,8 +9,8 @@
 namespace fti\adv_db\entity;
 
 
-use fti\adv_db\entity\util\EmptyEntityBuilder;
 use fti\adv_db\entity\util\EntityActionHelper;
+use fti\adv_db\entity\util\EntityBuilderHelper;
 use fti\adv_db\property\IntegerProperty;
 use fti\adv_db\property\StringProperty;
 
@@ -46,12 +46,11 @@ class University extends BasicEntity
 
 
     /**
-     * @return University
+     * @return EntityBuilderHelper
      */
-    public static function createEmpty()
+    public static function getBuilder()
     {
-        $emptyInstance = EmptyEntityBuilder::buildFromParamNames(__CLASS__);
-        return $emptyInstance;
+        return new EntityBuilderHelper(__CLASS__, self::getPrimaryKeyColName(), self::TABLE_NAME, self::LABEL);
     }
 
     /**
@@ -60,27 +59,6 @@ class University extends BasicEntity
     public function getDisplayName()
     {
         return $this->properties[self::PROP_NAME]->getValue();
-    }
-
-    /**
-     * @param int $uniqueIdentifier
-     * @return University
-     */
-    public static function retrieve($uniqueIdentifier)
-    {
-        return EntityActionHelper::retrieve(
-            __CLASS__,
-            self::TABLE_NAME,
-            array(self::getPrimaryKeyColName() => $uniqueIdentifier)
-        );
-    }
-
-    /**
-     * @return University[]
-     */
-    public static function getList()
-    {
-        return EntityActionHelper::getFullList(__CLASS__, self::TABLE_NAME);
     }
 
 

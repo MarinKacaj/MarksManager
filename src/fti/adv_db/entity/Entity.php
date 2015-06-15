@@ -7,6 +7,7 @@
  */
 
 namespace fti\adv_db\entity;
+use fti\adv_db\entity\util\EntityBuilderHelper;
 
 
 /**
@@ -22,11 +23,7 @@ interface Entity
     const PROP_ID = 'ID';
 
 
-    /**
-     * @return Entity
-     */
-    public static function createEmpty();
-
+    public function getEntityName();
     /**
      * @return Entity
      */
@@ -43,13 +40,7 @@ interface Entity
     public function delete();
 
     /**
-     * @param array|int $uniqueIdentifier
-     * @return Entity
+     * @return EntityBuilderHelper
      */
-    public static function retrieve($uniqueIdentifier);
-
-    /**
-     * @return Entity[]
-     */
-    public static function getList();
+    public static function getBuilder();
 }
