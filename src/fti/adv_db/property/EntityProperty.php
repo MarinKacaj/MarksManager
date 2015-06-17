@@ -11,6 +11,7 @@ namespace fti\adv_db\property;
 
 use DOMElement;
 use fti\adv_db\entity\BasicEntity;
+use fti\adv_db\entity\Entity;
 use fti\adv_db\view\DetailViewGenerator;
 use fti\adv_db\view\FormViewGenerator;
 use fti\adv_db\view\ListViewGenerator;
@@ -80,7 +81,10 @@ class EntityProperty extends BasicProperty
         foreach ($entityInstances as $entityInstance) {
             $value = $entityInstance->getIdentifier();
             $text = $entityInstance->getDisplayName();
-            $valueTextPairs[$value] = $text;
+            /*
+             * Every entity that will be referenced by another one should have a single primary key
+             */
+            $valueTextPairs[$value[Entity::PROP_ID]] = $text;
         }
         unset($entityInstance);
 
