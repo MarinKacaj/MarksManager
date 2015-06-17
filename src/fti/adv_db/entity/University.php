@@ -50,7 +50,7 @@ class University extends BasicEntity
      */
     public static function getBuilder()
     {
-        return new EntityBuilderHelper(__CLASS__, self::getPrimaryKeyColName(), self::TABLE_NAME, self::LABEL);
+        return new EntityBuilderHelper(__CLASS__, self::TABLE_NAME, self::LABEL);
     }
 
     /**
@@ -58,7 +58,7 @@ class University extends BasicEntity
      */
     public function getDisplayName()
     {
-        return $this->properties[self::PROP_NAME]->getValue();
+        return $this->getProperty(self::PROP_NAME)->getValue();
     }
 
 

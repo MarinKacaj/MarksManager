@@ -58,19 +58,19 @@ abstract class BasicEntity implements Entity
     }
 
     /**
-     * @return string
+     * @return string[]
      */
-    public static function getPrimaryKeyColName()
+    public static function getPrimaryKeyColNames()
     {
-        return self::PROP_ID;
+        return array(self::PROP_ID);
     }
 
     /**
-     * @return int
+     * @return array
      */
-    public function getID()
+    public function getIdentifier()
     {
-        return $this->id;
+        return array(self::PROP_ID => $this->id);
     }
 
     /**

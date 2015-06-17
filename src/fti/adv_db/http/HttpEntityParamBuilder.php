@@ -45,13 +45,18 @@ class HttpEntityParamBuilder
     }
 
     /**
-     * @param string $primaryKeyColName
-     * @return int
+     * @param array $primaryKeyColNames
+     * @return array
      */
-    public static function retrieveID($primaryKeyColName)
+    public static function retrieveIdentifier($primaryKeyColNames)
     {
-        $id = intval($_GET[$primaryKeyColName]);
-        return $id;
+        $identifier = array();
+        foreach ($primaryKeyColNames as $primaryKeyColName) {
+            $id = intval($_GET[$primaryKeyColName]);
+            array_push($identifier, $id);
+        }
+        unset($primaryKeyColName);
+        return $identifier;
     }
 
     /**
@@ -60,13 +65,13 @@ class HttpEntityParamBuilder
      */
     public static function buildFormAction($entityInstance)
     {
-        $id = $entityInstance->getID();
-        if ($id === BasicEntity::UNSAVED_INSTANCE_ID) {
+        $identifier = $entityInstance->getIdentifier();
+        if ($identifier === BasicEntity::UNSAVED_INSTANCE_ID) {
             $action = SAVE_DEFAULT_FILE_NAME;
         } else {
             $action = HttpEntityParamBuilder::buildArgumentsRelativePath(
                 UPDATE_DEFAULT_FILE_NAME,
-                array($entityInstance->getPrimaryKeyColName() => $id)
+                $identifier
             );
         }
         return $action;

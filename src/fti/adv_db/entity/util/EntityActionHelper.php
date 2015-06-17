@@ -122,7 +122,7 @@ class EntityActionHelper
         }
         unset($property);
 
-        $filters = array($this->entityInstance->getPrimaryKeyColName() => $this->entityInstance->getID());
+        $filters = array($this->entityInstance->getPrimaryKeyColNames() => $this->entityInstance->getIdentifier());
 
         $updateQuery = new UpdateQuery($this->tableName, $nameValuePairsToSet, $filters);
         $result = $updateQuery->exec();
@@ -134,7 +134,7 @@ class EntityActionHelper
      */
     public function delete()
     {
-        $filters = array($this->entityInstance->getPrimaryKeyColName() => $this->entityInstance->getID());
+        $filters = array($this->entityInstance->getPrimaryKeyColNames() => $this->entityInstance->getIdentifier());
 
         $deleteQuery = new DeleteQuery($this->tableName, $filters);
         $result = $deleteQuery->exec();

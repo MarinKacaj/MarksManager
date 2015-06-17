@@ -13,7 +13,8 @@ require_once dirname(dirname(dirname(__FILE__))) . '/src/fti/adv_db/functions/au
 
 spl_autoload_register('class_auto_loader');
 
-$id = HttpEntityParamBuilder::retrieveID(University::PROP_ID);
+
+$id = HttpEntityParamBuilder::retrieveIdentifier(array(University::PROP_ID));
 $universityInstance = University::getBuilder()->getByIdentifier($id);
 $result = $universityInstance->delete();
 

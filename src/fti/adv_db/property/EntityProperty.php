@@ -78,7 +78,7 @@ class EntityProperty extends BasicProperty
         $entityInstances = $this->entityInstances;
 
         foreach ($entityInstances as $entityInstance) {
-            $value = $entityInstance->getID();
+            $value = $entityInstance->getIdentifier();
             $text = $entityInstance->getDisplayName();
             $valueTextPairs[$value] = $text;
         }

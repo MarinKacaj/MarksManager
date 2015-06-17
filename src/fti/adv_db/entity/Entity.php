@@ -23,7 +23,16 @@ interface Entity
     const PROP_ID = 'ID';
 
 
+    /**
+     * @return string
+     */
     public function getEntityName();
+
+    /**
+     * @return string[]
+     */
+    public static function getPrimaryKeyColNames();
+
     /**
      * @return Entity
      */

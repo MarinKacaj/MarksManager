@@ -27,10 +27,6 @@ class EntityBuilderHelper
      */
     private $className;
     /**
-     * @var
-     */
-    private $primaryKeyColName;
-    /**
      * @var string
      */
     private $tableName;
@@ -41,14 +37,12 @@ class EntityBuilderHelper
 
     /**
      * @param string $className
-     * @param string $primaryKeyColName
      * @param string $tableName
      * @param string $label
      */
-    function __construct($className, $primaryKeyColName, $tableName, $label)
+    function __construct($className, $tableName, $label)
     {
         $this->className = $className;
-        $this->primaryKeyColName = $primaryKeyColName;
         $this->tableName = $tableName;
         $this->label = $label;
     }
@@ -64,7 +58,7 @@ class EntityBuilderHelper
     }
 
     /**
-     * @param $uniqueIdentifier
+     * @param array $uniqueIdentifier
      * @return BasicEntity
      */
     public function getByIdentifier($uniqueIdentifier)
@@ -72,7 +66,7 @@ class EntityBuilderHelper
         $entityInstance = EntityActionHelper::retrieve(
             __CLASS__,
             $this->tableName,
-            array($this->primaryKeyColName => $uniqueIdentifier)
+            $uniqueIdentifier
         );
         return $entityInstance;
     }
