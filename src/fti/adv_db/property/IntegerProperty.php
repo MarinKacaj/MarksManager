@@ -11,7 +11,6 @@ namespace fti\adv_db\property;
 
 use fti\adv_db\view\DetailViewGenerator;
 use fti\adv_db\view\FormViewGenerator;
-use fti\adv_db\view\ListViewGenerator;
 
 require_once dirname(dirname(__FILE__)) . '/functions/auto_loader.php';
 
@@ -33,11 +32,12 @@ class IntegerProperty extends BasicProperty
      * @param string $name
      * @param string $label
      * @param int $value
-     * @param bool $show
+     * @param bool $showOnForm
+     * @param bool $showOnList
      */
-    function __construct($name, $label, $value, $show)
+    function __construct($name, $label, $value, $showOnForm, $showOnList)
     {
-        parent::__construct($name, $name, BasicProperty::INTEGER, $label, $show);
+        parent::__construct($name, $name, BasicProperty::INTEGER, $label, $showOnForm, $showOnList);
         $this->value = intval($value);
     }
 
@@ -61,15 +61,6 @@ class IntegerProperty extends BasicProperty
     public function buildDetailBlock($detailViewGenerator, $name)
     {
         // TODO: Implement buildDetailBlock() method.
-    }
-
-    /**
-     * @param ListViewGenerator $listViewGenerator
-     * @param string $name
-     */
-    public function buildListBlock($listViewGenerator, $name)
-    {
-        // TODO: Implement buildListBlock() method.
     }
 
 

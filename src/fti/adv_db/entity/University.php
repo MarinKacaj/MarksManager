@@ -38,8 +38,8 @@ class University extends BasicEntity
     {
         $this->label = self::LABEL;
         $this->setIdFromParams(self::PROP_ID, $params);
-        $this->properties[self::PROP_ID] = new IntegerProperty(self::PROP_ID, 'ID', $this->id, false);
-        $this->properties[self::PROP_NAME] = new StringProperty(self::PROP_NAME, 'Emri', $params[self::PROP_NAME], true);
+        $this->properties[self::PROP_ID] = new IntegerProperty(self::PROP_ID, 'ID', $this->id, false, false);
+        $this->properties[self::PROP_NAME] = new StringProperty(self::PROP_NAME, 'Emri', $params[self::PROP_NAME], true, true);
 
         $this->actionHelper = new EntityActionHelper(self::TABLE_NAME, $this);
     }

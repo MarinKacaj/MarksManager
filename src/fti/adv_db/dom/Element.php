@@ -20,4 +20,16 @@ class Element
     const DIV = 'div';
     const LABEL = 'label';
     const BUTTON = 'button';
+
+    const TABLE = 'table';
+    const TABLE_HEAD = 'thead';
+    const TABLE_HEAD_COL = 'th';
+    const TABLE_BODY = 'tbody';
+    const TABLE_ROW = 'tr';
+    const TABLE_TD = 'td'; // table data (cell)
+    const LINK = 'a';
+
+    const HEADER_5 = 'h5';
+    const ICON = 'i';
+
 }

@@ -12,7 +12,6 @@ namespace fti\adv_db\property;
 use DOMElement;
 use fti\adv_db\view\DetailViewGenerator;
 use fti\adv_db\view\FormViewGenerator;
-use fti\adv_db\view\ListViewGenerator;
 
 require_once dirname(dirname(__FILE__)) . '/functions/auto_loader.php';
 
@@ -34,11 +33,12 @@ class StringProperty extends BasicProperty
      * @param string $name
      * @param string $label
      * @param string $value
-     * @param bool $show
+     * @param bool $showOnForm
+     * @param bool $showOnList
      */
-    function __construct($name, $label, $value, $show)
+    function __construct($name, $label, $value, $showOnForm, $showOnList)
     {
-        parent::__construct($name, $name, BasicProperty::STRING, $label, $show);
+        parent::__construct($name, $name, BasicProperty::STRING, $label, $showOnForm, $showOnList);
         $this->value = $value;
     }
 
@@ -64,16 +64,6 @@ class StringProperty extends BasicProperty
     public function buildDetailBlock($detailViewGenerator, $name)
     {
         // TODO: Implement createDetailBlock() method.
-    }
-
-    /**
-     * @param ListViewGenerator $listViewGenerator
-     * @param string $name
-     * @return DOMElement
-     */
-    public function buildListBlock($listViewGenerator, $name)
-    {
-        // TODO: Implement createListBlock() method.
     }
 
 
