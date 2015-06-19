@@ -53,7 +53,7 @@ class HttpEntityParamBuilder
         $identifier = array();
         foreach ($primaryKeyColNames as $primaryKeyColName) {
             $id = intval($_GET[$primaryKeyColName]);
-            array_push($identifier, $id);
+            $identifier[$primaryKeyColName] = $id;
         }
         unset($primaryKeyColName);
         return $identifier;

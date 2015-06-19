@@ -64,7 +64,7 @@ class EntityBuilderHelper
     public function getByIdentifier($uniqueIdentifier)
     {
         $entityInstance = EntityActionHelper::retrieve(
-            __CLASS__,
+            $this->className,
             $this->tableName,
             $uniqueIdentifier
         );
