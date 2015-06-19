@@ -14,7 +14,6 @@ use fti\adv_db\entity\BasicEntity;
 use fti\adv_db\entity\Entity;
 use fti\adv_db\view\DetailViewGenerator;
 use fti\adv_db\view\FormViewGenerator;
-use fti\adv_db\view\ListViewGenerator;
 
 require_once dirname(dirname(__FILE__)) . '/functions/auto_loader.php';
 
@@ -41,11 +40,11 @@ class EntityProperty extends BasicProperty
      * @param string $label
      * @param int $value
      * @param BasicEntity[] $entityInstances
-     * @param bool $show
+     * @param bool $showOnForm
      */
-    function __construct($name, $label, $value, $entityInstances, $show)
+    function __construct($name, $label, $value, $entityInstances, $showOnForm)
     {
-        parent::__construct($name, $name, BasicProperty::ENTITY, $label, $show);
+        parent::__construct($name, $name, BasicProperty::ENTITY, $label, $showOnForm, false);
 
         $this->value = $value;
         $this->entityInstances = $entityInstances;
@@ -99,16 +98,6 @@ class EntityProperty extends BasicProperty
     public function buildDetailBlock($detailViewGenerator, $name)
     {
         // TODO: Implement createDetailBlock() method.
-    }
-
-    /**
-     * @param ListViewGenerator $listViewGenerator
-     * @param string $name
-     * @return DOMElement
-     */
-    public function buildListBlock($listViewGenerator, $name)
-    {
-        // TODO: Implement createListBlock() method.
     }
 
 

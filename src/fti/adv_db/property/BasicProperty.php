@@ -11,7 +11,6 @@ namespace fti\adv_db\property;
 
 use fti\adv_db\view\DetailViewGenerator;
 use fti\adv_db\view\FormViewGenerator;
-use fti\adv_db\view\ListViewGenerator;
 
 require_once dirname(dirname(__FILE__)) . '/functions/auto_loader.php';
 
@@ -41,24 +40,30 @@ abstract class BasicProperty implements Property
      */
     protected $value;
     /**
-     * @var boolean
+     * @var bool
      */
-    protected $show;
+    protected $showOnForm;
+    /**
+     * @var bool
+     */
+    protected $showOnList;
 
     /**
      * @param string $name
      * @param string $colName
      * @param string $type
      * @param string $label
-     * @param bool $show
+     * @param bool $showOnForm
+     * @param bool $showOnList
      */
-    function __construct($name, $colName, $type, $label, $show)
+    function __construct($name, $colName, $type, $label, $showOnForm, $showOnList)
     {
         $this->name = $name;
         $this->colName = $colName;
         $this->type = $type;
         $this->label = $label;
-        $this->show = $show;
+        $this->showOnForm = $showOnForm;
+        $this->showOnList = $showOnList;
     }
 
 
@@ -84,7 +89,7 @@ abstract class BasicProperty implements Property
      */
     public function isShown()
     {
-        return $this->show;
+        return $this->showOnForm;
     }
 
     /**
@@ -92,7 +97,7 @@ abstract class BasicProperty implements Property
      */
     public function setShown($show)
     {
-        $this->show = $show;
+        $this->showOnForm = $show;
     }
 
     /**
@@ -125,6 +130,22 @@ abstract class BasicProperty implements Property
     }
 
     /**
+     * @return boolean
+     */
+    public function isShowOnForm()
+    {
+        return $this->showOnForm;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isShowOnList()
+    {
+        return $this->showOnList;
+    }
+
+    /**
      * @param FormViewGenerator $formViewGenerator
      * @param string $name
      */
@@ -135,12 +156,6 @@ abstract class BasicProperty implements Property
      * @param string $name
      */
     abstract public function buildDetailBlock($detailViewGenerator, $name);
-
-    /**
-     * @param ListViewGenerator $listViewGenerator
-     * @param string $name
-     */
-    abstract public function buildListBlock($listViewGenerator, $name);
 
 
 }

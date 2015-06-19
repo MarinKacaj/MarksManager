@@ -25,4 +25,5 @@ class Attribute
     const ACTION = 'action';
     const METHOD = 'method';
     const ENC_TYPE = 'enctype';
+    const HREF = 'href';
 }
