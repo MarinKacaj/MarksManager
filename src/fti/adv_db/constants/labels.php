@@ -14,3 +14,5 @@ define('SAVE_DEFAULT_FILE_NAME', 'save.php');
 define('UPDATE_DEFAULT_FILE_NAME', 'update.php');
 define('EDIT_DEFAULT_FILE_NAME', 'edit.php');
 define('DELETE_DEFAULT_FILE_NAME', 'delete.php');
+define('LIST_DEFAULT_FILE_NAME', 'list.php');
+define('ERROR_DEFAULT_FILE_NAME', 'error.php');

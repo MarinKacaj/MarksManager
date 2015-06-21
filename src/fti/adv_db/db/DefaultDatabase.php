@@ -9,6 +9,7 @@
 namespace fti\adv_db\db;
 
 
+use fti\adv_db\exceptions\MySQLException;
 use mysqli;
 use mysqli_result;
 
@@ -39,10 +40,14 @@ class DefaultDatabase
     /**
      * @param string $query
      * @return bool|mysqli_result
+     * @throws MySQLException
      */
     public function query($query)
     {
         $result = $this->connection->query($query);
+        if ($this->connection->errno) {
+            throw new MySQLException($this->connection->errno);
+        }
         return $result;
     }
 

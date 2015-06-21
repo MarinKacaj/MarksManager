@@ -11,7 +11,6 @@ namespace fti\adv_db\entity;
 
 use fti\adv_db\entity\util\EntityActionHelper;
 use fti\adv_db\property\BasicProperty;
-use InvalidArgumentException;
 
 require_once dirname(dirname(__FILE__)) . '/functions/auto_loader.php';
 
@@ -32,7 +31,7 @@ abstract class BasicEntity implements Entity
      */
     protected $entityName;
     /**
-     * @var int
+     * @var array
      */
     protected $id;
     /**
@@ -70,18 +69,18 @@ abstract class BasicEntity implements Entity
      */
     public function getIdentifier()
     {
-        return array(self::PROP_ID => $this->id);
+        return $this->id;
     }
 
     /**
-     * @param int $id
+     * @param array $id
      */
-    public function setId($id)
+    public function setID($id)
     {
-        if ($id >= self::UNSAVED_INSTANCE_ID) {
-            $this->id = intval($id);
+        if (is_array($id)) {
+            $this->id = $id;
         } else {
-            throw new InvalidArgumentException();
+            $this->id = array(self::PROP_ID => $id);
         }
     }
 
@@ -93,9 +92,11 @@ abstract class BasicEntity implements Entity
     {
         if (isset($params[$primaryKeyColName])) {
             $id = $params[$primaryKeyColName];
-            $this->setId($id);
+            $id = array($primaryKeyColName => $id);
+            $this->setID($id);
         } else {
-            $this->setId(self::UNSAVED_INSTANCE_ID);
+            $id = array($primaryKeyColName => self::UNSAVED_INSTANCE_ID);
+            $this->setID($id);
         }
     }
 

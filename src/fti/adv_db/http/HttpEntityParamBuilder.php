@@ -66,7 +66,7 @@ class HttpEntityParamBuilder
     public static function buildFormAction($entityInstance)
     {
         $identifier = $entityInstance->getIdentifier();
-        if ($identifier === BasicEntity::UNSAVED_INSTANCE_ID) {
+        if (in_array(BasicEntity::UNSAVED_INSTANCE_ID, $identifier)) {
             $action = SAVE_DEFAULT_FILE_NAME;
         } else {
             $action = HttpEntityParamBuilder::buildArgumentsRelativePath(
