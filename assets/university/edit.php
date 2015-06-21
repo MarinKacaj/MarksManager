@@ -18,4 +18,17 @@ spl_autoload_register('class_auto_loader');
 $identifier = HttpEntityParamBuilder::retrieveIdentifier(array(University::PROP_ID));
 $universityInstance = University::getBuilder()->getByIdentifier($identifier);
 $formViewAggregator = new FormViewAggregator($universityInstance);
-echo $formViewAggregator->buildEntityFormHTML();
+
+?>
+
+<!DOCTYPE html>
+<html>
+<?php require_once dirname(dirname(__FILE__)) . '/includes/head.php'; ?>
+<body>
+<?php require_once dirname(dirname(__FILE__)) . '/includes/navigation.php'; ?>
+<div class="container">
+    <div class="well text-center" id="mainTitle"><h4>P&euml;rdit&euml;so Universitetin</h4></div>
+    <?php echo $formViewAggregator->buildEntityFormHTML(); ?>
+</div>
+</body>
+</html>

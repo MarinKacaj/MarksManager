@@ -16,4 +16,17 @@ spl_autoload_register('class_auto_loader');
 
 $universityInstance = University::getBuilder()->createEmpty();
 $formViewAggregator = new FormViewAggregator($universityInstance);
-echo $formViewAggregator->buildEntityFormHTML();
+
+?>
+
+<!DOCTYPE html>
+<html>
+<?php require_once dirname(dirname(__FILE__)) . '/includes/head.php'; ?>
+<body>
+<?php require_once dirname(dirname(__FILE__)) . '/includes/navigation.php'; ?>
+<div class="container">
+    <div class="well text-center" id="mainTitle"><h4>Krijo Universitet</h4></div>
+    <?php echo $formViewAggregator->buildEntityFormHTML(); ?>
+</div>
+</body>
+</html>
