@@ -107,7 +107,9 @@ class EntityActionHelper
         $insertQuery = new InsertQuery($this->tableName, $nameValuePairs);
         $result = $insertQuery->exec();
         $insertID = $insertQuery->getLastInsertedID();
-        $this->entityInstance->setID($insertID);
+        if ($insertID) {
+            $this->entityInstance->setID($insertID);
+        }
         return $result;
     }
 
