@@ -128,7 +128,11 @@ class FormViewGenerator extends ViewGenerator
     private function createFieldBlockContainer()
     {
         $containerEl = $this->domDocument->createElement(Element::DIV);
-        $containerEl->setAttribute(Attribute::CLASS_NAME, DefaultAttributeValues::CL_FORM_GROUP);
+        $className = AttributeBuilder::buildFullClassName(array(
+            DefaultAttributeValues::CL_FORM_GROUP,
+            DefaultAttributeValues::CL_ROW
+        ));
+        $containerEl->setAttribute(Attribute::CLASS_NAME, $className);
         return $containerEl;
     }
 
