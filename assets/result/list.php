@@ -15,7 +15,9 @@ spl_autoload_register('class_auto_loader');
 
 
 $resultInstances = Result::getBuilder()->getList();
+$isEmpty = false;
 if (empty($resultInstances)) {
+    $isEmpty = true;
     array_push($resultInstances, Result::getBuilder()->createEmpty());
 }
 $listViewAggregator = new ListViewAggregator($resultInstances);
@@ -30,7 +32,7 @@ $listViewAggregator = new ListViewAggregator($resultInstances);
     <div class="well text-center" id="mainTitle"><h4>TITULL</h4></div>
     <div class="row">
         <div id="listaVleresoStudente" class="col-sm-12">
-            <?php echo $listViewAggregator->buildListHTML(); ?>
+            <?php echo $listViewAggregator->buildListHTML($isEmpty); ?>
         </div>
     </div>
 </div>
