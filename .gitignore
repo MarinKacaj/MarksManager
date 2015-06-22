@@ -33,9 +33,9 @@
 /phpunit.xml
 
 # Build data
-/build/
+/bui
 
 # Composer PHAR
 /composer.phar
 
-.idea/
+.idea/**
