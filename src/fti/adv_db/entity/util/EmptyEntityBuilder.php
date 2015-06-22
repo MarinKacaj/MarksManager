@@ -9,6 +9,7 @@
 namespace fti\adv_db\entity\util;
 
 
+use fti\adv_db\entity\BasicEntity;
 use fti\adv_db\entity\Entity;
 use ReflectionClass;
 
@@ -45,7 +46,11 @@ class EmptyEntityBuilder
         $params = array($primaryKeyColName => Entity::UNSAVED_INSTANCE_ID);
 
         foreach ($paramNames as $paramName) {
-            $params[$paramName] = '';
+            if (strcmp($paramName, $primaryKeyColName) === 0) {
+                $params[$paramName] = BasicEntity::UNSAVED_INSTANCE_ID;
+            } else {
+                $params[$paramName] = '';
+            }
         }
         unset($paramName);
 

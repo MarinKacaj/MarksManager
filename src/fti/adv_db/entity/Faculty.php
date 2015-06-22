@@ -47,7 +47,7 @@ class Faculty extends BasicEntity
 
         $this->properties = array();
         $this->setIdFromParams(self::PROP_ID, $params);
-        $this->properties[self::PROP_ID] = new IntegerProperty(self::PROP_ID, 'ID', $this->id, false, false);
+        $this->properties[self::PROP_ID] = new IntegerProperty(self::PROP_ID, 'ID', $this->id[self::PROP_ID], false, false);
         $this->properties[self::PROP_NAME] = new StringProperty(self::PROP_NAME, 'Emri', $params[self::PROP_NAME], true, true);
         $this->properties[self::PROP_ADDRESS] = new StringProperty(self::PROP_ADDRESS, 'Adresa', $params[self::PROP_ADDRESS], true, true);
         $this->properties[self::PROP_DEAN_ID] = new IntegerProperty(self::PROP_DEAN_ID, 'Dekani', $params[self::PROP_DEAN_ID], true, false);

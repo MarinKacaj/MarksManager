@@ -13,7 +13,9 @@ use fti\adv_db\entity\BasicEntity;
 use fti\adv_db\property\BasicProperty;
 use fti\adv_db\view\ListViewGenerator;
 
+require_once dirname(dirname(__FILE__)) . '/constants/labels.php';
 require_once dirname(dirname(__FILE__)) . '/functions/auto_loader.php';
+require_once dirname(dirname(__FILE__)) . '/functions/http_utils.php';
 
 spl_autoload_register('class_auto_loader');
 
@@ -105,7 +107,9 @@ class ListViewAggregator
     {
         foreach ($this->entityInstances as $entityInstance) {
             $values = $this->extractEntityInstanceListPropertiesValues($entityInstance);
-            $this->listViewGenerator->appendRow($values);
+            $deleteURL = DELETE_DEFAULT_FILE_NAME . '?' . http_build_str($entityInstance->getIdentifier());
+            $updateURL = EDIT_DEFAULT_FILE_NAME . '?' . http_build_str($entityInstance->getIdentifier());
+            $this->listViewGenerator->appendRow($values, $deleteURL, $updateURL);
         }
         unset($entityInstance);
 

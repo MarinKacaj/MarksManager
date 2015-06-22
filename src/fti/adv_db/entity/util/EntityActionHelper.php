@@ -18,6 +18,8 @@ use fti\adv_db\entity\Entity;
 
 require_once dirname(dirname(dirname(__FILE__))) . '/functions/auto_loader.php';
 
+spl_autoload_register('class_auto_loader');
+
 /**
  * Class EntityActionHelper
  * @package fti\adv_db\entity\util
@@ -105,7 +107,9 @@ class EntityActionHelper
         $insertQuery = new InsertQuery($this->tableName, $nameValuePairs);
         $result = $insertQuery->exec();
         $insertID = $insertQuery->getLastInsertedID();
-        $this->entityInstance->setId($insertID);
+        if ($insertID) {
+            $this->entityInstance->setID($insertID);
+        }
         return $result;
     }
 

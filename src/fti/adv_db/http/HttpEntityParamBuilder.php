@@ -53,7 +53,7 @@ class HttpEntityParamBuilder
         $identifier = array();
         foreach ($primaryKeyColNames as $primaryKeyColName) {
             $id = intval($_GET[$primaryKeyColName]);
-            array_push($identifier, $id);
+            $identifier[$primaryKeyColName] = $id;
         }
         unset($primaryKeyColName);
         return $identifier;
@@ -66,7 +66,7 @@ class HttpEntityParamBuilder
     public static function buildFormAction($entityInstance)
     {
         $identifier = $entityInstance->getIdentifier();
-        if ($identifier === BasicEntity::UNSAVED_INSTANCE_ID) {
+        if (in_array(BasicEntity::UNSAVED_INSTANCE_ID, $identifier)) {
             $action = SAVE_DEFAULT_FILE_NAME;
         } else {
             $action = HttpEntityParamBuilder::buildArgumentsRelativePath(
