@@ -85,22 +85,6 @@ abstract class BasicEntity implements Entity
     }
 
     /**
-     * @param string $primaryKeyColName
-     * @param string[] $params
-     */
-    protected function setIdFromParams($primaryKeyColName, $params)
-    {
-        if (isset($params[$primaryKeyColName])) {
-            $id = $params[$primaryKeyColName];
-            $id = array($primaryKeyColName => $id);
-            $this->setID($id);
-        } else {
-            $id = array($primaryKeyColName => self::UNSAVED_INSTANCE_ID);
-            $this->setID($id);
-        }
-    }
-
-    /**
      * @param string $propertyName
      * @return BasicProperty
      */
