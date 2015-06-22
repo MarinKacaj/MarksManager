@@ -18,6 +18,8 @@ interface Property
     const ARRAY_LIST = 4;
     const ENUM = 5;
     const ENTITY = 6;
+    const BOOLEAN = 7;
+    const DATE = 8;
 
     /**
      * @return int
