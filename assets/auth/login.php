@@ -6,6 +6,10 @@ use fti\adv_db\entity\Student;
 require_once dirname(dirname(dirname(__FILE__))) . '/src/fti/adv_db/constants/auth.php';
 require_once dirname(dirname(dirname(__FILE__))) . '/src/fti/adv_db/functions/auto_loader.php';
 spl_autoload_register('class_auto_loader');
+
+if (isset($_GET[LOGIN_ERROR_CODE])) {
+    $GLOBALS[LOGIN_ERROR_CODE] = intval($_GET[LOGIN_ERROR_CODE]);
+}
 ?>
 
 <!DOCTYPE html>
@@ -17,9 +21,9 @@ spl_autoload_register('class_auto_loader');
     <div class="well text-center" id="mainTitle"><h4>TITULL</h4></div>
     <form id="loginForm" class="form-horizontal" action="loginAuthentication.php" method="post">
         <div class="well col-sm-4 col-sm-offset-4">
+            <?php require_once dirname(dirname(__FILE__)) . '/includes/errorMessage.php'; ?>
             <div class="form-group">
                 <label for="inputEmail3" class="col-sm-2 control-label">Email</label>
-
                 <div class="col-sm-10">
                     <input type="email" name="<?php echo EMAIL; ?>" class="form-control" id="inputEmail3"
                            placeholder="Email"/>

@@ -15,9 +15,13 @@ body {
 }
 
 #mainTitle {
-    padding-bottom: 0px;
-    padding-top: 0px;
+    padding-bottom: 0;
+    padding-top: 0;
     color: #269abc;
+}
+
+.red-text {
+    color: rgb(203, 65, 84);
 }
 
 /********************************************************************************************************************/
