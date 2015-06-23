@@ -6,4 +6,6 @@
  * Time: 10:17 PM
  */
 
+require_once dirname(dirname(__FILE__)) . '/includes/session.php';
+
 echo 'error!'; // TODO - build decent error page

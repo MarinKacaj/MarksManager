@@ -13,6 +13,8 @@ use fti\adv_db\entity\UserEntity;
 use fti\adv_db\exceptions\MySQLException;
 use fti\adv_db\http\HttpEntityParamBuilder;
 
+require_once dirname(dirname(dirname(dirname(dirname(__FILE__))))) . '/assets/includes/session.php';
+
 require_once dirname(dirname(__FILE__)) . '/constants/labels.php';
 require_once dirname(dirname(__FILE__)) . '/constants/auth.php';
 
@@ -57,11 +59,11 @@ class ActionNavigator
     }
 
     /**
-     * @param int $error [optional]
+     * @param int $message [optional]
      */
-    public function redirectToLogInErrorPage($error = LOGIN_ERROR_INVALID_CREDENTIALS)
+    public function redirectToLogInPage($message = REPORT_LOGIN_ERROR_INVALID_CREDENTIALS)
     {
-        $errorArgs = array(LOGIN_ERROR_CODE => $error);
+        $errorArgs = array(LOGIN_REPORT_CODE => $message);
         $errorURLParams = http_build_str($errorArgs);
         $this->redirectToPath("login.php?$errorURLParams");
     }
@@ -114,15 +116,22 @@ class ActionNavigator
      * @param string $actor
      * @param int $error [optional]
      */
-    public function logInAndRedirect($actor, $error = LOGIN_ERROR_INVALID_CREDENTIALS)
+    public function logInAndRedirect($actor, $error = REPORT_LOGIN_ERROR_INVALID_CREDENTIALS)
     {
         if ($this->entityInstance) {
             $_SESSION[LOGGED_IN_USER_ID] = $this->entityInstance->getProperty(UserEntity::PROP_ID)->getValue();
             $_SESSION[LOGGED_IN_USER_ROLE] = $actor;
             $this->redirectToMainPage();
         } else {
-            $this->redirectToLogInErrorPage($error);
+            $this->redirectToLogInPage($error);
         }
+    }
+
+    public function logOutAndRedirect()
+    {
+        session_unset();
+        session_destroy();
+        $this->redirectToLogInPage(REPORT_LOGGED_OUT);
     }
 
 }
