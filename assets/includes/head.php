@@ -6,8 +6,9 @@
  * Time: 8:36 PM
  */
 
+require_once dirname(dirname(dirname(__FILE__))) . '/src/fti/adv_db/functions/http_utils.php';
 
-$baseURL = 'http://' . $_SERVER['SERVER_NAME'] . '/MarksManager/assets/';
+$baseURL = get_assets_base_url();
 
 ?>
 

@@ -10,7 +10,8 @@ define('EMAIL', 'username');
 define('PASSWORD', 'password');
 define('ACTOR', 'actor');
 
-define('ERROR_INVALID_CREDENTIALS', 'eig');
+define('LOGIN_ERROR_CODE', 'eig');
+define('LOGIN_ERROR_INVALID_CREDENTIALS', 1);
 
 define('LOGGED_IN_USER_ID', 'logged_in_user_id');
 define('LOGGED_IN_USER_ROLE', 'logged_in_user_role');
