@@ -46,7 +46,7 @@ class Group extends BasicEntity
             self::PROP_DEPARTMENT_ID, 'Dega', intval($params[self::PROP_DEPARTMENT_ID]), Department::getBuilder()->getList(), true
         );
         $this->properties[self::PROP_START_AY_ID] = new EntityProperty(
-            self::PROP_START_AY_ID, 'Dega', intval($params[self::PROP_START_AY_ID]), Department::getBuilder()->getList(), true
+            self::PROP_START_AY_ID, 'Viti Akademik', intval($params[self::PROP_START_AY_ID]), AcademicYear::getBuilder()->getList(), true
         );
 
         $this->actionHelper = new EntityActionHelper(self::TABLE_NAME, $this);

@@ -37,7 +37,7 @@ class AcademicYear extends BasicEntity
         $this->label = self::LABEL;
         $this->id = array(self::PROP_ID => $params[self::PROP_ID]);
         $this->properties[self::PROP_ID] = new IntegerProperty(self::PROP_ID, 'ID', $this->id[self::PROP_ID], false, false);
-        $this->properties[self::PROP_YEAR] = new IntegerProperty(self::PROP_YEAR, 'Viti', intval($params[self::PROP_YEAR]), false, false);
+        $this->properties[self::PROP_YEAR] = new IntegerProperty(self::PROP_YEAR, 'Viti', intval($params[self::PROP_YEAR]), true, true);
 
         $this->actionHelper = new EntityActionHelper(self::TABLE_NAME, $this);
     }

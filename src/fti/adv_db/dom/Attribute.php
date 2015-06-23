@@ -26,4 +26,5 @@ class Attribute
     const METHOD = 'method';
     const ENC_TYPE = 'enctype';
     const HREF = 'href';
+    const SELECTED = 'selected';
 }

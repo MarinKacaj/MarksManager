@@ -45,6 +45,11 @@ class Result extends BasicEntity
             self::PROP_STUDENT_ID => intval($params[self::PROP_STUDENT_ID])
         );
 
+        $mark = intval($params[self::PROP_MARK]);
+        if ($mark < 4 || $mark > 10) {
+            $mark = 4;
+        }
+
         $this->properties[self::PROP_EXAM_ID] = new EntityProperty(
             self::PROP_EXAM_ID, 'Provimi', $params[self::PROP_EXAM_ID], Exam::getBuilder()->getList(), true
         );
@@ -52,7 +57,7 @@ class Result extends BasicEntity
             self::PROP_STUDENT_ID, 'Studenti', $params[self::PROP_STUDENT_ID], Student::getBuilder()->getList(), true
         );
         $this->properties[self::PROP_MARK] = new IntegerProperty(
-            self::PROP_MARK, 'Nota', intval($params[self::PROP_MARK]), true, true
+            self::PROP_MARK, 'Nota', $mark, true, true, 4, 10
         );
         $this->properties[self::PROP_DATE] = new DateProperty(
             self::PROP_DATE, 'Data e Provimit', intval($params[self::PROP_DATE]), true, true

@@ -24,21 +24,29 @@ class BooleanProperty extends BasicProperty
 {
 
     /**
-     * @var bool
+     * @var string
      */
     protected $value;
 
     /**
      * @param string $name
      * @param string $label
-     * @param bool $value
+     * @param array $params
+     * @param string $paramName
      * @param bool $showOnForm
      * @param bool $showOnList
      */
-    function __construct($name, $label, $value, $showOnForm, $showOnList)
+    function __construct($name, $label, $params, $paramName, $showOnForm, $showOnList)
     {
         parent::__construct($name, $name, BasicProperty::BOOLEAN, $label, $showOnForm, $showOnList);
-        $this->value = (bool)$value;
+
+        $value = false;
+        if (isset($params[$paramName])) {
+            if (strcmp($params[$paramName], 'on') === 0 || $params[$paramName] == 1) {
+                $value = true;
+            }
+        }
+        $this->value = $value ? '1' : '0';
     }
 
     /**
@@ -49,8 +57,8 @@ class BooleanProperty extends BasicProperty
     {
         $formViewGenerator->appendCheckboxBlock(
             $this->label,
-            $this->value,
-            $name
+            $name,
+            $this->value
         );
     }
 

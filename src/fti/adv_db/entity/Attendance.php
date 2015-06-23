@@ -59,16 +59,16 @@ class Attendance extends BasicEntity
             self::PROP_DEPARTMENT_ID, 'Dege', $this->id[self::PROP_DEPARTMENT_ID], Department::getBuilder()->getList(), true
         );
         $this->properties[self::PROP_SEMINARIES] = new BooleanProperty(
-            self::PROP_SEMINARIES, 'Frekuentim Seminaresh', (bool)$params[self::PROP_SEMINARIES], true, true
+            self::PROP_SEMINARIES, 'Frekuentim Seminaresh', $params, self::PROP_SEMINARIES, true, true
         );
         $this->properties[self::PROP_LAB] = new BooleanProperty(
-            self::PROP_LAB, 'Frekuentim Laboratoresh', (bool)$params[self::PROP_LAB], true, true
+            self::PROP_LAB, 'Frekuentim Laboratoresh', $params, self::PROP_LAB, true, true
         );
         $this->properties[self::PROP_ASSIGNMENT] = new BooleanProperty(
-            self::PROP_ASSIGNMENT, 'Dorezim Detyre Kursi', (bool)$params[self::PROP_ASSIGNMENT], true, true
+            self::PROP_ASSIGNMENT, 'Dorezim Detyre Kursi', $params, self::PROP_ASSIGNMENT, true, true
         );
         $this->properties[self::PROP_STATUS] = new BooleanProperty(
-            self::PROP_STATUS, 'Gjendja', (bool)$params[self::PROP_STATUS], true, true
+            self::PROP_STATUS, 'Gjendja', $params, self::PROP_STATUS, true, true
         );
 
         $this->actionHelper = new EntityActionHelper(self::TABLE_NAME, $this);
