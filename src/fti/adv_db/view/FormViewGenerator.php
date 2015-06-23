@@ -128,7 +128,11 @@ class FormViewGenerator extends ViewGenerator
     private function createFieldBlockContainer()
     {
         $containerEl = $this->domDocument->createElement(Element::DIV);
-        $containerEl->setAttribute(Attribute::CLASS_NAME, DefaultAttributeValues::CL_FORM_GROUP);
+        $className = AttributeBuilder::buildFullClassName(array(
+            DefaultAttributeValues::CL_FORM_GROUP,
+            DefaultAttributeValues::CL_ROW
+        ));
+        $containerEl->setAttribute(Attribute::CLASS_NAME, $className);
         return $containerEl;
     }
 
@@ -237,10 +241,12 @@ class FormViewGenerator extends ViewGenerator
      * @param string $label
      * @param string $value
      * @param string $name
+     * @param int $min [optional]
+     * @param int $max [optional]
      */
-    public function appendNumberInputBlock($label, $value, $name)
+    public function appendNumberInputBlock($label, $value, $name, $min = -1, $max = -1)
     {
-        $numberInputBlockEl = $this->createNumberInputBlock($label, $value, $name);
+        $numberInputBlockEl = $this->createNumberInputBlock($label, $value, $name, $min, $max);
         $this->formEl->appendChild($numberInputBlockEl);
     }
 
@@ -248,11 +254,31 @@ class FormViewGenerator extends ViewGenerator
      * @param string $label
      * @param int $value
      * @param string $name
+     * @param int $min [optional]
+     * @param int $max [optional]
      * @return DOMElement
      */
-    public function createNumberInputBlock($label, $value, $name)
+    public function createNumberInputBlock($label, $value, $name, $min = -1, $max = -1)
     {
-        return $this->createSimpleInputBlock($label, $value, $name, DefaultAttributeValues::TYPE_NUMBER);
+        $containerEl = $this->createFieldBlockContainer();
+        $id = $this->genUniqueID();
+
+        $labelEl = $this->createLabel($label, DefaultAttributeValues::GENERIC_ID_PREFIX . $id);
+        $containerEl->appendChild($labelEl);
+
+        $inputWrapperEl = $this->createDefaultInputFieldWrapperElement();
+        $inputEl = $this->createInput($name, $value, DefaultAttributeValues::TYPE_NUMBER, $id);
+        if ($min != -1) {
+            $inputEl->setAttribute(Attribute::MIN, intval($min));
+        }
+        if ($max != -1) {
+            $inputEl->setAttribute(Attribute::MAX, intval($max));
+        }
+        $inputWrapperEl->appendChild($inputEl);
+
+        $containerEl->appendChild($inputWrapperEl);
+
+        return $containerEl;
     }
 
     /**
@@ -299,47 +325,33 @@ class FormViewGenerator extends ViewGenerator
      */
     public function createCheckboxBlock($label, $name, $value)
     {
-        return $this->createSimpleInputBlock($label, $value, $name, DefaultAttributeValues::TYPE_CHECKBOX);
-    }
+        $containerEl = $this->createFieldBlockContainer();
+        $id = $this->genUniqueID();
 
-    /**
-     * @param string $name
-     */
-    public function appendEnumSelectBlock($name)
-    {
-        $markSelectBlockEl = $this->createEnumSelectBlock($name);
-        $this->formEl->appendChild($markSelectBlockEl);
-    }
+        $labelEl = $this->createLabel($label, DefaultAttributeValues::GENERIC_ID_PREFIX . $id);
+        $containerEl->appendChild($labelEl);
 
-    /**
-     * @param string $name
-     * @return DOMElement
-     */
-    public function createEnumSelectBlock($name)
-    {
-        $label = 'Result';
-        $allowedMarks = array(
-            DefaultAttributeValues::STUDENT_NOT_PRESENT => 'Absent',
-            4 => '4',
-            5 => '5',
-            6 => '6',
-            7 => '7',
-            8 => '8',
-            9 => '9',
-            10 => '10'
-        );
-        $markSelectBlock = $this->createSelectBlock($label, $name, $allowedMarks);
-        return $markSelectBlock;
+        $inputWrapperEl = $this->createDefaultInputFieldWrapperElement();
+        $inputEl = $this->createInput($name, $value, DefaultAttributeValues::TYPE_CHECKBOX, $id);
+        if ($value == 1) {
+            $inputEl->setAttribute(Attribute::CHECKED, DefaultAttributeValues::CHECKED);
+        }
+        $inputWrapperEl->appendChild($inputEl);
+
+        $containerEl->appendChild($inputWrapperEl);
+
+        return $containerEl;
     }
 
     /**
      * @param string $label
      * @param string $name
      * @param string[] $valueTextPairs
+     * @param int $value
      */
-    public function appendSelectBlock($label, $name, $valueTextPairs)
+    public function appendSelectBlock($label, $name, $valueTextPairs, $value)
     {
-        $selectBlockEl = $this->createSelectBlock($label, $name, $valueTextPairs);
+        $selectBlockEl = $this->createSelectBlock($label, $name, $valueTextPairs, $value);
         $this->formEl->appendChild($selectBlockEl);
     }
 
@@ -347,9 +359,10 @@ class FormViewGenerator extends ViewGenerator
      * @param string $label
      * @param string $name
      * @param string[] $valueTextPairs
+     * @param int $value
      * @return DOMElement
      */
-    public function createSelectBlock($label, $name, $valueTextPairs)
+    public function createSelectBlock($label, $name, $valueTextPairs, $value)
     {
         $containerEl = $this->createFieldBlockContainer();
         $id = $this->genUniqueID();
@@ -361,7 +374,7 @@ class FormViewGenerator extends ViewGenerator
         $selectEl = $this->createSelectElement($name, $id);
         $selectEl->setAttribute(Attribute::ID, $id);
 
-        $optionsFragment = $this->createOptionsFragment($valueTextPairs);
+        $optionsFragment = $this->createOptionsFragment($valueTextPairs, $value);
         $selectEl->appendChild($optionsFragment);
         $selectWrapperEl->appendChild($selectEl);
         $containerEl->appendChild($selectWrapperEl);
@@ -384,15 +397,21 @@ class FormViewGenerator extends ViewGenerator
 
     /**
      * @param array $valueTextPairs
+     * @param int $selectedValue
      * @return DOMDocumentFragment
      */
-    private function createOptionsFragment($valueTextPairs)
+    private function createOptionsFragment($valueTextPairs, $selectedValue)
     {
         $optionsFragment = $this->domDocument->createDocumentFragment();
-        $valueTextPairs[''] = '';
+        if (empty($valueTextPairs)) {
+            $valueTextPairs[''] = '';
+        }
 
         foreach ($valueTextPairs as $value => $text) {
             $optionEl = $this->createOptionElement($value, $text);
+            if (intval($selectedValue) === intval($value)) {
+                $optionEl->setAttribute(Attribute::SELECTED, DefaultAttributeValues::SELECTED);
+            }
             $optionsFragment->appendChild($optionEl);
         }
         unset($value);

@@ -34,7 +34,7 @@ class MySQLException extends Exception
     /**
      * @var string
      */
-    private $message;
+    protected $message;
 
     /**
      * @param int $errorNumber [optional]

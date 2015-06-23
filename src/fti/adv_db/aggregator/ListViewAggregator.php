@@ -101,17 +101,20 @@ class ListViewAggregator
     }
 
     /**
+     * @param bool $isEmpty [optional]
      * @return string
      */
-    public function buildListHTML()
+    public function buildListHTML($isEmpty = false)
     {
-        foreach ($this->entityInstances as $entityInstance) {
-            $values = $this->extractEntityInstanceListPropertiesValues($entityInstance);
-            $deleteURL = DELETE_DEFAULT_FILE_NAME . '?' . http_build_str($entityInstance->getIdentifier());
-            $updateURL = EDIT_DEFAULT_FILE_NAME . '?' . http_build_str($entityInstance->getIdentifier());
-            $this->listViewGenerator->appendRow($values, $deleteURL, $updateURL);
+        if (!$isEmpty) {
+            foreach ($this->entityInstances as $entityInstance) {
+                $values = $this->extractEntityInstanceListPropertiesValues($entityInstance);
+                $deleteURL = DELETE_DEFAULT_FILE_NAME . '?' . http_build_str($entityInstance->getIdentifier());
+                $updateURL = EDIT_DEFAULT_FILE_NAME . '?' . http_build_str($entityInstance->getIdentifier());
+                $this->listViewGenerator->appendRow($values, $deleteURL, $updateURL);
+            }
+            unset($entityInstance);
         }
-        unset($entityInstance);
 
         return $this->listViewGenerator->getBuiltHTML();
     }

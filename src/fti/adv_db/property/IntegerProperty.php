@@ -27,6 +27,14 @@ class IntegerProperty extends BasicProperty
      * @var int
      */
     protected $value;
+    /**
+     * @var int
+     */
+    protected $min = -1;
+    /**
+     * @var int
+     */
+    protected $max = -1;
 
     /**
      * @param string $name
@@ -34,11 +42,16 @@ class IntegerProperty extends BasicProperty
      * @param int $value
      * @param bool $showOnForm
      * @param bool $showOnList
+     * @param int $min [optional]
+     * @param int $max [optional]
      */
-    function __construct($name, $label, $value, $showOnForm, $showOnList)
+    function __construct($name, $label, $value, $showOnForm, $showOnList, $min = -1, $max = -1)
     {
         parent::__construct($name, $name, BasicProperty::INTEGER, $label, $showOnForm, $showOnList);
+
         $this->value = intval($value);
+        $this->min = $min;
+        $this->max = $max;
     }
 
     /**
@@ -50,7 +63,9 @@ class IntegerProperty extends BasicProperty
         $formViewGenerator->appendNumberInputBlock(
             $this->label,
             $this->value,
-            $name
+            $name,
+            $this->min,
+            $this->max
         );
     }
 

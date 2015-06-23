@@ -22,6 +22,7 @@ class DefaultAttributeValues
     const CL_HORIZONTAL_FORM = 'horizontal-form';
     const CL_FORM_CONTROL = 'form-control';
     const CL_FORM_GROUP = 'form-group';
+    const CL_ROW = 'row';
     const CL_CONTROL_LABEL = 'control-label';
     const CL_CHECKBOX = 'checkbox';
     const CL_BUTTON = 'btn';

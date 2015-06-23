@@ -87,7 +87,7 @@ class EntityProperty extends BasicProperty
         }
         unset($entityInstance);
 
-        $formViewGenerator->appendSelectBlock($this->label, $name, $valueTextPairs);
+        $formViewGenerator->appendSelectBlock($this->label, $name, $valueTextPairs, $this->value);
     }
 
     /**
