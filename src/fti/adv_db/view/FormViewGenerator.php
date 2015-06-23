@@ -125,6 +125,23 @@ class FormViewGenerator extends ViewGenerator
     /**
      * @return DOMElement
      */
+    public function createListButton()
+    {
+        $linkEl = $this->domDocument->createElement(Element::LINK);
+        $linkEl->setAttribute(Attribute::HREF, 'list.php');
+
+        $createButtonEl = $this->domDocument->createElement(Element::BUTTON);
+        $createButtonEl->setAttribute(Attribute::CLASS_NAME, 'btn btn-default');
+        $buttonText = $this->domDocument->createTextNode('Kthehu te lista');
+        $createButtonEl->appendChild($buttonText);
+        $linkEl->appendChild($createButtonEl);
+
+        return $linkEl;
+    }
+
+    /**
+     * @return DOMElement
+     */
     private function createFieldBlockContainer()
     {
         $containerEl = $this->domDocument->createElement(Element::DIV);
@@ -437,11 +454,16 @@ class FormViewGenerator extends ViewGenerator
     }
 
     /**
+     * @param bool $appendListButton [optional]
      * @return string
      */
-    public function getBuiltHTML()
+    public function getBuiltHTML($appendListButton = true)
     {
         $this->domDocument->appendChild($this->formEl);
+        if ($appendListButton) {
+            $listButtonEl = $this->createListButton();
+            $this->domDocument->appendChild($listButtonEl);
+        }
         $rawHTML = $this->domDocument->saveHTML();
         $decodedHTML = html_entity_decode($rawHTML);
         return $decodedHTML;
