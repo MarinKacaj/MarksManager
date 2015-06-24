@@ -40,6 +40,10 @@ class SelectQuery extends CurrentDataQuery
     {
         $this->db = new DefaultDatabase();
 
+        $colNames = $this->db->sanitizeNameValuePairs($colNames);
+        $tableNames = $this->db->sanitizeNameValuePairs($tableNames);
+        $filters = $this->db->sanitizeNameValuePairs($filters);
+
         $this->projection = (empty($colNames)) ? '*' : QueryPartsBuilder::buildCSVString($colNames);
         $this->tableNames = QueryPartsBuilder::buildCSVString($tableNames);
         $this->buildConjunctionWhereClause($filters);
@@ -56,7 +60,6 @@ class SelectQuery extends CurrentDataQuery
         } else {
             $query = "SELECT {$this->projection} FROM {$this->tableNames} WHERE {$this->selection}";
         }
-        $query = $this->db->escape($query);
         return $query;
     }
 

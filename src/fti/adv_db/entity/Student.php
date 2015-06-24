@@ -23,7 +23,7 @@ spl_autoload_register('class_auto_loader');
  * Class Student
  * @package fti\adv_db\entity
  */
-class Student extends BasicEntity
+class Student extends UserEntity
 {
 
     const TABLE_NAME = 'student';
@@ -38,6 +38,8 @@ class Student extends BasicEntity
      */
     function __construct($params)
     {
+        parent::__construct($params);
+
         $this->label = self::LABEL;
         $this->id = array(self::PROP_ID => $params[self::PROP_ID]);
         $this->properties[self::PROP_ID] = new IntegerProperty(self::PROP_ID, 'ID', $this->id[self::PROP_ID], false, false);

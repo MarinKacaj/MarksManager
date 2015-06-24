@@ -6,6 +6,11 @@
  * Time: 9:00 PM
  */
 
+require_once dirname(__FILE__) . '/session.php';
+require_once dirname(dirname(dirname(__FILE__))) . '/src/fti/adv_db/functions/http_utils.php';
+
+$baseURL = get_assets_base_url();
+
 ?>
 
 <nav class="navbar navbar-default">
@@ -27,8 +32,8 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav pull-right">
-                <li><a href="">Menu1<span class="sr-only">(current)</span></a></li>
-                <li><a href="">Menu2</a></li>
+                <?php require_once dirname(__FILE__) . '/menuResolver.php'; ?>
+                <li><a href="<?php echo $baseURL . 'auth/logout.php'; ?>">Dilni</a></li>
             </ul>
         </div>
         <!-- /.navbar-collapse -->

@@ -162,13 +162,35 @@ class ListViewGenerator extends ViewGenerator
     }
 
     /**
+     * @return DOMElement
+     */
+    public function createCreateButton()
+    {
+        $linkEl = $this->domDocument->createElement(Element::LINK);
+        $linkEl->setAttribute(Attribute::HREF, 'create.php');
+
+        $createButtonEl = $this->domDocument->createElement(Element::BUTTON);
+        $createButtonEl->setAttribute(Attribute::CLASS_NAME, 'btn btn-default');
+        $buttonText = $this->domDocument->createTextNode('Shto');
+        $createButtonEl->appendChild($buttonText);
+        $linkEl->appendChild($createButtonEl);
+
+        return $linkEl;
+    }
+
+    /**
+     * @param bool $appendCreateButton [optional]
      * @return string
      */
-    public function getBuiltHTML()
+    public function getBuiltHTML($appendCreateButton = true)
     {
         $tableContainerEl = $this->createTableContainer();
         $tableContainerEl->appendChild($this->listContainerEl);
         $this->domDocument->appendChild($tableContainerEl);
+        if ($appendCreateButton) {
+            $createButtonEl = $this->createCreateButton();
+            $this->domDocument->appendChild($createButtonEl);
+        }
         $rawHTML = $this->domDocument->saveHTML();
         $decodedHTML = html_entity_decode($rawHTML);
         return $decodedHTML;

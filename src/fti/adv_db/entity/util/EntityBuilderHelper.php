@@ -58,17 +58,26 @@ class EntityBuilderHelper
     }
 
     /**
+     * @param $params
+     * @return BasicEntity
+     */
+    public function filterByParams($params)
+    {
+        $entityInstance = EntityActionHelper::retrieve(
+            $this->className,
+            $this->tableName,
+            $params
+        );
+        return $entityInstance;
+    }
+
+    /**
      * @param array $uniqueIdentifier
      * @return BasicEntity
      */
     public function getByIdentifier($uniqueIdentifier)
     {
-        $entityInstance = EntityActionHelper::retrieve(
-            $this->className,
-            $this->tableName,
-            $uniqueIdentifier
-        );
-        return $entityInstance;
+        return $this->filterByParams($uniqueIdentifier);
     }
 
     /**

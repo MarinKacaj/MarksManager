@@ -33,3 +33,9 @@ if (!function_exists('http_build_str')) {
         return implode($arg_separator, $result);
     }
 }
+
+function get_assets_base_url()
+{
+    $base_url = 'http://' . $_SERVER['SERVER_NAME'] . '/MarksManager/assets/';
+    return $base_url;
+}

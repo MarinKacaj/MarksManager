@@ -51,7 +51,7 @@ class EntityActionHelper
      * @param string $entityClassName
      * @param string $entityTableName
      * @param array $filter
-     * @return Entity
+     * @return Entity|bool
      */
     public static function retrieve($entityClassName, $entityTableName, $filter)
     {
@@ -62,7 +62,11 @@ class EntityActionHelper
         );
         $singleResultList = $selectQuery->exec();
         $params = $singleResultList->fetch_assoc();
-        $entityInstance = new $entityClassName($params);
+        if ($params) {
+            $entityInstance = new $entityClassName($params);
+        } else {
+            $entityInstance = false;
+        }
         return $entityInstance;
     }
 
