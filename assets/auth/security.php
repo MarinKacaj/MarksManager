@@ -17,9 +17,6 @@ require_once dirname(dirname(dirname(__FILE__))) . '/src/fti/adv_db/functions/au
 spl_autoload_register('class_auto_loader');
 
 
-// TODO - move to class
-// TODO - decouple login from action navigator
-
 /**
  * @param array $allowed_roles
  */
@@ -28,8 +25,8 @@ function redirectIfUnauthorized($allowed_roles)
     $actionNavigator = new ActionNavigator(null);
 
     $actor = $_SESSION[LOGGED_IN_USER_ROLE];
-    if (!in_array($allowed_roles, $actor)) {
-        $actionNavigator->redirectToLogInPage();
+    if (!in_array($actor, $allowed_roles)) {
+        $actionNavigator->redirectToMainPage();
     }
 }
 

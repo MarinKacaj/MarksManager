@@ -50,12 +50,13 @@ class ActionNavigator
     private function redirectToPath($path)
     {
         header("Location: $path");
+        die();
     }
 
     public function redirectToMainPage()
     {
         $assetsBaseURL = get_assets_base_url();
-        $this->redirectToPath("$assetsBaseURL/main.php");
+        $this->redirectToPath($assetsBaseURL . 'main.php');
     }
 
     /**
@@ -65,7 +66,8 @@ class ActionNavigator
     {
         $errorArgs = array(LOGIN_REPORT_CODE => $message);
         $errorURLParams = http_build_str($errorArgs);
-        $this->redirectToPath("login.php?$errorURLParams");
+        $baseURL = get_assets_base_url();
+        $this->redirectToPath($baseURL . "auth/login.php?$errorURLParams");
     }
 
     private function redirectToEditPage()

@@ -14,7 +14,7 @@ $baseURL = get_assets_base_url();
 ?>
 
 <head>
-    <title>Logged in: Profesor filani</title>
+    <title>UPT MarksManager</title>
 
     <meta name="viewport" content="width = device-width, initial-scale=1.0">
     <link href="<?php echo $baseURL; ?>css/bootstrap.css" rel="stylesheet">

@@ -10,9 +10,12 @@ use fti\adv_db\aggregator\FormViewAggregator;
 use fti\adv_db\entity\Result;
 
 require_once dirname(dirname(__FILE__)) . '/includes/session.php';
+require_once dirname(dirname(__FILE__)) . '/auth/security.php';
 require_once dirname(dirname(dirname(__FILE__))) . '/src/fti/adv_db/functions/auto_loader.php';
 
 spl_autoload_register('class_auto_loader');
+
+redirectIfNotProfessor();
 
 
 $resultInstance = Result::getBuilder()->createEmpty();
@@ -29,6 +32,6 @@ $formViewAggregator = new FormViewAggregator($resultInstance);
     <div class="well text-center" id="mainTitle"><h4>Shto Rezultat</h4></div>
     <?php echo $formViewAggregator->buildEntityFormHTML(); ?>
 </div>
-<?php require_once dirname(dirname(__FILE__)) . '/includes/date-picker-init.php'; ?>
+<?php require_once dirname(dirname(__FILE__)) . '/includes/datePickerInit.php'; ?>
 </body>
 </html>

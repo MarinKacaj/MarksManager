@@ -24,7 +24,7 @@ redirectIfLoggedIn();
 <body>
 <?php require_once dirname(dirname(__FILE__)) . '/includes/navigation.php'; ?>
 <div class="container">
-    <div class="well text-center" id="mainTitle"><h4>TITULL</h4></div>
+    <div class="well text-center" id="mainTitle"><h4>Logohuni</h4></div>
     <form id="loginForm" class="form-horizontal" action="loginAuthentication.php" method="post">
         <div class="well col-sm-4 col-sm-offset-4">
             <?php require_once dirname(dirname(__FILE__)) . '/includes/errorMessage.php'; ?>
