@@ -29,5 +29,6 @@ $formViewAggregator = new FormViewAggregator($resultInstance);
     <div class="well text-center" id="mainTitle"><h4>Shto Rezultat</h4></div>
     <?php echo $formViewAggregator->buildEntityFormHTML(); ?>
 </div>
+<?php require_once dirname(dirname(__FILE__)) . '/includes/date-picker-init.php'; ?>
 </body>
 </html>
