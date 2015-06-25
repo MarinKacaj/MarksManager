@@ -29,6 +29,7 @@ class DefaultAttributeValues
     const CL_DEFAULT_BUTTON = 'btn-default';
     const CL_SMALL_SCREEN_PREFIX = 'col-sm-';
     const CL_SMALL_SCREEN_OFFSET_PREFIX = 'col-sm-offset-';
+    const CL_DATE_TIME_PICKER = 'date-time-picker';
 
     /*
      * Default widths
@@ -37,7 +38,7 @@ class DefaultAttributeValues
     const INPUT_WIDTH = 10;
 
     /*
-     * ID prefixes
+     * IDs
      */
     const GENERIC_ID_PREFIX = 'input-generic-id-';
 

@@ -319,8 +319,35 @@ class FormViewGenerator extends ViewGenerator
     {
         $value = strtotime($value);
         $value = date('d/m/Y', $value);
-        $dateInputBlock = $this->createSimpleInputBlock($label, $value, $name, DefaultAttributeValues::TYPE_TEXT);
-        return $dateInputBlock;
+
+        $containerEl = $this->createFieldBlockContainer();
+        $id = $this->genUniqueID();
+
+        $labelEl = $this->createLabel($label, DefaultAttributeValues::GENERIC_ID_PREFIX . $id);
+        $containerEl->appendChild($labelEl);
+
+        $inputWrapperEl = $this->createDefaultInputFieldWrapperElement();
+        $currentClassName = $inputWrapperEl->getAttribute(Attribute::CLASS_NAME);
+        $fullClassName = AttributeBuilder::buildFullClassName(array(
+            $currentClassName,
+            DefaultAttributeValues::CL_DATE_TIME_PICKER
+        ));
+        $inputWrapperEl->setAttribute(Attribute::CLASS_NAME, $fullClassName);
+
+        $inputEl = $this->createInput($name, $value, DefaultAttributeValues::TYPE_TEXT, $id);
+        $inputWrapperEl->appendChild($inputEl);
+
+        $calendarIconContainerEl = $this->domDocument->createElement(Element::SPAN);
+        $calendarIconContainerEl->setAttribute(Attribute::CLASS_NAME, 'input-group-addon');
+
+        $calendarIconEl = $this->domDocument->createElement(Element::SPAN);
+        $calendarIconEl->setAttribute(Attribute::CLASS_NAME, 'glyphicon glyphicon-calendar');
+        $calendarIconContainerEl->appendChild($calendarIconEl);
+        $inputWrapperEl->appendChild($calendarIconContainerEl);
+
+        $containerEl->appendChild($inputWrapperEl);
+
+        return $containerEl;
     }
 
     /**
