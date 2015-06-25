@@ -60,7 +60,9 @@ $baseURL = get_assets_base_url();
     </a>
 </li>
 <li>
-
+    <a href="<?php echo $baseURL . 'result/list.php' ?>">
+        Rezultat
+    </a>
 </li>
 <li>
     <a href="<?php echo $baseURL . 'season/list.php' ?>">

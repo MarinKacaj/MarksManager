@@ -23,6 +23,8 @@ spl_autoload_register('class_auto_loader');
 class DateProperty extends BasicProperty
 {
 
+    const MY_SQL_DATE_FORMAT = 'Y-m-d';
+
     /**
      * @var string
      */
@@ -38,7 +40,12 @@ class DateProperty extends BasicProperty
     function __construct($name, $label, $value, $showOnForm, $showOnList)
     {
         parent::__construct($name, $name, BasicProperty::DATE, $label, $showOnForm, $showOnList);
-        $this->value = date('Y-m-d', strtotime($value));
+        if ($value) {
+            $value = str_replace('/', '-', $value);
+            $this->value = date(self::MY_SQL_DATE_FORMAT, strtotime($value));
+        } else {
+            $this->value = date(self::MY_SQL_DATE_FORMAT, time());
+        }
     }
 
     /**

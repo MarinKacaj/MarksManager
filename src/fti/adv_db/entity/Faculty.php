@@ -50,7 +50,9 @@ class Faculty extends BasicEntity
         $this->properties[self::PROP_ID] = new IntegerProperty(self::PROP_ID, 'ID', $this->id[self::PROP_ID], false, false);
         $this->properties[self::PROP_NAME] = new StringProperty(self::PROP_NAME, 'Emri', $params[self::PROP_NAME], true, true);
         $this->properties[self::PROP_ADDRESS] = new StringProperty(self::PROP_ADDRESS, 'Adresa', $params[self::PROP_ADDRESS], true, true);
-        $this->properties[self::PROP_DEAN_ID] = new IntegerProperty(self::PROP_DEAN_ID, 'Dekani', $params[self::PROP_DEAN_ID], true, false);
+        $this->properties[self::PROP_DEAN_ID] = new EntityProperty(self::PROP_DEAN_ID, 'Dekani',
+            intval($params[self::PROP_DEAN_ID]), Professor::getBuilder()->getList(), true
+        );
         $this->properties[self::PROP_HEAD_SECRETARY_ID] = new EntityProperty(
             self::PROP_HEAD_SECRETARY_ID, 'Krye Sekretarja',
             intval($params[self::PROP_HEAD_SECRETARY_ID]), Secretary::getBuilder()->getList(), true

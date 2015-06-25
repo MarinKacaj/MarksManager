@@ -47,7 +47,7 @@ function redirectIfLoggedIn()
 {
     $actionNavigator = new ActionNavigator(null);
 
-    if (!isset($_SESSION[LOGGED_IN_USER_ID]) || !isset($_SESSION[LOGGED_IN_USER_ROLE])) {
+    if (isset($_SESSION[LOGGED_IN_USER_ID]) && isset($_SESSION[LOGGED_IN_USER_ROLE])) {
         $actionNavigator->redirectToMainPage();
     }
 }
