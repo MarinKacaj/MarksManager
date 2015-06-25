@@ -8,6 +8,8 @@
 
 use fti\adv_db\entity\Professor;
 use fti\adv_db\entity\Secretary;
+use fti\adv_db\entity\Student;
+use fti\adv_db\entity\UserEntity;
 use fti\adv_db\nav\ActionNavigator;
 
 require_once dirname(dirname(__FILE__)) . '/includes/session.php';
@@ -47,4 +49,65 @@ function redirectIfLoggedIn()
     if (isset($_SESSION[LOGGED_IN_USER_ID]) && isset($_SESSION[LOGGED_IN_USER_ROLE])) {
         $actionNavigator->redirectToMainPage();
     }
+}
+
+function redirectIfNotLoggedIn()
+{
+    $actionNavigator = new ActionNavigator(null);
+
+    if (!isset($_SESSION[LOGGED_IN_USER_ID]) || !isset($_SESSION[LOGGED_IN_USER_ROLE])) {
+        $actionNavigator->logOutAndRedirect();
+    }
+}
+
+/**
+ * @param string $tableName
+ * @param array $loginFilter
+ * @return bool|UserEntity
+ */
+function getLoggedInUserByFilter($tableName, $loginFilter)
+{
+
+    switch ($tableName) {
+
+        case Student::TABLE_NAME:
+            $userInstance = Student::getBuilder()->filterByParams($loginFilter);
+            break;
+        case Professor::TABLE_NAME:
+            $userInstance = Professor::getBuilder()->filterByParams($loginFilter);
+            break;
+        case Secretary::TABLE_NAME:
+            $userInstance = Secretary::getBuilder()->filterByParams($loginFilter);
+            break;
+        default:
+            $userInstance = false;
+            break;
+    }
+
+    return $userInstance;
+}
+
+/**
+ * @param string $tableName
+ * @param string $email
+ * @param string $password
+ * @return bool|UserEntity
+ */
+function getLoggedInUserByCredentials($tableName, $email, $password)
+{
+    $loginFilter = array(UserEntity::PROP_EMAIL => $email, UserEntity::PROP_PASSWORD => $password);
+    $userInstance = getLoggedInUserByFilter($tableName, $loginFilter);
+    return $userInstance;
+}
+
+/**
+ * @return bool|UserEntity
+ */
+function getCurrentlyLoggedInUser()
+{
+    $userID = intval($_SESSION[LOGGED_IN_USER_ID]);
+    $userRole = $_SESSION[LOGGED_IN_USER_ROLE];
+    $userIdentifier = array(UserEntity::PROP_ID => $userID);
+    $userInstance = getLoggedInUserByFilter($userRole, $userIdentifier);
+    return $userInstance;
 }

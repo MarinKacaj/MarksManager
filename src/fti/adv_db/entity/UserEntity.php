@@ -33,4 +33,22 @@ abstract class UserEntity extends BasicEntity
         $this->properties[self::PROP_EMAIL] = new StringProperty(self::PROP_EMAIL, 'Email', $params[self::PROP_EMAIL], true, true);
         $this->properties[self::PROP_PASSWORD] = new StringProperty(self::PROP_PASSWORD, 'Password', $params[self::PROP_PASSWORD], true, true);
     }
+
+
+    /**
+     * @param string $testedPassword
+     * @return bool
+     */
+    public function isPasswordCorrect($testedPassword)
+    {
+        return strcmp($this->getProperty(self::PROP_PASSWORD)->getValue(), $testedPassword) === 0;
+    }
+
+    /**
+     * @param string $password
+     */
+    public function setPassword($password)
+    {
+        $this->getProperty(self::PROP_PASSWORD)->setValue($password);
+    }
 }

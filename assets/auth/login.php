@@ -10,11 +10,10 @@ require_once dirname(dirname(dirname(__FILE__))) . '/src/fti/adv_db/functions/au
 
 spl_autoload_register('class_auto_loader');
 
-if (isset($_GET[LOGIN_REPORT_CODE])) {
-    $GLOBALS[LOGIN_REPORT_CODE] = intval($_GET[LOGIN_REPORT_CODE]);
-}
-
 redirectIfLoggedIn();
+
+
+require_once dirname(dirname(__FILE__)) . '/auth/errorCodeSetter.php';
 
 ?>
 
