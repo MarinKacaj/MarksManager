@@ -243,6 +243,7 @@ class FormViewGenerator extends ViewGenerator
         $inputEl = $this->domDocument->createElement(Element::INPUT);
         $inputEl->setAttribute(Attribute::TYPE, $type);
         $inputEl->setAttribute(Attribute::NAME, $name);
+        $inputEl->setAttribute(Attribute::CLASS_NAME, DefaultAttributeValues::CL_FORM_CONTROL);
         if (strcasecmp($type, DefaultAttributeValues::TYPE_CHECKBOX) === 0) {
             if ($value === true) {
                 $inputEl->setAttribute(Attribute::CHECKED, DefaultAttributeValues::CHECKED);
@@ -415,6 +416,7 @@ class FormViewGenerator extends ViewGenerator
         $selectEl = $this->domDocument->createElement(Element::SELECT);
         $selectEl->setAttribute(Attribute::ID, DefaultAttributeValues::GENERIC_ID_PREFIX . $id);
         $selectEl->setAttribute(Attribute::NAME, $name);
+        $selectEl->setAttribute(Attribute::CLASS_NAME, DefaultAttributeValues::CL_FORM_CONTROL);
         return $selectEl;
     }
 
