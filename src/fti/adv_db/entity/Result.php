@@ -51,16 +51,16 @@ class Result extends BasicEntity
         }
 
         $this->properties[self::PROP_EXAM_ID] = new EntityProperty(
-            self::PROP_EXAM_ID, 'Provimi', $params[self::PROP_EXAM_ID], Exam::getBuilder()->getList(), true
+            self::PROP_EXAM_ID, 'Provimi', intval($params[self::PROP_EXAM_ID]), Exam::getBuilder()->getList(), true
         );
         $this->properties[self::PROP_STUDENT_ID] = new EntityProperty(
-            self::PROP_STUDENT_ID, 'Studenti', $params[self::PROP_STUDENT_ID], Student::getBuilder()->getList(), true
+            self::PROP_STUDENT_ID, 'Studenti', intval($params[self::PROP_STUDENT_ID]), Student::getBuilder()->getList(), true
         );
         $this->properties[self::PROP_MARK] = new IntegerProperty(
             self::PROP_MARK, 'Nota', $mark, true, true, 4, 10
         );
         $this->properties[self::PROP_DATE] = new DateProperty(
-            self::PROP_DATE, 'Data e Provimit', intval($params[self::PROP_DATE]), true, true
+            self::PROP_DATE, 'Data e Provimit', $params[self::PROP_DATE], true, true
         );
 
         $this->actionHelper = new EntityActionHelper(self::TABLE_NAME, $this);

@@ -4,14 +4,17 @@ use fti\adv_db\entity\Secretary;
 use fti\adv_db\entity\Student;
 
 require_once dirname(dirname(__FILE__)) . '/includes/session.php';
+require_once dirname(dirname(__FILE__)) . '/auth/security.php';
 require_once dirname(dirname(dirname(__FILE__))) . '/src/fti/adv_db/constants/auth.php';
 require_once dirname(dirname(dirname(__FILE__))) . '/src/fti/adv_db/functions/auto_loader.php';
 
 spl_autoload_register('class_auto_loader');
 
-if (isset($_GET[LOGIN_REPORT_CODE])) {
-    $GLOBALS[LOGIN_REPORT_CODE] = intval($_GET[LOGIN_REPORT_CODE]);
-}
+redirectIfLoggedIn();
+
+
+require_once dirname(dirname(__FILE__)) . '/auth/errorCodeSetter.php';
+
 ?>
 
 <!DOCTYPE html>
@@ -20,7 +23,7 @@ if (isset($_GET[LOGIN_REPORT_CODE])) {
 <body>
 <?php require_once dirname(dirname(__FILE__)) . '/includes/navigation.php'; ?>
 <div class="container">
-    <div class="well text-center" id="mainTitle"><h4>TITULL</h4></div>
+    <div class="well text-center" id="mainTitle"><h4>Logohuni</h4></div>
     <form id="loginForm" class="form-horizontal" action="loginAuthentication.php" method="post">
         <div class="well col-sm-4 col-sm-offset-4">
             <?php require_once dirname(dirname(__FILE__)) . '/includes/errorMessage.php'; ?>

@@ -243,6 +243,7 @@ class FormViewGenerator extends ViewGenerator
         $inputEl = $this->domDocument->createElement(Element::INPUT);
         $inputEl->setAttribute(Attribute::TYPE, $type);
         $inputEl->setAttribute(Attribute::NAME, $name);
+        $inputEl->setAttribute(Attribute::CLASS_NAME, DefaultAttributeValues::CL_FORM_CONTROL);
         if (strcasecmp($type, DefaultAttributeValues::TYPE_CHECKBOX) === 0) {
             if ($value === true) {
                 $inputEl->setAttribute(Attribute::CHECKED, DefaultAttributeValues::CHECKED);
@@ -319,8 +320,14 @@ class FormViewGenerator extends ViewGenerator
     {
         $value = strtotime($value);
         $value = date('d/m/Y', $value);
-        $dateInputBlock = $this->createSimpleInputBlock($label, $value, $name, DefaultAttributeValues::TYPE_TEXT);
-        return $dateInputBlock;
+        $inputContainerEl = $this->createSimpleInputBlock($label, $value, $name, DefaultAttributeValues::TYPE_TEXT);
+        $currentClassName = $inputContainerEl->getAttribute(Attribute::CLASS_NAME);
+        $fullClassName = AttributeBuilder::buildFullClassName(array(
+            $currentClassName,
+            DefaultAttributeValues::CL_DATE_TIME_PICKER
+        ));
+        $inputContainerEl->setAttribute(Attribute::CLASS_NAME, $fullClassName);
+        return $inputContainerEl;
     }
 
     /**
@@ -409,6 +416,7 @@ class FormViewGenerator extends ViewGenerator
         $selectEl = $this->domDocument->createElement(Element::SELECT);
         $selectEl->setAttribute(Attribute::ID, DefaultAttributeValues::GENERIC_ID_PREFIX . $id);
         $selectEl->setAttribute(Attribute::NAME, $name);
+        $selectEl->setAttribute(Attribute::CLASS_NAME, DefaultAttributeValues::CL_FORM_CONTROL);
         return $selectEl;
     }
 

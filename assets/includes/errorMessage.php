@@ -11,11 +11,17 @@ require_once dirname(dirname(dirname(__FILE__))) . '/src/fti/adv_db/constants/au
 
 $errorMessage = '';
 
-if (isset($GLOBALS[LOGIN_REPORT_CODE])) {
-    $loginErrorCode = $GLOBALS[LOGIN_REPORT_CODE];
+if (isset($GLOBALS[REPORT_CODE])) {
+    $loginErrorCode = $GLOBALS[REPORT_CODE];
     switch ($loginErrorCode) {
         case REPORT_LOGIN_ERROR_INVALID_CREDENTIALS:
             $errorMessage = 'Kredenciale t&euml; gabuara!';
+            break;
+        case REPORT_LOGGED_OUT:
+            $errorMessage = 'Ju nuk jeni loguar n&euml; sistem.';
+            break;
+        case REPORT_PASSWORD_MISMATCH:
+            $errorMessage = 'S&euml; paku nj&euml;ri nga fjal&euml;kalimet nuk p&euml;puthet!';
             break;
     }
 }

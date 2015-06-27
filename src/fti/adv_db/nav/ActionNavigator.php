@@ -50,12 +50,21 @@ class ActionNavigator
     private function redirectToPath($path)
     {
         header("Location: $path");
+        die();
     }
 
     public function redirectToMainPage()
     {
         $assetsBaseURL = get_assets_base_url();
-        $this->redirectToPath("$assetsBaseURL/main.php");
+        $this->redirectToPath($assetsBaseURL . 'main.php');
+    }
+
+    private function redirectForError($page, $message)
+    {
+        $errorArgs = array(REPORT_CODE => $message);
+        $errorURLParams = http_build_str($errorArgs);
+        $baseURL = get_assets_base_url();
+        $this->redirectToPath($baseURL . "$page?$errorURLParams");
     }
 
     /**
@@ -63,9 +72,7 @@ class ActionNavigator
      */
     public function redirectToLogInPage($message = REPORT_LOGIN_ERROR_INVALID_CREDENTIALS)
     {
-        $errorArgs = array(LOGIN_REPORT_CODE => $message);
-        $errorURLParams = http_build_str($errorArgs);
-        $this->redirectToPath("login.php?$errorURLParams");
+        $this->redirectForError('auth/login.php', $message);
     }
 
     private function redirectToEditPage()
@@ -77,7 +84,7 @@ class ActionNavigator
         $this->redirectToPath($updatePath);
     }
 
-    private function redirectToErrorPage()
+    private function redirectToDefaultErrorPage()
     {
         $this->redirectToPath(ERROR_DEFAULT_FILE_NAME);
     }
@@ -88,7 +95,7 @@ class ActionNavigator
             $this->entityInstance->save();
             $this->redirectToEditPage();
         } catch (MySQLException $e) {
-            $this->redirectToErrorPage();
+            $this->redirectToDefaultErrorPage();
         }
     }
 
@@ -98,7 +105,7 @@ class ActionNavigator
             $this->entityInstance->update();
             $this->redirectToEditPage();
         } catch (MySQLException $e) {
-            $this->redirectToErrorPage();
+            $this->redirectToDefaultErrorPage();
         }
     }
 
@@ -108,7 +115,7 @@ class ActionNavigator
             $this->entityInstance->delete();
             $this->redirectToPath(LIST_DEFAULT_FILE_NAME);
         } catch (MySQLException $e) {
-            $this->redirectToErrorPage();
+            $this->redirectToDefaultErrorPage();
         }
     }
 
@@ -132,6 +139,23 @@ class ActionNavigator
         session_unset();
         session_destroy();
         $this->redirectToLogInPage(REPORT_LOGGED_OUT);
+    }
+
+    /**
+     * @param bool $isCorrect
+     */
+    public function changePasswordAndRedirect($isCorrect)
+    {
+        $changePasswordFilePath = 'personal/' . CHANGE_PASSWORD_FILE;
+        if (!$isCorrect) {
+            $this->redirectForError($changePasswordFilePath, REPORT_PASSWORD_MISMATCH);
+        }
+        try {
+            $this->entityInstance->update();
+            $this->redirectToPath(CHANGE_PASSWORD_FILE);
+        } catch (MySQLException $e) {
+            $this->redirectForError($changePasswordFilePath, REPORT_PASSWORD_MISMATCH);
+        }
     }
 
 }

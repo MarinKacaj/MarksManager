@@ -20,6 +20,7 @@ class Element
     const DIV = 'div';
     const LABEL = 'label';
     const BUTTON = 'button';
+    const SPAN = 'span';
 
     const TABLE = 'table';
     const TABLE_HEAD = 'thead';

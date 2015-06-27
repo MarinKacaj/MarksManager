@@ -22,7 +22,7 @@ spl_autoload_register('class_auto_loader');
  * Class Secretary
  * @package fti\adv_db\entity
  */
-class Secretary extends BasicEntity
+class Secretary extends UserEntity
 {
 
     const TABLE_NAME = 'sekretare';

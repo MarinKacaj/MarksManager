@@ -30,7 +30,7 @@ $listViewAggregator = new ListViewAggregator($examInstances);
 <body>
 <?php require_once dirname(dirname(__FILE__)) . '/includes/navigation.php'; ?>
 <div class="container">
-    <div class="well text-center" id="mainTitle"><h4>TITULL</h4></div>
+    <div class="well text-center" id="mainTitle"><h4>Provime</h4></div>
     <div class="row">
         <div id="listaVleresoStudente" class="col-sm-12">
             <?php echo $listViewAggregator->buildListHTML($isEmpty); ?>
