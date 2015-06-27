@@ -19,13 +19,10 @@
 <body>
 <div class="container">
     <div class="row">
-        <div class="col-md-2 col-sm-offset-2">
+
+        <div class="col-md-12">
             <div class="error-template">
-                <img class="img-responsive" src="img/fella-not-found.png">
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="error-template">
+                <img class="center-block" src="img/fella-not-found.png">
                 <h1>Oops!</h1>
                 <h2>404 Not Found</h2>
                 <div class="error-details">
