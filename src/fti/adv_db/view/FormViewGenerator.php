@@ -470,15 +470,10 @@ class FormViewGenerator extends ViewGenerator
     }
 
     /**
-     * @param bool $appendListButton [optional]
      * @return string
      */
-    public function getBuiltHTML($appendListButton = true)
+    public function getBuiltHTML()
     {
-        if ($appendListButton) {
-            $listButtonEl = $this->createListButton();
-            $this->appendToForm($listButtonEl);
-        }
         $this->domDocument->appendChild($this->formEl);
         $rawHTML = $this->domDocument->saveHTML();
         $decodedHTML = html_entity_decode($rawHTML);
