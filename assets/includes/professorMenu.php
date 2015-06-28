@@ -21,7 +21,7 @@ $baseURL = get_assets_base_url();
 </li>
 <li>
     <a href="<?php echo $baseURL . 'result/list.php' ?>">
-        Rezultate
+        Flet&euml; Provimi
     </a>
 </li>
 <li>

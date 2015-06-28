@@ -90,6 +90,6 @@ class Exam extends BasicEntity
      */
     public function getDisplayName()
     {
-        return $this->getProperty(self::PROP_SUBJECT_ID)->getValue();
+        return $this->getProperty(self::PROP_SUBJECT_ID)->getEntityInstance()->getDisplayName();
     }
 }

@@ -11,6 +11,7 @@ namespace fti\adv_db\aggregator;
 
 use fti\adv_db\entity\Entity;
 use fti\adv_db\property\BasicProperty;
+use fti\adv_db\property\EntityProperty;
 use fti\adv_db\view\ListViewGenerator;
 
 require_once dirname(dirname(__FILE__)) . '/constants/labels.php';
@@ -99,7 +100,12 @@ class ListViewAggregator
 
         $listProperties = $this->extractEntityInstanceListProperties($entityInstance);
         foreach ($listProperties as $listProperty) {
-            array_push($listPropertiesValues, $listProperty->getValue());
+            if ($listProperty instanceof EntityProperty) {
+                $value = $listProperty->getEntityInstance()->getDisplayName();
+            } else {
+                $value = $listProperty->getValue();
+            }
+            array_push($listPropertiesValues, $value);
         }
         unset($listProperty);
 

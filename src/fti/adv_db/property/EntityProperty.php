@@ -31,7 +31,7 @@ class EntityProperty extends BasicProperty
      */
     protected $value;
     /**
-     * @var null|BasicEntity
+     * @var BasicEntity
      */
     private $entityInstance;
     /**
@@ -59,15 +59,19 @@ class EntityProperty extends BasicProperty
 
 
     /**
+     * @return BasicEntity
+     */
+    public function getEntityInstance()
+    {
+        return $this->entityInstance;
+    }
+
+    /**
      * @return int|string
      */
     public function getValue()
     {
-        if ($this->entityInstance === false) {
-            return $this->value;
-        } else {
-            return $this->entityInstance->getDisplayName();
-        }
+        return $this->value;
     }
 
     /**

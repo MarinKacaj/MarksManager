@@ -25,6 +25,7 @@ if (empty($resultInstances)) {
     array_push($resultInstances, Result::getBuilder()->createEmpty());
 }
 $listViewAggregator = new ListViewAggregator($resultInstances);
+
 ?>
 
 <!DOCTYPE html>
