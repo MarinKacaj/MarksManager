@@ -49,6 +49,9 @@ class BooleanProperty extends BasicProperty
         $this->value = $value ? '1' : '0';
     }
 
+    /**
+     * @return string
+     */
     public function getValue()
     {
         return ($this->value == '1') ? '&#10003' : '&#10007';
