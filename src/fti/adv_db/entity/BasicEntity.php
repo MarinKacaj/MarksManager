@@ -16,6 +16,10 @@ require_once dirname(dirname(__FILE__)) . '/functions/auto_loader.php';
 
 spl_autoload_register('class_auto_loader');
 
+/**
+ * Class BasicEntity
+ * @package fti\adv_db\entity
+ */
 abstract class BasicEntity implements Entity
 {
 
