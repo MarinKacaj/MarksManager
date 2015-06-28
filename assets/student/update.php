@@ -20,6 +20,6 @@ redirectIfNotSecretary();
 
 
 $params = HttpEntityParamBuilder::buildParams();
-$universityInstance = new Student($params);
-$actionNavigator = new ActionNavigator($universityInstance);
+$studentInstance = new Student($params);
+$actionNavigator = new ActionNavigator($studentInstance);
 $actionNavigator->updateAndRedirect();

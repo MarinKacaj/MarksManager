@@ -32,15 +32,21 @@ class ListViewGenerator extends ViewGenerator
      * @var string[]
      */
     private $colNames;
+    /**
+     * @var bool
+     */
+    private $tableHasActions;
 
     /**
      * @param string[] $colNames
+     * @param bool $tableHasActions
      */
-    function __construct($colNames)
+    function __construct($colNames, $tableHasActions)
     {
         parent::__construct();
 
         $this->colNames = $colNames;
+        $this->tableHasActions = $tableHasActions;
         $this->listContainerEl = $this->domDocument->createElement(Element::TABLE_BODY);
     }
 
@@ -52,10 +58,12 @@ class ListViewGenerator extends ViewGenerator
     {
         $tableHeadEl = $this->domDocument->createElement(Element::TABLE_HEAD);
 
-        $tableHeadColEl = $this->domDocument->createElement(Element::TABLE_HEAD_COL);
-        $tableHeadColTitle = $this->domDocument->createTextNode('Veprime');
-        $tableHeadColEl->appendChild($tableHeadColTitle);
-        $tableHeadEl->appendChild($tableHeadColEl);
+        if ($this->tableHasActions === true) {
+            $tableHeadColEl = $this->domDocument->createElement(Element::TABLE_HEAD_COL);
+            $tableHeadColTitle = $this->domDocument->createTextNode('Veprime');
+            $tableHeadColEl->appendChild($tableHeadColTitle);
+            $tableHeadEl->appendChild($tableHeadColEl);
+        }
 
         foreach ($this->colNames as $colName) {
             $tableHeadColEl = $this->domDocument->createElement(Element::TABLE_HEAD_COL);
@@ -124,12 +132,14 @@ class ListViewGenerator extends ViewGenerator
     {
         $tableRowEl = $this->domDocument->createElement(Element::TABLE_ROW);
 
-        $cellEl = $this->domDocument->createElement(Element::TABLE_TD);
-        $updateLinkEl = $this->createActionLink($updateURL, false);
-        $cellEl->appendChild($updateLinkEl);
-        $deleteLinkEl = $this->createActionLink($deleteURL, true);
-        $cellEl->appendChild($deleteLinkEl);
-        $tableRowEl->appendChild($cellEl);
+        if ($this->tableHasActions === true) {
+            $cellEl = $this->domDocument->createElement(Element::TABLE_TD);
+            $updateLinkEl = $this->createActionLink($updateURL, false);
+            $cellEl->appendChild($updateLinkEl);
+            $deleteLinkEl = $this->createActionLink($deleteURL, true);
+            $cellEl->appendChild($deleteLinkEl);
+            $tableRowEl->appendChild($cellEl);
+        }
 
         foreach ($values as $value) {
             $cellEl = $this->domDocument->createElement(Element::TABLE_TD);

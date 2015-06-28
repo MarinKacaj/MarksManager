@@ -62,4 +62,15 @@ class QueryPartsBuilder
 
         return $nameValuePairStrings;
     }
+
+    /**
+     * @param string $tableName
+     * @param string $colName
+     * @return string
+     */
+    public static function buildColName($tableName, $colName)
+    {
+        $fullyQualifiedColName = $tableName . '.' . $colName;
+        return $fullyQualifiedColName;
+    }
 }

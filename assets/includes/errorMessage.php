@@ -18,7 +18,7 @@ if (isset($GLOBALS[REPORT_CODE])) {
             $errorMessage = 'Kredenciale t&euml; gabuara!';
             break;
         case REPORT_LOGGED_OUT:
-            $errorMessage = 'Ju nuk jeni loguar n&euml; sistem.';
+            $errorMessage = 'Ju nuk jeni m&euml; loguar n&euml; sistem.';
             break;
         case REPORT_PASSWORD_MISMATCH:
             $errorMessage = 'S&euml; paku nj&euml;ri nga fjal&euml;kalimet nuk p&euml;puthet!';

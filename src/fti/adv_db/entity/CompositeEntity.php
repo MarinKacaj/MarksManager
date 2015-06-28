@@ -18,7 +18,7 @@ spl_autoload_register('class_auto_loader');
  * Class CompositeEntity
  * @package fti\adv_db\entity
  */
-abstract class CompositeEntity
+abstract class CompositeEntity implements Entity
 {
 
     /**

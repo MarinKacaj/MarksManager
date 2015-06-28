@@ -12,7 +12,6 @@ namespace fti\adv_db\entity;
 use fti\adv_db\entity\util\EntityActionHelper;
 use fti\adv_db\entity\util\EntityBuilderHelper;
 use fti\adv_db\property\EntityProperty;
-use fti\adv_db\property\IntegerProperty;
 use fti\adv_db\property\StringProperty;
 
 require_once dirname(dirname(__FILE__)) . '/functions/auto_loader.php';
@@ -41,8 +40,6 @@ class Student extends UserEntity
         parent::__construct($params);
 
         $this->label = self::LABEL;
-        $this->id = array(self::PROP_ID => $params[self::PROP_ID]);
-        $this->properties[self::PROP_ID] = new IntegerProperty(self::PROP_ID, 'ID', $this->id[self::PROP_ID], false, false);
         $this->properties[self::PROP_FIRST_NAME] = new StringProperty(self::PROP_FIRST_NAME, 'Emri', $params[self::PROP_FIRST_NAME], true, true);
         $this->properties[self::PROP_LAST_NAME] = new StringProperty(self::PROP_LAST_NAME, 'Mbiemri', $params[self::PROP_LAST_NAME], true, true);
         $this->properties[self::PROP_GROUP_ID] = new EntityProperty(

@@ -60,13 +60,18 @@ class StudentResultQuery extends SelectQuery
             Group::TABLE_NAME, Department::TABLE_NAME, $latestExamTableQuery);
         $this->tableNames = QueryPartsBuilder::buildCSVString($tableNames);
 
-        $filters = array(Exam::PROP_SUBJECT_ID => Subject::PROP_ID, Result::PROP_EXAM_ID => Exam::PROP_ID,
-            Result::PROP_STUDENT_ID => $studentID, Student::PROP_GROUP_ID => Group::PROP_ID,
-            Group::PROP_DEPARTMENT_ID => Exam::PROP_DEPARTMENT_ID,
-            Subject::PROP_ID => $this->latestExamTableAlias . '.' . Subject::PROP_ID,
-            $this->latestExamTableAlias . '.' . $latestExamQuery->getLastResultDateAlias() => Result::PROP_DATE
+        $filters = array(
+            Result::TABLE_NAME . '.' . Result::PROP_STUDENT_ID => $studentID,
         );
         $this->buildConjunctionWhereClause($filters);
+        $this->appendAndFilter(Exam::TABLE_NAME . '.' . Exam::PROP_SUBJECT_ID, Subject::TABLE_NAME . '.' . Subject::PROP_ID, true);
+        $this->appendAndFilter(Result::TABLE_NAME . '.' . Result::PROP_EXAM_ID, Exam::TABLE_NAME . '.' . Exam::PROP_ID, true);
+        $this->appendAndFilter(Student::TABLE_NAME . '.' . Student::PROP_GROUP_ID, Group::TABLE_NAME . '.' . Group::PROP_ID, true);
+        $this->appendAndFilter(Group::TABLE_NAME . '.' . Group::PROP_DEPARTMENT_ID, Exam::TABLE_NAME . '.' . Exam::PROP_DEPARTMENT_ID, true);
+        $this->appendAndFilter(Subject::TABLE_NAME . '.' . Subject::PROP_ID, $this->latestExamTableAlias . '.' . Subject::PROP_ID, true);
+        $this->appendAndFilter(
+            $this->latestExamTableAlias . '.' . $latestExamQuery->getLastResultDateAlias(),
+            Result::TABLE_NAME . '.' . Result::PROP_DATE, true);
     }
 
 

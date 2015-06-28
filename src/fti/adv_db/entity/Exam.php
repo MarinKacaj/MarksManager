@@ -48,7 +48,7 @@ class Exam extends BasicEntity
             self::PROP_SEASON_ID, 'Sezoni', intval($params[self::PROP_SEASON_ID]), Season::getBuilder()->getList(), true
         );
         $this->properties[self::PROP_SUBJECT_ID] = new EntityProperty(
-            self::PROP_SUBJECT_ID, 'Lende', intval($params[self::PROP_SUBJECT_ID]), Subject::getBuilder()->getList(), true
+            self::PROP_SUBJECT_ID, 'Lende', intval($params[self::PROP_SUBJECT_ID]), Subject::getBuilder()->getList(), true, true
         );
         $this->properties[self::PROP_DEPARTMENT_ID] = new EntityProperty(
             self::PROP_DEPARTMENT_ID, 'Dege', intval($params[self::PROP_DEPARTMENT_ID]), Department::getBuilder()->getList(), true

@@ -32,6 +32,11 @@ function redirectIfUnauthorized($allowed_roles)
     }
 }
 
+function redirectIfNotStudent()
+{
+    redirectIfUnauthorized(array(Student::TABLE_NAME));
+}
+
 function redirectIfNotSecretary()
 {
     redirectIfUnauthorized(array(Secretary::TABLE_NAME));

@@ -25,7 +25,7 @@ class EntityBuilderHelper
     /**
      * @var string
      */
-    private $className;
+    protected $className;
     /**
      * @var string
      */
