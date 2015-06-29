@@ -21,6 +21,7 @@ function resolve_menu()
 {
 
     if (isset($_SESSION[LOGGED_IN_USER_ROLE])) {
+
         $actor = $_SESSION[LOGGED_IN_USER_ROLE];
 
         switch ($actor) {

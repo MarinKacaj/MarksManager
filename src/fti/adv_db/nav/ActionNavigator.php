@@ -9,6 +9,9 @@
 namespace fti\adv_db\nav;
 
 use fti\adv_db\entity\BasicEntity;
+use fti\adv_db\entity\Professor;
+use fti\adv_db\entity\Secretary;
+use fti\adv_db\entity\Student;
 use fti\adv_db\entity\UserEntity;
 use fti\adv_db\exceptions\MySQLException;
 use fti\adv_db\http\HttpEntityParamBuilder;
@@ -34,6 +37,10 @@ class ActionNavigator
      * @var BasicEntity
      */
     private $entityInstance;
+    /**
+     * @var string
+     */
+    private $assetsBaseURL;
 
     /**
      * @param BasicEntity $entityInstance
@@ -41,6 +48,7 @@ class ActionNavigator
     function __construct($entityInstance)
     {
         $this->entityInstance = $entityInstance;
+        $this->assetsBaseURL = get_assets_base_url();
     }
 
 
@@ -55,16 +63,14 @@ class ActionNavigator
 
     public function redirectToMainPage()
     {
-        $assetsBaseURL = get_assets_base_url();
-        $this->redirectToPath($assetsBaseURL . 'main.php');
+        $this->redirectToPath($this->assetsBaseURL . 'main.php');
     }
 
     private function redirectForError($page, $message)
     {
         $errorArgs = array(REPORT_CODE => $message);
         $errorURLParams = http_build_str($errorArgs);
-        $baseURL = get_assets_base_url();
-        $this->redirectToPath($baseURL . "$page?$errorURLParams");
+        $this->redirectToPath($this->assetsBaseURL . "$page?$errorURLParams");
     }
 
     /**
@@ -126,9 +132,22 @@ class ActionNavigator
     public function logInAndRedirect($actor, $error = REPORT_LOGIN_ERROR_INVALID_CREDENTIALS)
     {
         if ($this->entityInstance) {
+
             $_SESSION[LOGGED_IN_USER_ID] = $this->entityInstance->getProperty(UserEntity::PROP_ID)->getValue();
             $_SESSION[LOGGED_IN_USER_ROLE] = $actor;
-            $this->redirectToMainPage();
+
+            switch ($actor) {
+
+                case Student::TABLE_NAME:
+                    $this->redirectToPath("{$this->assetsBaseURL}studentResults/list.php");
+                    break;
+                case Professor::TABLE_NAME:
+                    $this->redirectToPath("{$this->assetsBaseURL}result/filter.php");
+                    break;
+                case Secretary::TABLE_NAME:
+                    $this->redirectToPath("{$this->assetsBaseURL}university/list.php");
+                    break;
+            }
         } else {
             $this->redirectToLogInPage($error);
         }
