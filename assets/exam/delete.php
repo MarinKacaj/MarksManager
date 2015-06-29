@@ -18,7 +18,7 @@ spl_autoload_register('class_auto_loader');
 
 redirectIfNotSecretary();
 
-$id = HttpEntityParamBuilder::retrieveIdentifier(array(Exam::PROP_ID));
+$id = HttpEntityParamBuilder::retrieveFilter(array(Exam::PROP_ID));
 $examInstance = Exam::getBuilder()->getByIdentifier($id);
 $actionNavigator = new ActionNavigator($examInstance);
 $actionNavigator->deleteAndRedirect();

@@ -45,13 +45,13 @@ class HttpEntityParamBuilder
     }
 
     /**
-     * @param array $primaryKeyColNames
+     * @param array $filterColNames
      * @return array
      */
-    public static function retrieveIdentifier($primaryKeyColNames)
+    public static function retrieveFilter($filterColNames)
     {
         $identifier = array();
-        foreach ($primaryKeyColNames as $primaryKeyColName) {
+        foreach ($filterColNames as $primaryKeyColName) {
             $id = intval($_GET[$primaryKeyColName]);
             $identifier[$primaryKeyColName] = $id;
         }

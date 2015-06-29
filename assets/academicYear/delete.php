@@ -19,7 +19,7 @@ spl_autoload_register('class_auto_loader');
 redirectIfNotSecretary();
 
 
-$id = HttpEntityParamBuilder::retrieveIdentifier(array(AcademicYear::PROP_ID));
+$id = HttpEntityParamBuilder::retrieveFilter(array(AcademicYear::PROP_ID));
 $academicYearInstance = AcademicYear::getBuilder()->getByIdentifier($id);
 $actionNavigator = new ActionNavigator($academicYearInstance);
 $actionNavigator->deleteAndRedirect();

@@ -21,8 +21,36 @@ spl_autoload_register('class_auto_loader');
 abstract class CompositeEntity implements Entity
 {
 
+    const PROP_ORDINAL_NUMBER = 'ordinalNumber';
+
     /**
      * @var BasicProperty[]
      */
     protected $properties;
+
+    /**
+     * @param string $propertyName
+     * @return BasicProperty
+     */
+    public function getProperty($propertyName)
+    {
+        return $this->properties[$propertyName];
+    }
+
+    /**
+     * @return BasicProperty[]
+     */
+    public function getProperties()
+    {
+        return $this->properties;
+    }
+
+    /**
+     * @return array
+     */
+    public function getIdentifier()
+    {
+        $rowNum = intval($this->getProperty(self::PROP_ORDINAL_NUMBER)->getValue());
+        return array(self::PROP_ID => $rowNum);
+    }
 }

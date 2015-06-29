@@ -18,7 +18,7 @@ spl_autoload_register('class_auto_loader');
 
 redirectIfNotSecretary();
 
-$identifier = HttpEntityParamBuilder::retrieveIdentifier(array(Exam::PROP_ID));
+$identifier = HttpEntityParamBuilder::retrieveFilter(array(Exam::PROP_ID));
 $examInstance = Exam::getBuilder()->getByIdentifier($identifier);
 $formViewAggregator = new FormViewAggregator($examInstance);
 

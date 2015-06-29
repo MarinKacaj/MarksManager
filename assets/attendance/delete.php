@@ -19,7 +19,7 @@ spl_autoload_register('class_auto_loader');
 redirectIfNotProfessor();
 
 
-$id = HttpEntityParamBuilder::retrieveIdentifier(array(
+$id = HttpEntityParamBuilder::retrieveFilter(array(
         Attendance::PROP_STUDENT_ID, Attendance::PROP_STUDENT_ID, Attendance::PROP_SUBJECT_ID)
 );
 $examInstance = Attendance::getBuilder()->getByIdentifier($id);

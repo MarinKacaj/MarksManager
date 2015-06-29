@@ -81,6 +81,16 @@ class EntityBuilderHelper
     }
 
     /**
+     * @param array $filterData
+     * @return array
+     */
+    public function filterList($filterData)
+    {
+        $entityInstances = EntityActionHelper::getFilteredList($this->className, $this->tableName, $filterData);
+        return $entityInstances;
+    }
+
+    /**
      * @return BasicEntity[]
      */
     public function getList()

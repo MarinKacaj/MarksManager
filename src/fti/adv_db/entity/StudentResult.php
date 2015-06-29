@@ -11,7 +11,6 @@ namespace fti\adv_db\entity;
 
 use fti\adv_db\db\StudentResultQuery;
 use fti\adv_db\entity\util\EntityBuilderHelper;
-use fti\adv_db\property\BasicProperty;
 use fti\adv_db\property\IntegerProperty;
 use fti\adv_db\property\StringProperty;
 
@@ -26,7 +25,6 @@ spl_autoload_register('class_auto_loader');
 class StudentResult extends CompositeEntity
 {
 
-    const PROP_ORDINAL_NUMBER = 'ordinalNumber';
     const PROP_SUBJECT_NAME = Subject::PROP_NAME;
     const PROP_MARK = Result::PROP_MARK;
 
@@ -59,31 +57,6 @@ class StudentResult extends CompositeEntity
     public function getEntityName()
     {
         return 'Rezultatet';
-    }
-
-    /**
-     * @param string $propertyName
-     * @return BasicProperty
-     */
-    public function getProperty($propertyName)
-    {
-        return $this->properties[$propertyName];
-    }
-
-    /**
-     * @return BasicProperty[]
-     */
-    public function getProperties()
-    {
-        return $this->properties;
-    }
-
-    /**
-     * @return array
-     */
-    public function getIdentifier()
-    {
-        return array();
     }
 
     /**

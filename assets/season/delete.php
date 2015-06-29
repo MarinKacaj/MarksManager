@@ -19,7 +19,7 @@ spl_autoload_register('class_auto_loader');
 redirectIfNotSecretary();
 
 
-$id = HttpEntityParamBuilder::retrieveIdentifier(array(Season::PROP_ID));
+$id = HttpEntityParamBuilder::retrieveFilter(array(Season::PROP_ID));
 $seasonInstance = Season::getBuilder()->getByIdentifier($id);
 $actionNavigator = new ActionNavigator($seasonInstance);
 $actionNavigator->deleteAndRedirect();

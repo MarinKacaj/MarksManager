@@ -19,7 +19,7 @@ spl_autoload_register('class_auto_loader');
 redirectIfNotSecretary();
 
 
-$id = HttpEntityParamBuilder::retrieveIdentifier(array(Subject::PROP_ID));
+$id = HttpEntityParamBuilder::retrieveFilter(array(Subject::PROP_ID));
 $subjectInstance = Subject::getBuilder()->getByIdentifier($id);
 $actionNavigator = new ActionNavigator($subjectInstance);
 $actionNavigator->deleteAndRedirect();
