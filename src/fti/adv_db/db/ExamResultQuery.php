@@ -91,6 +91,9 @@ class ExamResultQuery extends SelectQuery
         $this->appendAndFilter(QueryPartsBuilder::buildColName(Subject::TABLE_NAME, Subject::PROP_ID), $subjectID);
         $this->appendAndFilter(QueryPartsBuilder::buildColName(Professor::TABLE_NAME, Professor::PROP_ID), $professorID);
         $this->appendAndFilter(QueryPartsBuilder::buildColName(Attendance::TABLE_NAME, Attendance::PROP_SUBJECT_ID), QueryPartsBuilder::buildColName(Subject::TABLE_NAME, Subject::PROP_ID), true);
+        $this->appendAndFilter(QueryPartsBuilder::buildColName(Attendance::TABLE_NAME, Attendance::PROP_ASSIGNMENT), '1');
+        $this->appendAndFilter(QueryPartsBuilder::buildColName(Attendance::TABLE_NAME, Attendance::PROP_LAB), '1');
+        $this->appendAndFilter(QueryPartsBuilder::buildColName(Attendance::TABLE_NAME, Attendance::PROP_SEMINARIES), '1');
         $this->appendAndFilter(QueryPartsBuilder::buildColName(Attendance::TABLE_NAME, Attendance::PROP_STATUS), $isImprovement ? '1' : '0');
 
         $headIDQualifiedName = QueryPartsBuilder::buildColName(Exam::TABLE_NAME, Exam::PROP_HEAD_ID);
