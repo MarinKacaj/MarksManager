@@ -37,7 +37,7 @@ if (empty($examResultInstances)) {
     $isEmpty = true;
     array_push($examResultInstances, ExamResult::getBuilder()->createEmpty());
 }
-$listViewAggregator = new ListViewAggregator($examResultInstances, false);
+$listViewAggregator = new ListViewAggregator($examResultInstances);
 
 ?>
 

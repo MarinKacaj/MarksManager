@@ -33,6 +33,7 @@ class ExamResult extends CompositeEntity
     const PROP_RESULT_DATE = Result::PROP_DATE;
     const PROP_SUBJECT_NAME = Subject::PROP_NAME;
     const PROP_GROUP_NAME = Group::PROP_NAME;
+    const PROP_EXAM_ID = Exam::PROP_ID;
     const PROP_EXAM_HEAD_ID = Exam::PROP_HEAD_ID;
     const PROP_EXAM_MEMBER1_ID = Exam::PROP_MEMBER1_ID;
     const PROP_EXAM_MEMBER2_ID = Exam::PROP_MEMBER2_ID;
@@ -46,6 +47,7 @@ class ExamResult extends CompositeEntity
         if ($mark < 4 || $mark > 10) {
             $mark = 4;
         }
+        $examID = intval($params[self::PROP_EXAM_ID]);
         $headID = intval($params[self::PROP_EXAM_HEAD_ID]);
         $m1ID = intval($params[self::PROP_EXAM_MEMBER1_ID]);
         $m2ID = intval($params[self::PROP_EXAM_MEMBER2_ID]);
@@ -55,6 +57,9 @@ class ExamResult extends CompositeEntity
 
         $this->properties[self::PROP_ORDINAL_NUMBER] = new IntegerProperty(
             self::PROP_ORDINAL_NUMBER, '#', $ordinalNumber, true, true, 0
+        );
+        $this->properties[self::PROP_EXAM_ID] = new IntegerProperty(
+            self::PROP_EXAM_ID, 'Provimi', $examID, true, false
         );
         $this->properties[self::PROP_RESULT_MARK] = new IntegerProperty(
             self::PROP_RESULT_MARK, 'Nota', $mark, true, true, 4, 10
@@ -95,6 +100,17 @@ class ExamResult extends CompositeEntity
     public function getEntityName()
     {
         return 'Flete Provimi';
+    }
+
+    /**
+     * @return array
+     */
+    public function getIdentifier()
+    {
+        return array(
+            Result::PROP_STUDENT_ID => $this->getProperty(self::PROP_STUDENT_ID)->getValue(),
+            Result::PROP_EXAM_ID => $this->getProperty(self::PROP_EXAM_ID)->getValue()
+        );
     }
 
     /**

@@ -64,6 +64,7 @@ class ExamResultQuery extends SelectQuery
             QueryPartsBuilder::buildColName(Department::TABLE_NAME, Department::PROP_NAME),
             QueryPartsBuilder::buildColName(AcademicYear::TABLE_NAME, AcademicYear::PROP_YEAR),
             QueryPartsBuilder::buildColName(Subject::TABLE_NAME, Subject::PROP_NAME),
+            QueryPartsBuilder::buildColName(Exam::TABLE_NAME, Exam::PROP_ID),
             QueryPartsBuilder::buildColName(Exam::TABLE_NAME, Exam::PROP_HEAD_ID),
             QueryPartsBuilder::buildColName(Exam::TABLE_NAME, Exam::PROP_MEMBER1_ID),
             QueryPartsBuilder::buildColName(Exam::TABLE_NAME, Exam::PROP_MEMBER2_ID)
