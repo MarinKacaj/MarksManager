@@ -29,7 +29,7 @@ $filters = HttpEntityParamBuilder::retrieveFilter(array(Season::TABLE_NAME, Subj
 $seasonID = intval($filters[Season::TABLE_NAME]);
 $subjectID = intval($filters[Subject::TABLE_NAME]);
 $groupID = intval($filters[Group::TABLE_NAME]);
-$isImprovement = isset($filters[RESULT_IS_FOR_IMPROVEMENT]) ? true : false;
+$isImprovement = isset($_GET[RESULT_IS_FOR_IMPROVEMENT]) ? true : false;
 
 $examResultInstances = ExamResult::getFilteredList($seasonID, $subjectID, $groupID, $professorID, $isImprovement);
 $isEmpty = false;
