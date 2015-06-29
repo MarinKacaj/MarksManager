@@ -51,6 +51,9 @@ $listViewAggregator = new ListViewAggregator($examResultInstances, false);
     <div class="row">
         <div id="listaVleresoStudente" class="col-sm-12">
             <?php echo $listViewAggregator->buildListHTML($isEmpty); ?>
+            <a href="filter.php">
+                <button class="btn btn-default">Kthehu te filtri</button>
+            </a>
         </div>
     </div>
 </div>
