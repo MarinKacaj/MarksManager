@@ -14,7 +14,7 @@ use fti\adv_db\property\BasicProperty;
 use fti\adv_db\property\EntityProperty;
 use fti\adv_db\view\ListViewGenerator;
 
-require_once dirname(dirname(__FILE__)) . '/constants/labels.php';
+require_once dirname(dirname(__FILE__)) . '/constants/gen_purpose.php';
 require_once dirname(dirname(__FILE__)) . '/functions/auto_loader.php';
 require_once dirname(dirname(__FILE__)) . '/functions/http_utils.php';
 

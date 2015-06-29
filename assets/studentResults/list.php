@@ -19,7 +19,7 @@ redirectIfNotStudent();
 
 
 $currentlyLoggedInStudent = getCurrentlyLoggedInUser();
-$studentResultInstances = StudentResult::getList($currentlyLoggedInStudent);
+$studentResultInstances = StudentResult::getFilteredList($currentlyLoggedInStudent);
 $isEmpty = false;
 if (empty($studentResultInstances)) {
     $isEmpty = true;

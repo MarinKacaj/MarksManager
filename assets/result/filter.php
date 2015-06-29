@@ -6,12 +6,13 @@
  * Time: 9:57 PM
  */
 
-use fti\adv_db\entity\Department;
+use fti\adv_db\entity\Group;
 use fti\adv_db\entity\Season;
 use fti\adv_db\entity\Subject;
 
 require_once dirname(dirname(__FILE__)) . '/includes/session.php';
 require_once dirname(dirname(__FILE__)) . '/auth/security.php';
+require_once dirname(dirname(dirname(__FILE__))) . '/src/fti/adv_db/constants/gen_purpose.php';
 require_once dirname(dirname(dirname(__FILE__))) . '/src/fti/adv_db/functions/auto_loader.php';
 
 spl_autoload_register('class_auto_loader');
@@ -20,7 +21,7 @@ redirectIfNotProfessor();
 
 $seasonInstances = Season::getBuilder()->getList();
 $subjectInstances = Subject::getBuilder()->getList();
-$departmentInstances = Department::getBuilder()->getList();
+$groupInstances = Group::getBuilder()->getList();
 
 ?>
 
@@ -61,17 +62,25 @@ $departmentInstances = Department::getBuilder()->getList();
                 </div>
             </div>
             <div class="form-group">
-                <label for="department" class="col-sm-2 control-label">Dega</label>
+                <label for="group" class="col-sm-2 control-label">Grupi</label>
 
                 <div class="col-sm-10">
-                    <select name="<?php echo Department::TABLE_NAME; ?>" class="form-control" id="department">
-                        <?php foreach ($departmentInstances as $departmentInstance) : ?>
+                    <select name="<?php echo Group::TABLE_NAME; ?>" class="form-control" id="group">
+                        <?php foreach ($groupInstances as $groupInstance) : ?>
                             <option
-                                value="<?php echo $departmentInstance->getProperty(Subject::PROP_ID)->getValue(); ?>">
-                                <?php echo $departmentInstance->getDisplayName(); ?>
+                                value="<?php echo $groupInstance->getProperty(Group::PROP_ID)->getValue(); ?>">
+                                <?php echo $groupInstance->getDisplayName(); ?>
                             </option>
                         <?php endforeach; ?>
                     </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="isImprovement" class="col-sm-2 control-label">P&euml;rmir&euml;sim</label>
+
+                <div class="col-sm-10">
+                    <input type="checkbox" name="<?php echo RESULT_IS_FOR_IMPROVEMENT; ?>"
+                           class="form-control" id="isImprovement"/>
                 </div>
             </div>
             <div class="form-group">

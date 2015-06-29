@@ -35,10 +35,6 @@ class ExamResultQuery extends SelectQuery
     /**
      * @var string
      */
-    private $rowNumName;
-    /**
-     * @var string
-     */
     private $profMembersQueryPart;
 
     /**
@@ -47,9 +43,8 @@ class ExamResultQuery extends SelectQuery
      * @param int $groupID
      * @param int $professorID
      * @param bool $isImprovement
-     * @param string $rowNumName
      */
-    function __construct($seasonID, $subjectID, $groupID, $professorID, $isImprovement, $rowNumName)
+    function __construct($seasonID, $subjectID, $groupID, $professorID, $isImprovement)
     {
         $this->db = new DefaultDatabase();
 
@@ -64,6 +59,7 @@ class ExamResultQuery extends SelectQuery
             QueryPartsBuilder::buildColName(Student::TABLE_NAME, Student::PROP_FIRST_NAME),
             QueryPartsBuilder::buildColName(Student::TABLE_NAME, Student::PROP_LAST_NAME),
             QueryPartsBuilder::buildColName(Result::TABLE_NAME, Result::PROP_DATE),
+            QueryPartsBuilder::buildColName(Result::TABLE_NAME, Result::PROP_MARK),
             QueryPartsBuilder::buildColName(Group::TABLE_NAME, Group::PROP_NAME),
             QueryPartsBuilder::buildColName(Department::TABLE_NAME, Department::PROP_NAME),
             QueryPartsBuilder::buildColName(AcademicYear::TABLE_NAME, AcademicYear::PROP_YEAR),
@@ -93,7 +89,7 @@ class ExamResultQuery extends SelectQuery
         $this->appendAndFilter(QueryPartsBuilder::buildColName(Exam::TABLE_NAME, Exam::PROP_SUBJECT_ID), QueryPartsBuilder::buildColName(Subject::TABLE_NAME, Subject::PROP_ID), true);
         $this->appendAndFilter(QueryPartsBuilder::buildColName(Subject::TABLE_NAME, Subject::PROP_ID), $subjectID);
         $this->appendAndFilter(QueryPartsBuilder::buildColName(Professor::TABLE_NAME, Professor::PROP_ID), $professorID);
-        $this->appendAndFilter(QueryPartsBuilder::buildColName(Attendance::TABLE_NAME, Attendance::PROP_SUBJECT_ID), QueryPartsBuilder::buildColName(Subject::TABLE_NAME, Subject::PROP_ID));
+        $this->appendAndFilter(QueryPartsBuilder::buildColName(Attendance::TABLE_NAME, Attendance::PROP_SUBJECT_ID), QueryPartsBuilder::buildColName(Subject::TABLE_NAME, Subject::PROP_ID), true);
         $this->appendAndFilter(QueryPartsBuilder::buildColName(Attendance::TABLE_NAME, Attendance::PROP_STATUS), $isImprovement ? '1' : '0');
 
         $headIDQualifiedName = QueryPartsBuilder::buildColName(Exam::TABLE_NAME, Exam::PROP_HEAD_ID);
@@ -101,8 +97,6 @@ class ExamResultQuery extends SelectQuery
         $m2IDQualifiedName = QueryPartsBuilder::buildColName(Exam::TABLE_NAME, Exam::PROP_MEMBER2_ID);
         $profMembersQueryPart = "($headIDQualifiedName = $professorID OR $m1IDQualifiedName = $professorID OR $m2IDQualifiedName = $professorID)";
         $this->profMembersQueryPart = $profMembersQueryPart;
-
-        $this->rowNumName = $rowNumName;
     }
 
     /**
@@ -111,7 +105,7 @@ class ExamResultQuery extends SelectQuery
     public function getQuery()
     {
         $studentIDQualifiedName = QueryPartsBuilder::buildColName(Student::TABLE_NAME, Student::PROP_ID);
-        $query = "SELECT (@row:=@row + 1) AS {$this->rowNumName} {$this->projection} FROM {$this->tableNames} WHERE {$this->selection} AND {$this->profMembersQueryPart} GROUP BY $studentIDQualifiedName";
+        $query = "SELECT {$this->projection} FROM {$this->tableNames} WHERE {$this->selection} AND {$this->profMembersQueryPart} GROUP BY $studentIDQualifiedName";
         return $query;
     }
 

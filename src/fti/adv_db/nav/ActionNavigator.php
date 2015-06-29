@@ -15,7 +15,7 @@ use fti\adv_db\http\HttpEntityParamBuilder;
 
 require_once dirname(dirname(dirname(dirname(dirname(__FILE__))))) . '/assets/includes/session.php';
 
-require_once dirname(dirname(__FILE__)) . '/constants/labels.php';
+require_once dirname(dirname(__FILE__)) . '/constants/gen_purpose.php';
 require_once dirname(dirname(__FILE__)) . '/constants/auth.php';
 
 require_once dirname(dirname(__FILE__)) . '/functions/auto_loader.php';

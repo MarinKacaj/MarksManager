@@ -71,9 +71,9 @@ class StudentResult extends CompositeEntity
      * @param UserEntity $studentInstance
      * @return StudentResult[]
      */
-    public static function getList($studentInstance)
+    public static function getFilteredList($studentInstance)
     {
-        $i = 0;
+        $i = 1;
         $studentResults = array();
         $studentID = $studentInstance->getProperty(Student::PROP_ID)->getValue();
 
@@ -82,7 +82,6 @@ class StudentResult extends CompositeEntity
         while (($params = $resultList->fetch_assoc()) !== NULL) {
 
             $params[self::PROP_ORDINAL_NUMBER] = $i;
-
             $studentResult = new StudentResult($params);
             array_push($studentResults, $studentResult);
 

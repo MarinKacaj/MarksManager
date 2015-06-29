@@ -51,11 +51,11 @@ class HttpEntityParamBuilder
     public static function retrieveFilter($filterColNames)
     {
         $identifier = array();
-        foreach ($filterColNames as $primaryKeyColName) {
-            $id = intval($_GET[$primaryKeyColName]);
-            $identifier[$primaryKeyColName] = $id;
+        foreach ($filterColNames as $filterColName) {
+            $id = intval($_GET[$filterColName]);
+            $identifier[$filterColName] = $id;
         }
-        unset($primaryKeyColName);
+        unset($filterColName);
         return $identifier;
     }
 
