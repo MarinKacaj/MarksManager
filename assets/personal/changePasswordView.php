@@ -23,45 +23,46 @@ require_once dirname(dirname(__FILE__)) . '/auth/errorCodeSetter.php';
 <!DOCTYPE html>
 <html>
 <?php require_once dirname(dirname(__FILE__)) . '/includes/head.php'; ?>
-<body>
-<?php require_once dirname(dirname(__FILE__)) . '/includes/navigation.php'; ?>
-<div class="container">
-    <div class="well text-center" id="mainTitle"><h4>Ndrysho fjal&euml;kalimin</h4></div>
-    <form action="changePasswordController.php" method="post">
-        <div class="well col-sm-4 col-sm-offset-4">
-            <?php require_once dirname(dirname(__FILE__)) . '/includes/errorMessage.php'; ?>
-            <div class="form-group row">
-                <label for="oldPassword" class="col-sm-2 control-label">Fjal&euml;kalimi i vjet&euml;r</label>
-
-                <div class="col-sm-9 col-sm-offset-1">
-                    <input type="password" name="<?php echo OLD_PASSWORD; ?>" class="form-control" id="oldPassword"
-                           value=""/>
-                </div>
+<body class="custom-body">
+<div id="wrapper">
+    <?php require_once dirname(dirname(__FILE__)) . '/includes/navigation.php'; ?>
+    <div id="page-wrapper">
+        <div class="row">
+            <div class="col-lg-12">
+                <h2 class="page-header">Fjal&euml;kalimi</h2>
             </div>
-            <div class="form-group row">
-                <label for="currentPassword" class="col-sm-2 control-label">Fjal&euml;kalimi i ri</label>
-
-                <div class="col-sm-9 col-sm-offset-1">
-                    <input type="password" name="<?php echo PASSWORD; ?>" class="form-control"
-                           id="currentPassword"/>
-                </div>
-            </div>
-            <div class="form-group row">
-                <label for="currentPasswordConfirmation" class="col-sm-2 control-label">Konfirmoni fjal&euml;kalimin e
-                    ri</label>
-
-                <div class="col-sm-9 col-sm-offset-1">
-                    <input type="password" name="<?php echo PASSWORD_CONFIRMATION; ?>" class="form-control"
-                           id="currentPasswordConfirmation"/>
-                </div>
-            </div>
-            <div class="form-group row">
-                <div class="col-sm-offset-3 col-sm-9">
-                    <button type="submit" class="btn btn-default">Ndrysho</button>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">Ndrysho</div>
+                    <div class="panel-body">
+                        <?php require_once dirname(dirname(__FILE__)) . '/includes/errorMessage.php'; ?>
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label for="oldPassword">Fjal&euml;kalimi i vjet&euml;r</label>
+                                    <input type="password" class="form-control" name="<?php echo OLD_PASSWORD; ?>"
+                                           id="oldPassword"/>
+                                </div>
+                                <div class="form-group">
+                                    <label for="currentPassword">Fjal&euml;kalimi i ri</label>
+                                    <input type="password" class="form-control" name="<?php echo PASSWORD; ?>"
+                                           id="currentPassword"/>
+                                </div>
+                                <div class="form-group">
+                                    <label for="currentPasswordConfirmation">Konfirmoni fjal&euml;kalimin e ri</label>
+                                    <input type="password" class="form-control" name="<?php echo PASSWORD_CONFIRMATION; ?>"
+                                           id="currentPasswordConfirmation"/>
+                                </div>
+                                <button type="submit" class="btn btn-default">P&euml;rdit&euml;so</button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-    </form>
+    </div>
 </div>
 </body>
 </html>

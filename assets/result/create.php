@@ -6,32 +6,13 @@
  * Time: 6:14 PM
  */
 
-use fti\adv_db\aggregator\FormViewAggregator;
 use fti\adv_db\entity\Result;
 
-require_once dirname(dirname(__FILE__)) . '/includes/session.php';
-require_once dirname(dirname(__FILE__)) . '/auth/security.php';
-require_once dirname(dirname(dirname(__FILE__))) . '/src/fti/adv_db/functions/auto_loader.php';
+require_once dirname(dirname(__FILE__)) . '/includes/loader.php';
+require_once dirname(dirname(__FILE__)) . '/pages/createHelper.php';
 
-spl_autoload_register('class_auto_loader');
+redirectIfNotSecretary();
 
-redirectIfNotProfessor();
-
-
-$resultInstance = Result::getBuilder()->createEmpty();
-$formViewAggregator = new FormViewAggregator($resultInstance);
-
-?>
-
-<!DOCTYPE html>
-<html>
-<?php require_once dirname(dirname(__FILE__)) . '/includes/head.php'; ?>
-<body>
-<?php require_once dirname(dirname(__FILE__)) . '/includes/navigation.php'; ?>
-<div class="container">
-    <div class="well text-center" id="mainTitle"><h4>Shto Rezultat</h4></div>
-    <?php echo $formViewAggregator->buildEntityFormHTML(); ?>
-</div>
-<?php require_once dirname(dirname(__FILE__)) . '/includes/datePickerInit.php'; ?>
-</body>
-</html>
+$entityBuilder = Result::getBuilder();
+buildCreateView($entityBuilder);
+require_once dirname(dirname(__FILE__)) . '/pages/formPage.php';

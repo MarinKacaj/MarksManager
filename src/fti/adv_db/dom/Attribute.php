@@ -27,4 +27,5 @@ class Attribute
     const ENC_TYPE = 'enctype';
     const HREF = 'href';
     const SELECTED = 'selected';
+    const ROLE = 'role';
 }

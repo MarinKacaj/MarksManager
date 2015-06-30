@@ -47,7 +47,6 @@ class FormViewGenerator extends ViewGenerator
 
         $this->formEl = $this->createFormBlock($title, $action, $method, $encType);
         $this->formInnerContainerEl = $this->domDocument->createElement(Element::DIV);
-        $this->formInnerContainerEl->setAttribute(Attribute::CLASS_NAME, 'well col-sm-4 col-sm-offset-4');
         $this->formEl->appendChild($this->formInnerContainerEl);
     }
 
@@ -78,7 +77,7 @@ class FormViewGenerator extends ViewGenerator
     public function createFormBlock($title, $action, $method, $encType)
     {
         $formEl = $this->domDocument->createElement(Element::FORM);
-        $formEl->setAttribute(Attribute::CLASS_NAME, DefaultAttributeValues::CL_HORIZONTAL_FORM);
+        $formEl->setAttribute(Attribute::ROLE, DefaultAttributeValues::ROLE_FORM);
         $formEl->setAttribute(Attribute::ACTION, $action);
         $formEl->setAttribute(Attribute::METHOD, $method);
         $formEl->setAttribute(Attribute::ENC_TYPE, $encType);
@@ -108,11 +107,11 @@ class FormViewGenerator extends ViewGenerator
         $containerEl = $this->createFieldBlockContainer();
 
         $buttonWrapperEl = $this->domDocument->createElement(Element::DIV);
-        $fullClassName = AttributeBuilder::buildFullClassName(array(
+        /*$fullClassName = AttributeBuilder::buildFullClassName(array(
             DefaultAttributeValues::CL_SMALL_SCREEN_OFFSET_PREFIX . DefaultAttributeValues::LABEL_WIDTH,
             DefaultAttributeValues::CL_SMALL_SCREEN_PREFIX . DefaultAttributeValues::INPUT_WIDTH
         ));
-        $buttonWrapperEl->setAttribute(Attribute::CLASS_NAME, $fullClassName);
+        $buttonWrapperEl->setAttribute(Attribute::CLASS_NAME, $fullClassName);*/
 
         $buttonEl = $this->domDocument->createElement(Element::BUTTON);
         $fullClassName = AttributeBuilder::buildFullClassName(array(
@@ -155,7 +154,7 @@ class FormViewGenerator extends ViewGenerator
         $containerEl = $this->domDocument->createElement(Element::DIV);
         $className = AttributeBuilder::buildFullClassName(array(
             DefaultAttributeValues::CL_FORM_GROUP,
-            DefaultAttributeValues::CL_ROW
+            // DefaultAttributeValues::CL_ROW
         ));
         $containerEl->setAttribute(Attribute::CLASS_NAME, $className);
         return $containerEl;
@@ -198,11 +197,8 @@ class FormViewGenerator extends ViewGenerator
         $labelEl = $this->createLabel($label, DefaultAttributeValues::GENERIC_ID_PREFIX . $id);
         $containerEl->appendChild($labelEl);
 
-        $inputWrapperEl = $this->createDefaultInputFieldWrapperElement();
         $inputEl = $this->createInput($name, $value, $type, $id);
-        $inputWrapperEl->appendChild($inputEl);
-
-        $containerEl->appendChild($inputWrapperEl);
+        $containerEl->appendChild($inputEl);
 
         return $containerEl;
     }
@@ -216,7 +212,7 @@ class FormViewGenerator extends ViewGenerator
     {
         $labelEl = $this->domDocument->createElement(Element::LABEL);
         $fullClassName = AttributeBuilder::buildFullClassName(array(
-            DefaultAttributeValues::CL_SMALL_SCREEN_PREFIX . DefaultAttributeValues::LABEL_WIDTH,
+            // DefaultAttributeValues::CL_SMALL_SCREEN_PREFIX . DefaultAttributeValues::LABEL_WIDTH,
             DefaultAttributeValues::CL_CONTROL_LABEL
         ));
         $labelEl->setAttribute(Attribute::CLASS_NAME, $fullClassName);
@@ -234,8 +230,8 @@ class FormViewGenerator extends ViewGenerator
     private function createDefaultInputFieldWrapperElement()
     {
         $inputWrapperEl = $this->domDocument->createElement(Element::DIV);
-        $inputWrapperEl->setAttribute(Attribute::CLASS_NAME,
-            DefaultAttributeValues::CL_SMALL_SCREEN_PREFIX . DefaultAttributeValues::INPUT_WIDTH);
+        /*$inputWrapperEl->setAttribute(Attribute::CLASS_NAME,
+            DefaultAttributeValues::CL_SMALL_SCREEN_PREFIX . DefaultAttributeValues::INPUT_WIDTH);*/
         return $inputWrapperEl;
     }
 
