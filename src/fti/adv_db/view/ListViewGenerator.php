@@ -13,6 +13,7 @@ use DOMElement;
 use fti\adv_db\dom\Attribute;
 use fti\adv_db\dom\Element;
 
+require_once dirname(dirname(__FILE__)) . '/constants/gen_purpose.php';
 require_once dirname(dirname(__FILE__)) . '/functions/auto_loader.php';
 
 spl_autoload_register('class_auto_loader');
@@ -82,7 +83,8 @@ class ListViewGenerator extends ViewGenerator
     private function createTable()
     {
         $tableEl = $this->domDocument->createElement(Element::TABLE);
-        $tableEl->setAttribute(Attribute::CLASS_NAME, 'table table-bordered table-hover');
+        $tableEl->setAttribute(Attribute::CLASS_NAME, 'table table-striped table-bordered table-hover');
+        $tableEl->setAttribute(Attribute::ID, DATA_TABLE_ID);
         $tableHeadEl = $this->createTableHead($this->colNames);
         $tableEl->appendChild($tableHeadEl);
 
@@ -114,7 +116,8 @@ class ListViewGenerator extends ViewGenerator
         $linkEl->setAttribute(Attribute::HREF, $url);
 
         $pullClassName = $isDelete ? 'pull-left' : 'pull-right';
-        $actionIconClassName = $isDelete ? 'fa-user-times' : 'fa-user';
+        // $actionIconClassName = $isDelete ? 'fa-user-times' : 'fa-user';
+        $actionIconClassName = $isDelete ? 'fa-times' : 'fa-user';
         $iconEl = $this->domDocument->createElement(Element::ICON);
         $iconEl->setAttribute(Attribute::CLASS_NAME, "fa $actionIconClassName fa-2x $pullClassName");
         $linkEl->appendChild($iconEl);

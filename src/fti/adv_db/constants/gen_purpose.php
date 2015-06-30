@@ -18,6 +18,7 @@ define('DELETE_DEFAULT_FILE_NAME', 'delete.php');
 define('LIST_DEFAULT_FILE_NAME', 'list.php');
 define('ERROR_DEFAULT_FILE_NAME', 'error.php');
 define('CHANGE_PASSWORD_FILE', 'changePasswordView.php');
+define('DATA_TABLE_ID', 'entity-instances-data-table');
 
 /*
  * Filter

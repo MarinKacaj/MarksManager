@@ -23,9 +23,11 @@ $baseURL = get_assets_base_url();
     <link href="<?php echo $baseURL; ?>css/font-awesome.min.css" rel="stylesheet">
     <link href="<?php echo $baseURL; ?>css/sb-admin-2.css" rel="stylesheet">
     <link href="<?php echo $baseURL; ?>css/metisMenu.min.css" rel="stylesheet">
+    <link href="<?php echo $baseURL; ?>css/dataTables.bootstrap.css" rel="stylesheet">
     <link href="<?php echo $baseURL; ?>fonts/fontawesome-webfont.ttf" rel="stylesheet">
 
     <script type="text/javascript" src="<?php echo $baseURL; ?>js/jquery-1.11.0.min.js"></script>
     <script type="text/javascript" src="<?php echo $baseURL; ?>js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="<?php echo $baseURL; ?>js/metisMenu.min.js"></script>
     <script type="text/javascript" src="<?php echo $baseURL; ?>js/custom.js"></script>
 </head>

@@ -11,7 +11,7 @@ use fti\adv_db\entity\Attendance;
 require_once dirname(dirname(__FILE__)) . '/includes/loader.php';
 require_once dirname(dirname(__FILE__)) . '/pages/createHelper.php';
 
-redirectIfNotSecretary();
+redirectIfNotProfessor();
 
 $entityBuilder = Attendance::getBuilder();
 buildCreateView($entityBuilder);
