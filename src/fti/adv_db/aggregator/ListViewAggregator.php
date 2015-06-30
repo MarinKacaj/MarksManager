@@ -9,11 +9,12 @@
 namespace fti\adv_db\aggregator;
 
 
-use fti\adv_db\entity\BasicEntity;
+use fti\adv_db\entity\Entity;
 use fti\adv_db\property\BasicProperty;
+use fti\adv_db\property\EntityProperty;
 use fti\adv_db\view\ListViewGenerator;
 
-require_once dirname(dirname(__FILE__)) . '/constants/labels.php';
+require_once dirname(dirname(__FILE__)) . '/constants/gen_purpose.php';
 require_once dirname(dirname(__FILE__)) . '/functions/auto_loader.php';
 require_once dirname(dirname(__FILE__)) . '/functions/http_utils.php';
 
@@ -31,24 +32,30 @@ class ListViewAggregator
      */
     private $listViewGenerator;
     /**
-     * @var BasicEntity[]
+     * @var Entity[]
      */
     private $entityInstances;
+    /**
+     * @var bool
+     */
+    private $tableHasActions;
 
     /**
-     * @param BasicEntity[] $entityInstances - must not be empty, should at least be an array of >=1 empty instances
+     * @param Entity[] $entityInstances - must not be empty, should at least be an array of >=1 empty instances
+     * @param bool $tableHasActions [optional]
      */
-    function __construct($entityInstances)
+    function __construct($entityInstances, $tableHasActions = true)
     {
         $this->entityInstances = $entityInstances;
 
         $propertyNames = $this->extractEntityInstanceListPropertiesNames($entityInstances[0]);
-        $this->listViewGenerator = new ListViewGenerator($propertyNames);
+        $this->tableHasActions = $tableHasActions;
+        $this->listViewGenerator = new ListViewGenerator($propertyNames, $tableHasActions);
     }
 
 
     /**
-     * @param BasicEntity $entityInstance
+     * @param Entity $entityInstance
      * @return BasicProperty[]
      */
     private function extractEntityInstanceListProperties($entityInstance)
@@ -67,7 +74,7 @@ class ListViewAggregator
     }
 
     /**
-     * @param BasicEntity $entityInstance
+     * @param Entity $entityInstance
      * @return string[]
      */
     private function extractEntityInstanceListPropertiesNames($entityInstance)
@@ -84,7 +91,7 @@ class ListViewAggregator
     }
 
     /**
-     * @param BasicEntity $entityInstance
+     * @param Entity $entityInstance
      * @return string[]
      */
     private function extractEntityInstanceListPropertiesValues($entityInstance)
@@ -93,7 +100,12 @@ class ListViewAggregator
 
         $listProperties = $this->extractEntityInstanceListProperties($entityInstance);
         foreach ($listProperties as $listProperty) {
-            array_push($listPropertiesValues, $listProperty->getValue());
+            if ($listProperty instanceof EntityProperty) {
+                $value = $listProperty->getEntityInstance()->getDisplayName();
+            } else {
+                $value = $listProperty->getValue();
+            }
+            array_push($listPropertiesValues, $value);
         }
         unset($listProperty);
 

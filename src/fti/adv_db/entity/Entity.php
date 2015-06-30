@@ -8,6 +8,7 @@
 
 namespace fti\adv_db\entity;
 use fti\adv_db\entity\util\EntityBuilderHelper;
+use fti\adv_db\property\BasicProperty;
 
 
 /**
@@ -29,24 +30,20 @@ interface Entity
     public function getEntityName();
 
     /**
-     * @return string[]
+     * @param string $propertyName
+     * @return BasicProperty
      */
-    public static function getPrimaryKeyColNames();
+    public function getProperty($propertyName);
 
     /**
-     * @return Entity
+     * @return BasicProperty[]
      */
-    public function save();
+    public function getProperties();
 
     /**
-     * @return Entity
+     * @return array
      */
-    public function update();
-
-    /**
-     * @return bool
-     */
-    public function delete();
+    public function getIdentifier();
 
     /**
      * @return EntityBuilderHelper

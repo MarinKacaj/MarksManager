@@ -39,6 +39,11 @@ class Result extends BasicEntity
      */
     function __construct($params)
     {
+        $examID = intval($params[self::PROP_EXAM_ID]);
+        $studentID = intval($params[self::PROP_STUDENT_ID]);
+        $examInstance = Exam::getBuilder()->getByIdentifier(array(Exam::PROP_ID => $examID));
+        $studentInstance = Student::getBuilder()->getByIdentifier(array(Student::PROP_ID => $studentID));
+
         $this->label = self::LABEL;
         $this->id = array(
             self::PROP_EXAM_ID => intval($params[self::PROP_EXAM_ID]),
@@ -51,10 +56,12 @@ class Result extends BasicEntity
         }
 
         $this->properties[self::PROP_EXAM_ID] = new EntityProperty(
-            self::PROP_EXAM_ID, 'Provimi', intval($params[self::PROP_EXAM_ID]), Exam::getBuilder()->getList(), true
+            self::PROP_EXAM_ID, 'Provimi', $examID, Exam::getBuilder()->getList(), true,
+            true, $examInstance
         );
         $this->properties[self::PROP_STUDENT_ID] = new EntityProperty(
-            self::PROP_STUDENT_ID, 'Studenti', intval($params[self::PROP_STUDENT_ID]), Student::getBuilder()->getList(), true
+            self::PROP_STUDENT_ID, 'Studenti', $studentID, Student::getBuilder()->getList(), true,
+            true, $studentInstance
         );
         $this->properties[self::PROP_MARK] = new IntegerProperty(
             self::PROP_MARK, 'Nota', $mark, true, true, 4, 10

@@ -25,11 +25,11 @@ class SelectQuery extends CurrentDataQuery
     /**
      * @var string
      */
-    private $projection;
+    protected $projection;
     /**
      * @var string
      */
-    private $tableNames;
+    protected $tableNames;
 
     /**
      * @param string[] $colNames
@@ -48,6 +48,7 @@ class SelectQuery extends CurrentDataQuery
         $this->tableNames = QueryPartsBuilder::buildCSVString($tableNames);
         $this->buildConjunctionWhereClause($filters);
     }
+
 
     /**
      * @return string

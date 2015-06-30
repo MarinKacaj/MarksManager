@@ -7,5 +7,10 @@
  */
 
 require_once dirname(__FILE__) . '/includes/session.php';
+require_once dirname(__FILE__) . '/auth/security.php';
+require_once dirname(dirname(__FILE__)) . '/src/fti/adv_db/constants/gen_purpose.php';
+require_once dirname(dirname(__FILE__)) . '/src/fti/adv_db/functions/auto_loader.php';
 
-echo 'Hi there! This is the dashboard.';
+spl_autoload_register('class_auto_loader');
+
+

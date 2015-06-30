@@ -19,7 +19,7 @@ spl_autoload_register('class_auto_loader');
 redirectIfNotSecretary();
 
 
-$identifier = HttpEntityParamBuilder::retrieveIdentifier(array(Faculty::PROP_ID));
+$identifier = HttpEntityParamBuilder::retrieveFilter(array(Faculty::PROP_ID));
 $facultyInstance = Faculty::getBuilder()->getByIdentifier($identifier);
 $formViewAggregator = new FormViewAggregator($facultyInstance);
 

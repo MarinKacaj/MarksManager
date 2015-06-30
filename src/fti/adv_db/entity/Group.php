@@ -66,6 +66,8 @@ class Group extends BasicEntity
      */
     public function getDisplayName()
     {
-        return $this->getProperty(self::PROP_NAME)->getValue();
+        $departmentID = intval($this->getProperty(self::PROP_DEPARTMENT_ID)->getValue());
+        $departmentInstance = Department::getBuilder()->getByIdentifier(array(Department::PROP_ID => $departmentID));
+        return $this->getProperty(self::PROP_NAME)->getValue() . ' ' . $departmentInstance->getDisplayName();
     }
 }

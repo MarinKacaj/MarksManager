@@ -27,11 +27,12 @@ abstract class CurrentDataQuery extends BasicQuery
     /**
      * @param string $colName
      * @param string $value
+     * @param bool $isValueColName
      * @param string $booleanOperand [optional]
      */
-    private function appendFilter($colName, $value, $booleanOperand = '')
+    private function appendFilter($colName, $value, $isValueColName, $booleanOperand = '')
     {
-        if (!is_numeric($value) && is_string($value)) {
+        if (!is_numeric($value) && is_string($value) && !$isValueColName) {
             $value = "'$value'";
         }
         $filterToAppend = ' ' . $booleanOperand . ' ' . $colName . '=' . $value;
@@ -41,28 +42,31 @@ abstract class CurrentDataQuery extends BasicQuery
     /**
      * @param string $colName
      * @param string $value
+     * @param bool $isValueColName
      */
-    public function appendFirstFilter($colName, $value)
+    public function appendFirstFilter($colName, $value, $isValueColName = false)
     {
-        $this->appendFilter($colName, $value);
+        $this->appendFilter($colName, $value, $isValueColName);
     }
 
     /**
      * @param string $colName
      * @param string $value
+     * @param bool $isValueColName [optional]
      */
-    public function appendAndFilter($colName, $value)
+    public function appendAndFilter($colName, $value, $isValueColName = false)
     {
-        $this->appendFilter($colName, $value, 'AND');
+        $this->appendFilter($colName, $value, $isValueColName, 'AND');
     }
 
     /**
      * @param string $colName
      * @param string $value
+     * @param bool $isValueColName [optional]
      */
-    public function appendOrFilter($colName, $value)
+    public function appendOrFilter($colName, $value, $isValueColName = false)
     {
-        $this->appendFilter($colName, $value, 'OR');
+        $this->appendFilter($colName, $value, $isValueColName, 'OR');
     }
 
     /**

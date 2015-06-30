@@ -40,18 +40,28 @@ class Exam extends BasicEntity
      */
     function __construct($params)
     {
+        $seasonID = intval($params[self::PROP_SEASON_ID]);
+        $subjectID = intval($params[self::PROP_SUBJECT_ID]);
+        $departmentID = intval($params[self::PROP_DEPARTMENT_ID]);
+        $seasonInstance = Season::getBuilder()->getByIdentifier(array(Season::PROP_ID => $seasonID));
+        $subjectInstance = Subject::getBuilder()->getByIdentifier(array(Subject::PROP_ID => $subjectID));
+        $departmentInstance = Department::getBuilder()->getByIdentifier(array(Department::PROP_ID => $departmentID));
+
         $this->label = self::LABEL;
         $this->id = array(self::PROP_ID => $params[self::PROP_ID]);
         $this->properties[self::PROP_ID] = new IntegerProperty(self::PROP_ID, 'ID', $this->id[self::PROP_ID], false, false);
 
         $this->properties[self::PROP_SEASON_ID] = new EntityProperty(
-            self::PROP_SEASON_ID, 'Sezoni', intval($params[self::PROP_SEASON_ID]), Season::getBuilder()->getList(), true
+            self::PROP_SEASON_ID, 'Sezon', intval($params[self::PROP_SEASON_ID]), Season::getBuilder()->getList(), true,
+            true, $seasonInstance
         );
         $this->properties[self::PROP_SUBJECT_ID] = new EntityProperty(
-            self::PROP_SUBJECT_ID, 'Lende', intval($params[self::PROP_SUBJECT_ID]), Subject::getBuilder()->getList(), true
+            self::PROP_SUBJECT_ID, 'Lende', $subjectID, Subject::getBuilder()->getList(), true,
+            true, $subjectInstance
         );
         $this->properties[self::PROP_DEPARTMENT_ID] = new EntityProperty(
-            self::PROP_DEPARTMENT_ID, 'Dege', intval($params[self::PROP_DEPARTMENT_ID]), Department::getBuilder()->getList(), true
+            self::PROP_DEPARTMENT_ID, 'Dege', $departmentID, Department::getBuilder()->getList(), true,
+            true, $departmentInstance
         );
         $this->properties[self::PROP_HEAD_ID] = new EntityProperty(
             self::PROP_HEAD_ID, 'Kryetar Komisioni', intval($params[self::PROP_HEAD_ID]), Professor::getBuilder()->getList(), true
@@ -80,6 +90,6 @@ class Exam extends BasicEntity
      */
     public function getDisplayName()
     {
-        return $this->getProperty(self::PROP_SUBJECT_ID)->getValue();
+        return $this->getProperty(self::PROP_SUBJECT_ID)->getEntityInstance()->getDisplayName();
     }
 }
