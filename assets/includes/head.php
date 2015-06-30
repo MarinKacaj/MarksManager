@@ -29,5 +29,4 @@ $baseURL = get_assets_base_url();
     <script type="text/javascript" src="<?php echo $baseURL; ?>js/jquery-1.11.0.min.js"></script>
     <script type="text/javascript" src="<?php echo $baseURL; ?>js/bootstrap.min.js"></script>
     <script type="text/javascript" src="<?php echo $baseURL; ?>js/metisMenu.min.js"></script>
-    <script type="text/javascript" src="<?php echo $baseURL; ?>js/custom.js"></script>
 </head>
