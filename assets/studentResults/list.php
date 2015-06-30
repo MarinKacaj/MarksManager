@@ -16,5 +16,5 @@ redirectIfNotStudent();
 $entityBuilder = StudentResult::getBuilder();
 $currentlyLoggedInStudent = getCurrentlyLoggedInUser();
 $studentResultInstances = StudentResult::getFilteredList($currentlyLoggedInStudent);
-buildListViewFromList($entityBuilder, $studentResultInstances);
+buildListViewFromList($entityBuilder, $studentResultInstances, false);
 require_once dirname(dirname(__FILE__)) . '/pages/listPage.php';

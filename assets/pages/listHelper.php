@@ -15,15 +15,16 @@ require_once dirname(dirname(__FILE__)) . '/includes/loader.php';
 /**
  * @param EntityBuilderHelper $entityBuilder
  * @param Entity[] $entityInstances
+ * @param bool $tableHasActions [optional]
  */
-function buildListViewFromList($entityBuilder, $entityInstances) {
+function buildListViewFromList($entityBuilder, $entityInstances, $tableHasActions = true) {
 
     $isEmpty = false;
     if (empty($entityInstances)) {
         $isEmpty = true;
         array_push($entityInstances, $entityBuilder->createEmpty());
     }
-    $formViewAggregator = new ListViewAggregator($entityInstances);
+    $formViewAggregator = new ListViewAggregator($entityInstances, $tableHasActions);
 
     $contentHeader = $entityBuilder->getLabel();
     $contentAction = 'Lista';
@@ -36,8 +37,9 @@ function buildListViewFromList($entityBuilder, $entityInstances) {
 
 /**
  * @param EntityBuilderHelper $entityBuilder
+ * @param bool $tableHasActions [optional]
  */
-function buildListView($entityBuilder)
+function buildListView($entityBuilder, $tableHasActions = true)
 {
     $entityInstances = $entityBuilder->getList();
     buildListViewFromList($entityBuilder, $entityInstances);
