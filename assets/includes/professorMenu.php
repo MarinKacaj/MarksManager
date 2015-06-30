@@ -17,6 +17,15 @@ $baseURL = get_assets_base_url();
 <li>
     <a href="<?php echo $baseURL . 'attendance/list.php' ?>">
         Frekuentimi
-        <span class="sr-only">(current)</span>
+    </a>
+</li>
+<li>
+    <a href="<?php echo $baseURL . 'result/filter.php' ?>">
+        Flet&euml; Provimi
+    </a>
+</li>
+<li>
+    <a href="<?php echo $baseURL . 'personal/changePasswordView.php' ?>">
+        Ndrysho fjal&euml;kalimin
     </a>
 </li>

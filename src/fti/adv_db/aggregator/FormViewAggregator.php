@@ -12,7 +12,7 @@ use fti\adv_db\entity\BasicEntity;
 use fti\adv_db\http\HttpEntityParamBuilder;
 use fti\adv_db\view\FormViewGenerator;
 
-require_once dirname(dirname(__FILE__)) . '/constants/labels.php';
+require_once dirname(dirname(__FILE__)) . '/constants/gen_purpose.php';
 require_once dirname(dirname(__FILE__)) . '/functions/auto_loader.php';
 
 spl_autoload_register('class_auto_loader');

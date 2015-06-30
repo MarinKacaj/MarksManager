@@ -19,7 +19,7 @@ spl_autoload_register('class_auto_loader');
 redirectIfNotProfessor();
 
 
-$identifier = HttpEntityParamBuilder::retrieveIdentifier(array(Result::PROP_EXAM_ID, Result::PROP_STUDENT_ID));;
+$identifier = HttpEntityParamBuilder::retrieveFilter(array(Result::PROP_EXAM_ID, Result::PROP_STUDENT_ID));;
 $resultInstance = Result::getBuilder()->getByIdentifier($identifier);
 $formViewAggregator = new FormViewAggregator($resultInstance);
 

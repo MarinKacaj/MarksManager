@@ -25,7 +25,7 @@ class EntityBuilderHelper
     /**
      * @var string
      */
-    private $className;
+    protected $className;
     /**
      * @var string
      */
@@ -78,6 +78,16 @@ class EntityBuilderHelper
     public function getByIdentifier($uniqueIdentifier)
     {
         return $this->filterByParams($uniqueIdentifier);
+    }
+
+    /**
+     * @param array $filterData
+     * @return array
+     */
+    public function filterList($filterData)
+    {
+        $entityInstances = EntityActionHelper::getFilteredList($this->className, $this->tableName, $filterData);
+        return $entityInstances;
     }
 
     /**

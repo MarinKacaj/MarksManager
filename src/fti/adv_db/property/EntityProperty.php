@@ -31,6 +31,10 @@ class EntityProperty extends BasicProperty
      */
     protected $value;
     /**
+     * @var BasicEntity
+     */
+    private $entityInstance;
+    /**
      * @var BasicEntity[]
      */
     private $entityInstances;
@@ -39,20 +43,31 @@ class EntityProperty extends BasicProperty
      * @param string $name
      * @param string $label
      * @param int $value
-     * @param BasicEntity[] $entityInstances
+     * @param BasicEntity[] $entityInstances - NOT EMPTY
      * @param bool $showOnForm
+     * @param bool $showOnList [optional]
+     * @param bool|BasicEntity $entityInstance [optional]
      */
-    function __construct($name, $label, $value, $entityInstances, $showOnForm)
+    function __construct($name, $label, $value, $entityInstances, $showOnForm, $showOnList = false, $entityInstance = false)
     {
-        parent::__construct($name, $name, BasicProperty::ENTITY, $label, $showOnForm, false);
+        parent::__construct($name, $name, BasicProperty::ENTITY, $label, $showOnForm, $showOnList);
 
         $this->value = $value;
         $this->entityInstances = $entityInstances;
+        $this->entityInstance = $entityInstance;
     }
 
 
     /**
      * @return BasicEntity
+     */
+    public function getEntityInstance()
+    {
+        return $this->entityInstance;
+    }
+
+    /**
+     * @return int|string
      */
     public function getValue()
     {

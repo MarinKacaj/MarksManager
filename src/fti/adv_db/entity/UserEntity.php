@@ -9,6 +9,7 @@
 namespace fti\adv_db\entity;
 
 
+use fti\adv_db\property\IntegerProperty;
 use fti\adv_db\property\StringProperty;
 
 require_once dirname(dirname(__FILE__)) . '/functions/auto_loader.php';
@@ -30,8 +31,13 @@ abstract class UserEntity extends BasicEntity
      */
     public function __construct($params)
     {
+        $id = intval($params[self::PROP_ID]);
+        $this->id = array(self::PROP_ID => $id);
+        $this->properties[self::PROP_ID] = new IntegerProperty(self::PROP_ID, 'ID', $id, false, false);
         $this->properties[self::PROP_EMAIL] = new StringProperty(self::PROP_EMAIL, 'Email', $params[self::PROP_EMAIL], true, true);
-        $this->properties[self::PROP_PASSWORD] = new StringProperty(self::PROP_PASSWORD, 'Password', $params[self::PROP_PASSWORD], true, true);
+        if ($id === BasicEntity::UNSAVED_INSTANCE_ID) {
+            $this->properties[self::PROP_PASSWORD] = new StringProperty(self::PROP_PASSWORD, 'Password', $params[self::PROP_PASSWORD], true, true);
+        }
     }
 
 
@@ -51,4 +57,5 @@ abstract class UserEntity extends BasicEntity
     {
         $this->getProperty(self::PROP_PASSWORD)->setValue($password);
     }
+
 }

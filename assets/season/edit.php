@@ -19,7 +19,7 @@ spl_autoload_register('class_auto_loader');
 redirectIfNotSecretary();
 
 
-$identifier = HttpEntityParamBuilder::retrieveIdentifier(array(Season::PROP_ID));
+$identifier = HttpEntityParamBuilder::retrieveFilter(array(Season::PROP_ID));
 $seasonInstance = Season::getBuilder()->getByIdentifier($identifier);
 $formViewAggregator = new FormViewAggregator($seasonInstance);
 

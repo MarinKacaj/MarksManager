@@ -50,6 +50,14 @@ class BooleanProperty extends BasicProperty
     }
 
     /**
+     * @return string
+     */
+    public function getValue()
+    {
+        return ($this->value == '1') ? '&#10003' : '&#10007';
+    }
+
+    /**
      * @param FormViewGenerator $formViewGenerator
      * @param string $name
      */

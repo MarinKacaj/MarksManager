@@ -17,3 +17,4 @@ define('DELETE_DEFAULT_FILE_NAME', 'delete.php');
 define('LIST_DEFAULT_FILE_NAME', 'list.php');
 define('ERROR_DEFAULT_FILE_NAME', 'error.php');
 define('CHANGE_PASSWORD_FILE', 'changePasswordView.php');
+define('RESULT_IS_FOR_IMPROVEMENT', 'is_improvement');

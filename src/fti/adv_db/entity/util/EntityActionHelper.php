@@ -73,13 +73,14 @@ class EntityActionHelper
     /**
      * @param string $entityClassName
      * @param string $entityTableName
-     * @return BasicEntity[]
+     * @param array $filterData
+     * @return array
      */
-    public static function getFullList($entityClassName, $entityTableName)
+    public static function getFilteredList($entityClassName, $entityTableName, $filterData)
     {
         $entityInstances = array();
 
-        $selectQuery = new SelectQuery(array(), array($entityTableName));
+        $selectQuery = new SelectQuery(array(), array($entityTableName), $filterData);
         $resultList = $selectQuery->exec();
         while (($params = $resultList->fetch_assoc()) !== NULL) {
             $entityInstance = new $entityClassName($params);
@@ -87,6 +88,16 @@ class EntityActionHelper
         }
 
         return $entityInstances;
+    }
+
+    /**
+     * @param string $entityClassName
+     * @param string $entityTableName
+     * @return BasicEntity[]
+     */
+    public static function getFullList($entityClassName, $entityTableName)
+    {
+        return self::getFilteredList($entityClassName, $entityTableName, array());
     }
 
     /**
