@@ -95,7 +95,6 @@ class ActionNavigator
         $this->redirectToPath(ERROR_DEFAULT_FILE_NAME);
     }
 
-
     private function redirectToListPage($errorCode = ERROR_NONE)
     {
         $path = LIST_DEFAULT_FILE_NAME;

@@ -30,13 +30,27 @@ $isImprovement = isset($_GET[RESULT_IS_FOR_IMPROVEMENT]) ? true : false;
 $entityBuilder = ExamResult::getBuilder();
 $entityInstances = ExamResult::getFilteredList($seasonID, $subjectID, $groupID, $professorID, $isImprovement);
 
-
 $isEmpty = false;
 if (empty($entityInstances)) {
     $isEmpty = true;
     array_push($entityInstances, $entityBuilder->createEmpty());
+} else {
+    $headProfessor = Professor::getBuilder()->getByIdentifier(
+        array(Professor::PROP_ID => $entityInstances[0]->getProperty(ExamResult::PROP_EXAM_HEAD_ID)->getValue())
+    );
+    $member1Professor = Professor::getBuilder()->getByIdentifier(
+        array(Professor::PROP_ID => $entityInstances[0]->getProperty(ExamResult::PROP_EXAM_MEMBER1_ID)->getValue())
+    );
+    $member2Professor = Professor::getBuilder()->getByIdentifier(
+        array(Professor::PROP_ID => $entityInstances[0]->getProperty(ExamResult::PROP_EXAM_MEMBER2_ID)->getValue())
+    );
 }
 $listViewAggregator = new ListViewAggregator($entityInstances, true);
+$listViewAggregator->setIsUpdateButtonDisplayed(true);
+$listViewAggregator->setIsDeleteButtonDisplayed(false);
+
+$subjectInstance = Subject::getBuilder()->getByIdentifier(array(Subject::PROP_ID => $subjectID));
+$groupInstance = Group::getBuilder()->getByIdentifier(array(Group::PROP_ID => $groupID));
 
 $contentHeader = $entityBuilder->getLabel();
 $contentAction = 'Lista';
@@ -64,6 +78,46 @@ $contentHTML = $listViewAggregator->buildListHTML($isEmpty, false);
                     </div>
                     <div class="panel-body">
                         <?php require_once dirname(dirname(__FILE__)) . '/includes/errorMessage.php'; ?>
+                        <div>
+                            <table class="table table-bordered">
+                                <tr>
+                                    <td><strong><?php echo $groupInstance->getDisplayName(); ?></strong></td>
+                                    <td>
+                                        <strong>Kryetar: </strong>
+                                        <?php
+                                        if (isset($headProfessor)) {
+                                            echo $headProfessor->getDisplayName();
+                                        }
+                                        ?>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <strong>L&euml;nda: </strong>
+                                        <?php echo $subjectInstance->getDisplayName(); ?>
+                                    </td>
+                                    <td>
+                                        <strong>Pedagogu #1: </strong>
+                                        <?php
+                                        if (isset($member1Professor)) {
+                                            echo $member1Professor->getDisplayName();
+                                        }
+                                        ?>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td>
+                                        <strong>Pedagogu #2: </strong>
+                                        <?php
+                                        if (isset($member2Professor)) {
+                                            echo $member2Professor->getDisplayName();
+                                        }
+                                        ?>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
                         <div class="dataTable_wrapper">
                             <?php echo $contentHTML; ?>
                         </div>

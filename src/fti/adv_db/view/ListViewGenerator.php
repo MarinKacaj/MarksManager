@@ -37,6 +37,14 @@ class ListViewGenerator extends ViewGenerator
      * @var bool
      */
     private $tableHasActions;
+    /**
+     * @var boolean
+     */
+    private $isUpdateButtonDisplayed;
+    /**
+     * @var boolean
+     */
+    private $isDeleteButtonDisplayed;
 
     /**
      * @param string[] $colNames
@@ -48,9 +56,47 @@ class ListViewGenerator extends ViewGenerator
 
         $this->colNames = $colNames;
         $this->tableHasActions = $tableHasActions;
+        if ($tableHasActions) {
+            $this->isUpdateButtonDisplayed = true;
+            $this->isDeleteButtonDisplayed = true;
+        } else {
+            $this->isUpdateButtonDisplayed = false;
+            $this->isDeleteButtonDisplayed = false;
+        }
         $this->listContainerEl = $this->domDocument->createElement(Element::TABLE_BODY);
     }
 
+    /**
+     * @return boolean
+     */
+    public function isUpdateButtonDisplayed()
+    {
+        return $this->isUpdateButtonDisplayed;
+    }
+
+    /**
+     * @param boolean $isUpdateButtonDisplayed
+     */
+    public function setIsUpdateButtonDisplayed($isUpdateButtonDisplayed)
+    {
+        $this->isUpdateButtonDisplayed = $isUpdateButtonDisplayed;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isDeleteButtonDisplayed()
+    {
+        return $this->isDeleteButtonDisplayed;
+    }
+
+    /**
+     * @param boolean $isDeleteButtonDisplayed
+     */
+    public function setIsDeleteButtonDisplayed($isDeleteButtonDisplayed)
+    {
+        $this->isDeleteButtonDisplayed = $isDeleteButtonDisplayed;
+    }
 
     /**
      * @return DOMElement
@@ -137,10 +183,14 @@ class ListViewGenerator extends ViewGenerator
 
         if ($this->tableHasActions === true) {
             $cellEl = $this->domDocument->createElement(Element::TABLE_TD);
-            $updateLinkEl = $this->createActionLink($updateURL, false);
-            $cellEl->appendChild($updateLinkEl);
-            $deleteLinkEl = $this->createActionLink($deleteURL, true);
-            $cellEl->appendChild($deleteLinkEl);
+            if ($this->isUpdateButtonDisplayed) {
+                $updateLinkEl = $this->createActionLink($updateURL, false);
+                $cellEl->appendChild($updateLinkEl);
+            }
+            if ($this->isDeleteButtonDisplayed) {
+                $deleteLinkEl = $this->createActionLink($deleteURL, true);
+                $cellEl->appendChild($deleteLinkEl);
+            }
             $tableRowEl->appendChild($cellEl);
         }
 

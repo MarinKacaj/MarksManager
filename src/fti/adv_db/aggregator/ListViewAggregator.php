@@ -55,6 +55,22 @@ class ListViewAggregator
 
 
     /**
+     * @param boolean $isUpdateButtonDisplayed
+     */
+    public function setIsUpdateButtonDisplayed($isUpdateButtonDisplayed)
+    {
+        $this->listViewGenerator->setIsUpdateButtonDisplayed($isUpdateButtonDisplayed);
+    }
+
+    /**
+     * @param boolean $isDeleteButtonDisplayed
+     */
+    public function setIsDeleteButtonDisplayed($isDeleteButtonDisplayed)
+    {
+        $this->listViewGenerator->setIsDeleteButtonDisplayed($isDeleteButtonDisplayed);
+    }
+
+    /**
      * @param Entity $entityInstance
      * @return BasicProperty[]
      */

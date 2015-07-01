@@ -78,13 +78,13 @@ class ExamResult extends CompositeEntity
             self::PROP_STUDENT_FIRST_NAME, 'Emri', $params[self::PROP_STUDENT_FIRST_NAME], false, true
         );
         $this->properties[self::PROP_STUDENT_LAST_NAME] = new StringProperty(
-            self::PROP_STUDENT_LAST_NAME, 'Emri', $params[self::PROP_STUDENT_LAST_NAME], false, true
+            self::PROP_STUDENT_LAST_NAME, 'Mbiemri', $params[self::PROP_STUDENT_LAST_NAME], false, true
         );
         $this->properties[self::PROP_GROUP_NAME] = new StringProperty(
             self::PROP_GROUP_NAME, 'Grupi', $params[self::PROP_GROUP_NAME], false, false
         );
         $this->properties[self::PROP_SUBJECT_NAME] = new StringProperty(
-            self::PROP_SUBJECT_NAME, 'L&eumlnda', $params[self::PROP_SUBJECT_NAME], false, true
+            self::PROP_SUBJECT_NAME, 'L&eumlnda', $params[self::PROP_SUBJECT_NAME], false, false
         );
         $this->properties[self::PROP_AY_START_YEAR] = new StringProperty(
             self::PROP_AY_START_YEAR, 'Viti Akademik', $aySpan, false, true
