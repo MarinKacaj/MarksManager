@@ -90,6 +90,14 @@ abstract class BasicEntity implements Entity
 
     /**
      * @param string $propertyName
+     */
+    public function unsetProperty($propertyName)
+    {
+        unset($this->properties[$propertyName]);
+    }
+
+    /**
+     * @param string $propertyName
      * @return BasicProperty
      */
     public function getProperty($propertyName)

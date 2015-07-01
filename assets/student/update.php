@@ -21,5 +21,6 @@ redirectIfNotSecretary();
 
 $params = HttpEntityParamBuilder::buildParams();
 $studentInstance = new Student($params);
+$studentInstance->unsetPassword();
 $actionNavigator = new ActionNavigator($studentInstance);
 $actionNavigator->updateAndRedirect();

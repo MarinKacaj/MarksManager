@@ -37,27 +37,29 @@ require_once dirname(dirname(__FILE__)) . '/auth/errorCodeSetter.php';
                 <div class="panel panel-default">
                     <div class="panel-heading">Ndrysho</div>
                     <div class="panel-body">
-                        <?php require_once dirname(dirname(__FILE__)) . '/includes/errorMessage.php'; ?>
-                        <div class="row">
-                            <div class="col-lg-4">
-                                <div class="form-group">
-                                    <label for="oldPassword">Fjal&euml;kalimi i vjet&euml;r</label>
-                                    <input type="password" class="form-control" name="<?php echo OLD_PASSWORD; ?>"
-                                           id="oldPassword"/>
+                        <form role="form" action="changePasswordController.php" method="post">
+                            <?php require_once dirname(dirname(__FILE__)) . '/includes/errorMessage.php'; ?>
+                            <div class="row">
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label for="oldPassword">Fjal&euml;kalimi i vjet&euml;r</label>
+                                        <input type="password" class="form-control" name="<?php echo OLD_PASSWORD; ?>"
+                                               id="oldPassword"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="currentPassword">Fjal&euml;kalimi i ri</label>
+                                        <input type="password" class="form-control" name="<?php echo PASSWORD; ?>"
+                                               id="currentPassword"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="currentPasswordConfirmation">Konfirmoni fjal&euml;kalimin e ri</label>
+                                        <input type="password" class="form-control" name="<?php echo PASSWORD_CONFIRMATION; ?>"
+                                               id="currentPasswordConfirmation"/>
+                                    </div>
+                                    <button type="submit" class="btn btn-default">P&euml;rdit&euml;so</button>
                                 </div>
-                                <div class="form-group">
-                                    <label for="currentPassword">Fjal&euml;kalimi i ri</label>
-                                    <input type="password" class="form-control" name="<?php echo PASSWORD; ?>"
-                                           id="currentPassword"/>
-                                </div>
-                                <div class="form-group">
-                                    <label for="currentPasswordConfirmation">Konfirmoni fjal&euml;kalimin e ri</label>
-                                    <input type="password" class="form-control" name="<?php echo PASSWORD_CONFIRMATION; ?>"
-                                           id="currentPasswordConfirmation"/>
-                                </div>
-                                <button type="submit" class="btn btn-default">P&euml;rdit&euml;so</button>
                             </div>
-                        </div>
+                        </form>
                     </div>
                 </div>
             </div>
