@@ -25,11 +25,11 @@ function buildListViewFromList($entityBuilder, $entityInstances, $tableHasAction
         $isEmpty = true;
         array_push($entityInstances, $entityBuilder->createEmpty());
     }
-    $formViewAggregator = new ListViewAggregator($entityInstances, $tableHasActions);
+    $listViewAggregator = new ListViewAggregator($entityInstances, $tableHasActions);
 
     $contentHeader = $entityBuilder->getLabel();
     $contentAction = 'Lista';
-    $contentHTML = $formViewAggregator->buildListHTML($isEmpty, $appendCreateButton);
+    $contentHTML = $listViewAggregator->buildListHTML($isEmpty, $appendCreateButton);
 
     $GLOBALS[CONTENT_HEADER] = $contentHeader;
     $GLOBALS[CONTENT_ACTION] = $contentAction;
