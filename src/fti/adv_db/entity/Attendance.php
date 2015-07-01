@@ -53,7 +53,8 @@ class Attendance extends BasicEntity
             self::PROP_SUBJECT_ID, 'Lende', $this->id[self::PROP_SUBJECT_ID], Subject::getBuilder()->getList(), true
         );
         $this->properties[self::PROP_STUDENT_ID] = new EntityProperty(
-            self::PROP_STUDENT_ID, 'Student', $this->id[self::PROP_STUDENT_ID], Student::getBuilder()->getList(), true
+            self::PROP_STUDENT_ID, 'Student', $this->id[self::PROP_STUDENT_ID], Student::getBuilder()->getList(), true,
+            true, Student::getBuilder()->getByIdentifier(array(Student::PROP_ID => $this->id[self::PROP_STUDENT_ID]))
         );
         $this->properties[self::PROP_DEPARTMENT_ID] = new EntityProperty(
             self::PROP_DEPARTMENT_ID, 'Dege', $this->id[self::PROP_DEPARTMENT_ID], Department::getBuilder()->getList(), true

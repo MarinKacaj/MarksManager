@@ -60,6 +60,7 @@ class Professor extends UserEntity
      */
     public function getDisplayName()
     {
-        return $this->getProperty(self::PROP_FIRST_NAME)->getValue() . ' ' . $this->getProperty(self::PROP_LAST_NAME)->getValue();
+        return $this->getProperty(self::PROP_SC_DEGREE)->getValue() . ' ' .
+        $this->getProperty(self::PROP_FIRST_NAME)->getValue() . ' ' . $this->getProperty(self::PROP_LAST_NAME)->getValue();
     }
 }
