@@ -118,9 +118,13 @@ function getLoggedInUserByCredentials($tableName, $email, $password)
  */
 function getCurrentlyLoggedInUser()
 {
-    $userID = intval($_SESSION[LOGGED_IN_USER_ID]);
-    $userRole = $_SESSION[LOGGED_IN_USER_ROLE];
-    $userIdentifier = array(UserEntity::PROP_ID => $userID);
-    $userInstance = getLoggedInUserByFilter($userRole, $userIdentifier);
-    return $userInstance;
+    if (isset($_SESSION[LOGGED_IN_USER_ID]) && isset($_SESSION[LOGGED_IN_USER_ROLE])) {
+        $userID = intval($_SESSION[LOGGED_IN_USER_ID]);
+        $userRole = $_SESSION[LOGGED_IN_USER_ROLE];
+        $userIdentifier = array(UserEntity::PROP_ID => $userID);
+        $userInstance = getLoggedInUserByFilter($userRole, $userIdentifier);
+        return $userInstance;
+    } else {
+        return false;
+    }
 }

@@ -11,6 +11,7 @@ require_once dirname(dirname(__FILE__)) . '/auth/security.php';
 require_once dirname(dirname(dirname(__FILE__))) . '/src/fti/adv_db/functions/http_utils.php';
 
 $baseURL = get_assets_base_url();
+$loggedInUser = getCurrentlyLoggedInUser();
 
 ?>
 
@@ -34,7 +35,7 @@ $baseURL = get_assets_base_url();
             <!-- /.dropdown -->
             <li class="dropdown">
                 <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                    <i class="fa fa-user fa-fw"></i>  <i class="fa fa-caret-down"></i>
+                    <i class="fa fa-user fa-fw"></i> <?php echo $loggedInUser->getDisplayName(); ?> <i class="fa fa-caret-down"></i>
                 </a>
                 <ul class="dropdown-menu dropdown-user">
                     <li>
