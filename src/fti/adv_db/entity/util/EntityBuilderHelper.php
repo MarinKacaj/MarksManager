@@ -99,5 +99,13 @@ class EntityBuilderHelper
         return $entityInstances;
     }
 
+    /**
+     * @return string
+     */
+    public function getLabel()
+    {
+        return $this->label;
+    }
+
 
 }

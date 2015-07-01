@@ -6,34 +6,15 @@
  * Time: 2:05 PM
  */
 
-use fti\adv_db\aggregator\FormViewAggregator;
 use fti\adv_db\entity\Result;
 use fti\adv_db\http\HttpEntityParamBuilder;
 
-require_once dirname(dirname(__FILE__)) . '/includes/session.php';
-require_once dirname(dirname(__FILE__)) . '/auth/security.php';
-require_once dirname(dirname(dirname(__FILE__))) . '/src/fti/adv_db/functions/auto_loader.php';
-
-spl_autoload_register('class_auto_loader');
+require_once dirname(dirname(__FILE__)) . '/includes/loader.php';
+require_once dirname(dirname(__FILE__)) . '/pages/editHelper.php';
 
 redirectIfNotProfessor();
 
-
 $identifier = HttpEntityParamBuilder::retrieveFilter(array(Result::PROP_EXAM_ID, Result::PROP_STUDENT_ID));;
-$resultInstance = Result::getBuilder()->getByIdentifier($identifier);
-$formViewAggregator = new FormViewAggregator($resultInstance);
-
-?>
-
-<!DOCTYPE html>
-<html>
-<?php require_once dirname(dirname(__FILE__)) . '/includes/head.php'; ?>
-<body>
-<?php require_once dirname(dirname(__FILE__)) . '/includes/navigation.php'; ?>
-<div class="container">
-    <div class="well text-center" id="mainTitle"><h4>P&euml;rdit&euml;so Rezultatin</h4></div>
-    <?php echo $formViewAggregator->buildEntityFormHTML(); ?>
-</div>
-<?php require_once dirname(dirname(__FILE__)) . '/includes/datePickerInit.php'; ?>
-</body>
-</html>
+$entityBuilder = Result::getBuilder();
+buildEditView($entityBuilder, $identifier);
+require_once dirname(dirname(__FILE__)) . '/pages/formPage.php';

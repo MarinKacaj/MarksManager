@@ -26,6 +26,7 @@ spl_autoload_register('class_auto_loader');
 class ExamResult extends CompositeEntity
 {
 
+    const LABEL = 'Flet&euml; Provimi';
     const PROP_STUDENT_ID = Student::PROP_ID;
     const PROP_STUDENT_FIRST_NAME = Student::PROP_FIRST_NAME;
     const PROP_STUDENT_LAST_NAME = Student::PROP_LAST_NAME;
@@ -118,7 +119,7 @@ class ExamResult extends CompositeEntity
      */
     public static function getBuilder()
     {
-        return new EntityBuilderHelper(__CLASS__, '', '');
+        return new EntityBuilderHelper(__CLASS__, '', self::LABEL);
     }
 
     /**

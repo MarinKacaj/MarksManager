@@ -25,6 +25,7 @@ spl_autoload_register('class_auto_loader');
 class StudentResult extends CompositeEntity
 {
 
+    const LABEL = 'Rezultate Studenti';
     const PROP_SUBJECT_NAME = Subject::PROP_NAME;
     const PROP_MARK = Result::PROP_MARK;
 
@@ -64,7 +65,7 @@ class StudentResult extends CompositeEntity
      */
     public static function getBuilder()
     {
-        return new EntityBuilderHelper(__CLASS__, '', '');
+        return new EntityBuilderHelper(__CLASS__, '', self::LABEL);
     }
 
     /**

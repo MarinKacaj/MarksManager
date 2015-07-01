@@ -74,5 +74,9 @@ class DefaultAttributeValues
      */
     const STUDENT_NOT_PRESENT = 0;
 
+    /*
+     * Roles
+     */
+    const ROLE_FORM = 'form';
 
 }

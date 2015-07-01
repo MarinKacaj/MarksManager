@@ -2,11 +2,14 @@
 body {
 
 }
+
 .container {
     width: 100%;
 }
+
 .navbar {
 }
+
 .navbar-brand #logo {
     color: #269abc;
 }
@@ -24,21 +27,28 @@ body {
     color: rgb(203, 65, 84);
 }
 
+.left-text-container .left-text {
+    text-align: left;
+}
+
 /********************************************************************************************************************/
 
-.error-template {
+ .error-template {
     padding: 40px 15px;
     text-align: center;
 }
+
 .error-actions {
-    margin-top:15px;
-    margin-bottom:15px;
+    margin-top: 15px;
+    margin-bottom: 15px;
 }
+
 .error-template img {
     width: 200px;
 }
+
 .error-actions .btn {
-    margin-right:10px;
+    margin-right: 10px;
 }
 
 /*************************************************************FORM*****************************************************************/
@@ -47,17 +57,19 @@ body {
 
 }
 
-
 /*************************************************************MEDIA*****************************************************************/
 @media (max-width: 991px) {
 
 }
+
 @media (min-width: 768px) {
 
 }
+
 @media (max-width: 767px) {
 
 }
+
 @media (max-width: 460px) {
 
 }

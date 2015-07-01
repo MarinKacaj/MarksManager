@@ -7,36 +7,61 @@
  */
 
 require_once dirname(__FILE__) . '/session.php';
+require_once dirname(dirname(__FILE__)) . '/auth/security.php';
 require_once dirname(dirname(dirname(__FILE__))) . '/src/fti/adv_db/functions/http_utils.php';
 
 $baseURL = get_assets_base_url();
 
 ?>
 
-<nav class="navbar navbar-default">
-    <div class="container-fluid">
-        <!-- Brand and toggle get grouped for better mobile display -->
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
-                    data-target="#bs-example-navbar-collapse-1">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="#">
-                <span style="color: #269abc;">UPT </span>MarksManager
-            </a>
-        </div>
+<!-- Navigation -->
+<nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#">
+            <span style="color: #269abc;">UPT </span>MarksManager
+        </a>
+    </div>
+    <!-- /.navbar-header -->
 
-        <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <ul class="nav navbar-nav pull-right">
+    <?php if (isLogInActive()) : ?>
+        <ul class="nav navbar-top-links navbar-right">
+            <!-- /.dropdown -->
+            <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                    <i class="fa fa-user fa-fw"></i>  <i class="fa fa-caret-down"></i>
+                </a>
+                <ul class="dropdown-menu dropdown-user">
+                    <li>
+                        <a href="<?php echo $baseURL . 'personal/changePasswordView.php' ?>">
+                            <i class="fa fa-gear fa-fw"></i> Ndryshoni fjal&euml;kalimin
+                        </a>
+                    </li>
+                    <li class="divider"></li>
+                    <li><a href="<?php echo $baseURL . 'auth/logout.php'; ?>"><i class="fa fa-sign-out fa-fw"></i> Dilni</a>
+                    </li>
+                </ul>
+                <!-- /.dropdown-user -->
+            </li>
+            <!-- /.dropdown -->
+        </ul>
+        <!-- /.navbar-top-links -->
+    <?php endif; ?>
+
+    <div class="navbar-default sidebar" role="navigation">
+        <div class="sidebar-nav navbar-collapse">
+            <ul class="nav" id="side-menu">
                 <?php require_once dirname(__FILE__) . '/menuResolver.php'; ?>
-                <li><a href="<?php echo $baseURL . 'auth/logout.php'; ?>">Dilni</a></li>
             </ul>
         </div>
-        <!-- /.navbar-collapse -->
+        <!-- /.sidebar-collapse -->
     </div>
-    <!-- /.container-fluid -->
+    <!-- /.navbar-static-side -->
 </nav>
+
+<script type="text/javascript" src="<?php echo $baseURL; ?>js/sb-admin-2.js"></script>

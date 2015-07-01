@@ -47,11 +47,19 @@ function redirectIfNotProfessor()
     redirectIfUnauthorized(array(Professor::TABLE_NAME));
 }
 
+/**
+ * @return bool
+ */
+function isLogInActive() {
+    $isLoginActive = isset($_SESSION[LOGGED_IN_USER_ID]) && isset($_SESSION[LOGGED_IN_USER_ROLE]);
+    return $isLoginActive;
+}
+
 function redirectIfLoggedIn()
 {
     $actionNavigator = new ActionNavigator(null);
 
-    if (isset($_SESSION[LOGGED_IN_USER_ID]) && isset($_SESSION[LOGGED_IN_USER_ROLE])) {
+    if (isLogInActive()) {
         $actionNavigator->redirectToMainPage();
     }
 }
@@ -60,7 +68,7 @@ function redirectIfNotLoggedIn()
 {
     $actionNavigator = new ActionNavigator(null);
 
-    if (!isset($_SESSION[LOGGED_IN_USER_ID]) || !isset($_SESSION[LOGGED_IN_USER_ROLE])) {
+    if (!isLogInActive()) {
         $actionNavigator->logOutAndRedirect();
     }
 }
