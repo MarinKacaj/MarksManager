@@ -95,11 +95,16 @@ class ActionNavigator
         $this->redirectToPath(ERROR_DEFAULT_FILE_NAME);
     }
 
+    private function redirectToListPage()
+    {
+        $this->redirectToPath(LIST_DEFAULT_FILE_NAME);
+    }
+
     public function saveAndRedirect()
     {
         try {
             $this->entityInstance->save();
-            $this->redirectToEditPage();
+            $this->redirectToListPage();
         } catch (MySQLException $e) {
             $this->redirectToDefaultErrorPage();
         }
@@ -109,7 +114,7 @@ class ActionNavigator
     {
         try {
             $this->entityInstance->update();
-            $this->redirectToEditPage();
+            $this->redirectToListPage();
         } catch (MySQLException $e) {
             $this->redirectToDefaultErrorPage();
         }
@@ -119,7 +124,7 @@ class ActionNavigator
     {
         try {
             $this->entityInstance->delete();
-            $this->redirectToPath(LIST_DEFAULT_FILE_NAME);
+            $this->redirectToListPage();
         } catch (MySQLException $e) {
             $this->redirectToDefaultErrorPage();
         }

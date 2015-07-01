@@ -16,6 +16,10 @@ require_once dirname(dirname(__FILE__)) . '/functions/auto_loader.php';
 
 spl_autoload_register('class_auto_loader');
 
+/**
+ * Class BasicProperty
+ * @package fti\adv_db\property
+ */
 abstract class BasicProperty implements Property
 {
 
