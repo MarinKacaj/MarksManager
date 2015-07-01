@@ -42,5 +42,5 @@ function buildListViewFromList($entityBuilder, $entityInstances, $tableHasAction
 function buildListView($entityBuilder, $tableHasActions = true)
 {
     $entityInstances = $entityBuilder->getList();
-    buildListViewFromList($entityBuilder, $entityInstances);
+    buildListViewFromList($entityBuilder, $entityInstances, $tableHasActions);
 }
