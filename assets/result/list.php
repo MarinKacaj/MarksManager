@@ -28,5 +28,5 @@ $isImprovement = isset($_GET[RESULT_IS_FOR_IMPROVEMENT]) ? true : false;
 
 $entityBuilder = ExamResult::getBuilder();
 $examResultInstances = ExamResult::getFilteredList($seasonID, $subjectID, $groupID, $professorID, $isImprovement);
-buildListViewFromList($entityBuilder, $examResultInstances);
+buildListViewFromList($entityBuilder, $examResultInstances, true, false);
 require_once dirname(dirname(__FILE__)) . '/pages/listPage.php';

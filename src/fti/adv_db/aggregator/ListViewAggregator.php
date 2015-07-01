@@ -114,9 +114,10 @@ class ListViewAggregator
 
     /**
      * @param bool $isEmpty [optional]
+     * @param bool $appendCreateButton [optional]
      * @return string
      */
-    public function buildListHTML($isEmpty = false)
+    public function buildListHTML($isEmpty = false, $appendCreateButton = true)
     {
         if (!$isEmpty) {
             foreach ($this->entityInstances as $entityInstance) {
@@ -128,7 +129,7 @@ class ListViewAggregator
             unset($entityInstance);
         }
 
-        return $this->listViewGenerator->getBuiltHTML();
+        return $this->listViewGenerator->getBuiltHTML($appendCreateButton);
     }
 
 

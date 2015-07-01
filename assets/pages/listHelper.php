@@ -16,8 +16,9 @@ require_once dirname(dirname(__FILE__)) . '/includes/loader.php';
  * @param EntityBuilderHelper $entityBuilder
  * @param Entity[] $entityInstances
  * @param bool $tableHasActions [optional]
+ * @param bool $appendCreateButton [optional]
  */
-function buildListViewFromList($entityBuilder, $entityInstances, $tableHasActions = true) {
+function buildListViewFromList($entityBuilder, $entityInstances, $tableHasActions = true, $appendCreateButton = true) {
 
     $isEmpty = false;
     if (empty($entityInstances)) {
@@ -28,7 +29,7 @@ function buildListViewFromList($entityBuilder, $entityInstances, $tableHasAction
 
     $contentHeader = $entityBuilder->getLabel();
     $contentAction = 'Lista';
-    $contentHTML = $formViewAggregator->buildListHTML($isEmpty);
+    $contentHTML = $formViewAggregator->buildListHTML($isEmpty, $appendCreateButton);
 
     $GLOBALS[CONTENT_HEADER] = $contentHeader;
     $GLOBALS[CONTENT_ACTION] = $contentAction;
@@ -38,9 +39,10 @@ function buildListViewFromList($entityBuilder, $entityInstances, $tableHasAction
 /**
  * @param EntityBuilderHelper $entityBuilder
  * @param bool $tableHasActions [optional]
+ * @param bool $appendCreateButton [optional]
  */
-function buildListView($entityBuilder, $tableHasActions = true)
+function buildListView($entityBuilder, $tableHasActions = true, $appendCreateButton = true)
 {
     $entityInstances = $entityBuilder->getList();
-    buildListViewFromList($entityBuilder, $entityInstances, $tableHasActions);
+    buildListViewFromList($entityBuilder, $entityInstances, $tableHasActions, $appendCreateButton);
 }
