@@ -1,4 +1,26 @@
 <?php
+
+use fti\adv_db\entity\Professor;
+use fti\adv_db\entity\Secretary;
+use fti\adv_db\entity\Student;
+
+require_once dirname(__FILE__) . '/includes/loader.php';
+
+$baseURL = get_assets_base_url();
+$path = '';
+$actor = $_SESSION[LOGGED_IN_USER_ROLE];
+switch ($actor) {
+    case Student::TABLE_NAME:
+        $path = $baseURL . 'studentResults/list.php';
+        break;
+    case Professor::TABLE_NAME:
+        $path = $baseURL . 'result/filter.php';
+        break;
+    case Secretary::TABLE_NAME:
+        $path = $baseURL . 'university/list.php';
+        break;
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -23,17 +45,17 @@
         <div class="col-md-12">
             <div class="error-template">
                 <img class="center-block" src="img/fella-not-found.png">
-                <h1>Oops!</h1>
-                <h2>404 Not Found</h2>
+                <h1></h1>
+                <h2>Problem i p&euml;rkohsh&euml;m teknik</h2>
                 <div class="error-details">
-                    Sorry, an error has occured, Requested page not found!
+                    Keni hasur nj&euml; defekt teknik. Kontaktoni administrator&euml;t.
                 </div>
                 <div class="error-actions">
-                    <a href="#" class="btn btn-primary btn-lg"><span class="fa fa-home"></span>
-                        Take Me Home
+                    <a href="<?php echo $path; ?>" class="btn btn-primary btn-lg"><span class="fa fa-home"></span>
+                        Kthehuni mbrapa
                     </a>
-                    <a href="#" class="btn btn-default btn-lg"><span class="fa fa-envelope-o"></span>
-                        Contact Support
+                    <a href="mailto:axhuvani@fti.edu.al" class="btn btn-default btn-lg"><span class="fa fa-envelope-o"></span>
+                        Kontaktoni mir&euml;mbajtjen
                     </a>
                 </div>
             </div>

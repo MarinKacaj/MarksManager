@@ -92,7 +92,7 @@ class ActionNavigator
 
     private function redirectToDefaultErrorPage()
     {
-        $this->redirectToPath(ERROR_DEFAULT_FILE_NAME);
+        $this->redirectToPath($this->assetsBaseURL . ERROR_DEFAULT_FILE_NAME);
     }
 
     private function redirectToListPage($errorCode = ERROR_NONE)
