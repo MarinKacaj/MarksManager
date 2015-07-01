@@ -31,3 +31,10 @@ define('RESULT_IS_FOR_IMPROVEMENT', 'is_improvement');
 define('CONTENT_HEADER', 'content_header');
 define('CONTENT_ACTION', 'content_action');
 define('CONTENT_HTML', 'content_html');
+
+/*
+ * Error codes
+ */
+define('ERROR_NONE', 0);
+define('REPORT_CODE', 'report_code');
+define('MYSQL_ERROR_FOREIGN_KEY_CONSTRAINT_VIOLATED', 1451);

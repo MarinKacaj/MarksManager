@@ -10,7 +10,6 @@ define('EMAIL', 'username');
 define('PASSWORD', 'password');
 define('ACTOR', 'actor');
 
-define('REPORT_CODE', 'report_code');
 define('REPORT_LOGIN_ERROR_INVALID_CREDENTIALS', 1);
 define('REPORT_LOGGED_OUT', 2);
 define('REPORT_PASSWORD_MISMATCH', 3);

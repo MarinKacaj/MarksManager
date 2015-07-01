@@ -95,9 +95,15 @@ class ActionNavigator
         $this->redirectToPath(ERROR_DEFAULT_FILE_NAME);
     }
 
-    private function redirectToListPage()
+
+    private function redirectToListPage($errorCode = ERROR_NONE)
     {
-        $this->redirectToPath(LIST_DEFAULT_FILE_NAME);
+        $path = LIST_DEFAULT_FILE_NAME;
+        if ($errorCode !== ERROR_NONE) {
+            $errorArgs = http_build_str(array(REPORT_CODE => $errorCode));
+            $path .= '?' . $errorArgs;
+        }
+        $this->redirectToPath($path);
     }
 
     public function saveAndRedirect()
@@ -126,7 +132,7 @@ class ActionNavigator
             $this->entityInstance->delete();
             $this->redirectToListPage();
         } catch (MySQLException $e) {
-            $this->redirectToDefaultErrorPage();
+            $this->redirectToListPage($e->getErrorNumber());
         }
     }
 

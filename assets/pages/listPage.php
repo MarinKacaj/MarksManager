@@ -7,14 +7,19 @@
  */
 
 require_once dirname(dirname(__FILE__)) . '/includes/session.php';
+require_once dirname(dirname(__FILE__)) . '/auth/security.php';
 require_once dirname(dirname(dirname(__FILE__))) . '/src/fti/adv_db/functions/http_utils.php';
-
+require_once dirname(dirname(dirname(__FILE__))) . '/src/fti/adv_db/constants/gen_purpose.php';
 
 $baseURL = get_assets_base_url();
 
 $contentHeader = $GLOBALS[CONTENT_HEADER];
 $contentAction = $GLOBALS[CONTENT_ACTION];
 $contentHTML = $GLOBALS[CONTENT_HTML];
+
+if (isset($_GET[REPORT_CODE])) {
+    $GLOBALS[REPORT_CODE] = intval($_GET[REPORT_CODE]);
+}
 
 ?>
 
@@ -37,6 +42,7 @@ $contentHTML = $GLOBALS[CONTENT_HTML];
                         <?php echo $contentAction; ?>
                     </div>
                     <div class="panel-body">
+                        <?php require_once dirname(dirname(__FILE__)) . '/includes/errorMessage.php'; ?>
                         <div class="dataTable_wrapper">
                             <?php echo $contentHTML; ?>
                         </div>

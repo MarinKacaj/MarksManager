@@ -14,6 +14,10 @@ $contentHeader = $GLOBALS[CONTENT_HEADER];
 $contentAction = $GLOBALS[CONTENT_ACTION];
 $contentHTML = $GLOBALS[CONTENT_HTML];
 
+if (isset($_GET[REPORT_CODE])) {
+    $GLOBALS[REPORT_CODE] = intval($_GET[REPORT_CODE]);
+}
+
 ?>
 
 

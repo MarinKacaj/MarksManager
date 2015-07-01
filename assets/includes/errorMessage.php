@@ -8,6 +8,7 @@
 
 require_once dirname(__FILE__) . '/session.php';
 require_once dirname(dirname(dirname(__FILE__))) . '/src/fti/adv_db/constants/auth.php';
+require_once dirname(dirname(dirname(__FILE__))) . '/src/fti/adv_db/constants/gen_purpose.php';
 
 $errorMessage = '';
 
@@ -22,6 +23,9 @@ if (isset($GLOBALS[REPORT_CODE])) {
             break;
         case REPORT_PASSWORD_MISMATCH:
             $errorMessage = 'S&euml; paku nj&euml;ri nga fjal&euml;kalimet nuk p&euml;puthet!';
+            break;
+        case MYSQL_ERROR_FOREIGN_KEY_CONSTRAINT_VIOLATED:
+            $errorMessage = 'Elementi nuk mund t&euml; fshihet. Element&euml; t&euml; tjer&euml; varen prej tij.';
             break;
     }
 }
