@@ -14,7 +14,7 @@ use fti\adv_db\entity\Secretary;
 use fti\adv_db\entity\Student;
 use fti\adv_db\entity\UserEntity;
 use fti\adv_db\exceptions\MySQLException;
-use fti\adv_db\http\HttpEntityParamBuilder;
+use InvalidArgumentException;
 
 require_once dirname(dirname(dirname(dirname(dirname(__FILE__))))) . '/assets/includes/session.php';
 
@@ -81,27 +81,52 @@ class ActionNavigator
         $this->redirectForError('auth/login.php', $message);
     }
 
-    private function redirectToEditPage()
-    {
-        $updatePath = HttpEntityParamBuilder::buildArgumentsRelativePath(
-            EDIT_DEFAULT_FILE_NAME,
-            $this->entityInstance->getIdentifier()
-        );
-        $this->redirectToPath($updatePath);
-    }
-
     private function redirectToDefaultErrorPage()
     {
         $this->redirectToPath($this->assetsBaseURL . ERROR_DEFAULT_FILE_NAME);
     }
 
-    private function redirectToListPage($errorCode = ERROR_NONE)
+    /**
+     * @param string $path
+     * @param int $errorCode
+     * @return string
+     */
+    private function buildErrorPath($path, $errorCode)
     {
-        $path = LIST_DEFAULT_FILE_NAME;
         if ($errorCode !== ERROR_NONE) {
             $errorArgs = http_build_str(array(REPORT_CODE => $errorCode));
             $path .= '?' . $errorArgs;
         }
+        return $path;
+    }
+
+    /**
+     * @param int $errorCode [optional]
+     */
+    private function redirectToListPage($errorCode = ERROR_NONE)
+    {
+        $path = LIST_DEFAULT_FILE_NAME;
+        $path = $this->buildErrorPath($path, $errorCode);
+        $this->redirectToPath($path);
+    }
+
+    /**
+     * @param int $errorCode [optional]
+     */
+    private function redirectToCreatePage($errorCode = ERROR_NONE)
+    {
+        $path = CREATE_DEFAULT_FILE_NAME;
+        $path = $this->buildErrorPath($path, $errorCode);
+        $this->redirectToPath($path);
+    }
+
+    /**
+     * @param int $errorCode [optional]
+     */
+    private function redirectToEditPage($errorCode = ERROR_NONE)
+    {
+        $path = EDIT_DEFAULT_FILE_NAME;
+        $path = $this->buildErrorPath($path, $errorCode);
         $this->redirectToPath($path);
     }
 
@@ -110,8 +135,10 @@ class ActionNavigator
         try {
             $this->entityInstance->save();
             $this->redirectToListPage();
+        } catch (InvalidArgumentException $e) {
+            $this->redirectToCreatePage($e->getCode());
         } catch (MySQLException $e) {
-            $this->redirectToDefaultErrorPage();
+            $this->redirectToCreatePage($e->getCode());
         }
     }
 
@@ -120,8 +147,10 @@ class ActionNavigator
         try {
             $this->entityInstance->update();
             $this->redirectToListPage();
+        } catch (InvalidArgumentException $e) {
+            $this->redirectToEditPage($e->getCode());
         } catch (MySQLException $e) {
-            $this->redirectToDefaultErrorPage();
+            $this->redirectToEditPage($e->getCode());
         }
     }
 
@@ -130,8 +159,10 @@ class ActionNavigator
         try {
             $this->entityInstance->delete();
             $this->redirectToListPage();
+        } catch (InvalidArgumentException $e) {
+            $this->redirectToEditPage($e->getCode());
         } catch (MySQLException $e) {
-            $this->redirectToListPage($e->getErrorNumber());
+            $this->redirectToEditPage($e->getCode());
         }
     }
 

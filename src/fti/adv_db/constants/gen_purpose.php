@@ -38,3 +38,4 @@ define('CONTENT_HTML', 'content_html');
 define('ERROR_NONE', 0);
 define('REPORT_CODE', 'report_code');
 define('MYSQL_ERROR_FOREIGN_KEY_CONSTRAINT_VIOLATED', 1451);
+define('EXAM_ERROR_CONSTRAINT_VIOLATION', -1);

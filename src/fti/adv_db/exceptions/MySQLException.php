@@ -42,11 +42,14 @@ class MySQLException extends Exception
      */
     function __construct($errorNumber = self::DEFAULT_ERROR_CODE, $message = '')
     {
-        $this->errorNumber = $errorNumber;
+        $this->code = $errorNumber;
         $this->message = $message;
     }
 
 
+    /**
+     * @return int
+     */
     public function getErrorNumber()
     {
         return $this->errorNumber;

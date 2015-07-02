@@ -27,6 +27,9 @@ if (isset($GLOBALS[REPORT_CODE])) {
         case MYSQL_ERROR_FOREIGN_KEY_CONSTRAINT_VIOLATED:
             $errorMessage = 'Elementi nuk mund t&euml; fshihet. Element&euml; t&euml; tjer&euml; varen prej tij.';
             break;
+        case EXAM_ERROR_CONSTRAINT_VIOLATION:
+            $errorMessage = 'Pedagog&euml;t nuk mund t&euml; jen&euml; i nj&euml;jti person.';
+            break;
     }
 }
 ?>

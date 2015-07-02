@@ -13,7 +13,9 @@ use fti\adv_db\entity\util\EntityActionHelper;
 use fti\adv_db\entity\util\EntityBuilderHelper;
 use fti\adv_db\property\EntityProperty;
 use fti\adv_db\property\IntegerProperty;
+use InvalidArgumentException;
 
+require_once dirname(dirname(__FILE__)) . '/constants/gen_purpose.php';
 require_once dirname(dirname(__FILE__)) . '/functions/auto_loader.php';
 
 spl_autoload_register('class_auto_loader');
@@ -35,11 +37,22 @@ class Exam extends BasicEntity
     const PROP_MEMBER1_ID = 'id_antar1';
     const PROP_MEMBER2_ID = 'id_antar2';
 
+    private $headID;
+    private $member1ID;
+    private $member2ID;
+
     /**
      * @param array $params
      */
     function __construct($params)
     {
+        if (!isset($params[self::PROP_ID])) {
+            $params[self::PROP_ID] = BasicEntity::UNSAVED_INSTANCE_ID;
+        }
+
+        $headID = intval($params[self::PROP_HEAD_ID]);
+        $member1ID = intval($params[self::PROP_MEMBER1_ID]);
+        $member2ID = intval($params[self::PROP_MEMBER2_ID]);
         $seasonID = intval($params[self::PROP_SEASON_ID]);
         $subjectID = intval($params[self::PROP_SUBJECT_ID]);
         $departmentID = intval($params[self::PROP_DEPARTMENT_ID]);
@@ -47,10 +60,13 @@ class Exam extends BasicEntity
         $subjectInstance = Subject::getBuilder()->getByIdentifier(array(Subject::PROP_ID => $subjectID));
         $departmentInstance = Department::getBuilder()->getByIdentifier(array(Department::PROP_ID => $departmentID));
 
+        $this->headID = $headID;
+        $this->member1ID = $member1ID;
+        $this->member2ID = $member2ID;
+
         $this->label = self::LABEL;
         $this->id = array(self::PROP_ID => $params[self::PROP_ID]);
         $this->properties[self::PROP_ID] = new IntegerProperty(self::PROP_ID, 'ID', $this->id[self::PROP_ID], false, false);
-
         $this->properties[self::PROP_SEASON_ID] = new EntityProperty(
             self::PROP_SEASON_ID, 'Sezon', intval($params[self::PROP_SEASON_ID]), Season::getBuilder()->getList(), true,
             true, $seasonInstance
@@ -64,13 +80,13 @@ class Exam extends BasicEntity
             true, $departmentInstance
         );
         $this->properties[self::PROP_HEAD_ID] = new EntityProperty(
-            self::PROP_HEAD_ID, 'Kryetar Komisioni', intval($params[self::PROP_HEAD_ID]), Professor::getBuilder()->getList(), true
+            self::PROP_HEAD_ID, 'Kryetar Komisioni', $headID, Professor::getBuilder()->getList(), true
         );
         $this->properties[self::PROP_MEMBER1_ID] = new EntityProperty(
-            self::PROP_MEMBER1_ID, 'Anetar 1', intval($params[self::PROP_MEMBER1_ID]), Professor::getBuilder()->getList(), true
+            self::PROP_MEMBER1_ID, 'An&euml;tar 1', $member1ID, Professor::getBuilder()->getList(), true
         );
         $this->properties[self::PROP_MEMBER2_ID] = new EntityProperty(
-            self::PROP_MEMBER2_ID, 'Anetar 2', intval($params[self::PROP_MEMBER2_ID]), Professor::getBuilder()->getList(), true
+            self::PROP_MEMBER2_ID, 'An&euml;tar 2', $member2ID, Professor::getBuilder()->getList(), true
         );
 
         $this->actionHelper = new EntityActionHelper(self::TABLE_NAME, $this);
@@ -92,4 +108,31 @@ class Exam extends BasicEntity
     {
         return $this->getProperty(self::PROP_SUBJECT_ID)->getEntityInstance()->getDisplayName();
     }
+
+    private function validateProfessors()
+    {
+        if (($this->headID === $this->member1ID || $this->headID === $this->member2ID || $this->member1ID === $this->member2ID)) {
+            throw new InvalidArgumentException('Professors must not be the same', EXAM_ERROR_CONSTRAINT_VIOLATION);
+        }
+    }
+
+    /**
+     * @return Exam
+     */
+    public function save()
+    {
+        $this->validateProfessors();
+        return parent::save();
+    }
+
+    /**
+     * @return Exam
+     */
+    public function update()
+    {
+        $this->validateProfessors();
+        return parent::update();
+    }
+
+
 }
