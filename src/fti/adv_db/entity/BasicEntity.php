@@ -110,6 +110,15 @@ abstract class BasicEntity implements Entity
     }
 
     /**
+     * @param $propertyName
+     * @param $propertyValue
+     */
+    public function setProperty($propertyName, $propertyValue)
+    {
+        $this->getProperty($propertyName)->setValue($propertyValue);
+    }
+
+    /**
      * @return BasicProperty[]
      */
     public function getProperties()

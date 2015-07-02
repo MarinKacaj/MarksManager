@@ -73,4 +73,18 @@ class QueryPartsBuilder
         $fullyQualifiedColName = $tableName . '.' . $colName;
         return $fullyQualifiedColName;
     }
+
+    /**
+     * This static method sucks. TODO - find a better solution
+     *
+     * @param string $firstTableName
+     * @param string $firstColName
+     * @param string $secondTableName
+     * @param string $secondColName
+     * @return string
+     */
+    public static function buildColEq($firstTableName, $firstColName, $secondTableName, $secondColName)
+    {
+        return "$firstTableName.$firstColName = $secondTableName.$secondColName";
+    }
 }

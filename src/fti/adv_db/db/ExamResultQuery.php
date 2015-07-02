@@ -9,14 +9,13 @@
 namespace fti\adv_db\db;
 
 
-use fti\adv_db\db\util\QueryPartsBuilder;
+use fti\adv_db\db\util\QueryPartsBuilder as QBuilder;
 use fti\adv_db\entity\AcademicYear;
 use fti\adv_db\entity\Attendance;
 use fti\adv_db\entity\Department;
 use fti\adv_db\entity\Exam;
 use fti\adv_db\entity\ExamResult;
 use fti\adv_db\entity\Group;
-use fti\adv_db\entity\Professor;
 use fti\adv_db\entity\Result;
 use fti\adv_db\entity\Season;
 use fti\adv_db\entity\Student;
@@ -34,11 +33,6 @@ class ExamResultQuery extends SelectQuery
 {
 
     /**
-     * @var string
-     */
-    private $profMembersQueryPart;
-
-    /**
      * @param int $seasonID
      * @param int $subjectID
      * @param int $groupID
@@ -53,52 +47,66 @@ class ExamResultQuery extends SelectQuery
         $subjectID = intval($subjectID);
         $groupID = intval($groupID);
         $professorID = intval($professorID);
-        $isImprovement = (bool)$isImprovement;
+        $isImprovement = (bool) $isImprovement;
 
         $colNames = array(
-            QueryPartsBuilder::buildColName(Student::TABLE_NAME, Student::PROP_ID . ' AS ' . ExamResult::PROP_STUDENT_ID),
-            QueryPartsBuilder::buildColName(Student::TABLE_NAME, Student::PROP_FIRST_NAME),
-            QueryPartsBuilder::buildColName(Student::TABLE_NAME, Student::PROP_LAST_NAME),
-            QueryPartsBuilder::buildColName(Result::TABLE_NAME, Result::PROP_DATE),
-            QueryPartsBuilder::buildColName(Result::TABLE_NAME, Result::PROP_MARK),
-            QueryPartsBuilder::buildColName(Group::TABLE_NAME, Group::PROP_NAME),
-            QueryPartsBuilder::buildColName(Department::TABLE_NAME, Department::PROP_NAME),
-            QueryPartsBuilder::buildColName(AcademicYear::TABLE_NAME, AcademicYear::PROP_YEAR),
-            QueryPartsBuilder::buildColName(Subject::TABLE_NAME, Subject::PROP_NAME),
-            QueryPartsBuilder::buildColName(Exam::TABLE_NAME, Exam::PROP_ID . ' AS ' . ExamResult::PROP_EXAM_ID),
-            QueryPartsBuilder::buildColName(Exam::TABLE_NAME, Exam::PROP_HEAD_ID),
-            QueryPartsBuilder::buildColName(Exam::TABLE_NAME, Exam::PROP_MEMBER1_ID),
-            QueryPartsBuilder::buildColName(Exam::TABLE_NAME, Exam::PROP_MEMBER2_ID)
+            QBuilder::buildColName(Student::TABLE_NAME, Student::PROP_ID . ' AS ' . ExamResult::PROP_STUDENT_ID),
+            QBuilder::buildColName(Student::TABLE_NAME, Student::PROP_FIRST_NAME),
+            QBuilder::buildColName(Student::TABLE_NAME, Student::PROP_LAST_NAME),
+            QBuilder::buildColName(Result::TABLE_NAME, Result::PROP_DATE),
+            QBuilder::buildColName(Result::TABLE_NAME, Result::PROP_MARK),
+            QBuilder::buildColName(Group::TABLE_NAME, Group::PROP_NAME),
+            QBuilder::buildColName(Department::TABLE_NAME, Department::PROP_NAME),
+            QBuilder::buildColName(AcademicYear::TABLE_NAME, AcademicYear::PROP_YEAR),
+            QBuilder::buildColName(Subject::TABLE_NAME, Subject::PROP_NAME),
+            QBuilder::buildColName(Exam::TABLE_NAME, Exam::PROP_ID . ' AS ' . ExamResult::PROP_EXAM_ID),
+            QBuilder::buildColName(Exam::TABLE_NAME, Exam::PROP_HEAD_ID),
+            QBuilder::buildColName(Exam::TABLE_NAME, Exam::PROP_MEMBER1_ID),
+            QBuilder::buildColName(Exam::TABLE_NAME, Exam::PROP_MEMBER2_ID)
         );
-        $this->projection = QueryPartsBuilder::buildCSVString($colNames);
+        $this->projection = QBuilder::buildCSVString($colNames);
 
         $tableNames = array(
-            AcademicYear::TABLE_NAME, Season::TABLE_NAME, Group::TABLE_NAME, Subject::TABLE_NAME, Professor::TABLE_NAME,
-            Exam::TABLE_NAME, Student::TABLE_NAME, Department::TABLE_NAME, Result::TABLE_NAME, Attendance::TABLE_NAME
+            AcademicYear::TABLE_NAME
         );
-        $this->tableNames = QueryPartsBuilder::buildCSVString($tableNames);
+        $this->tableNames = QBuilder::buildCSVString($tableNames);
+        $this->joinTableWith(Group::TABLE_NAME, QBuilder::buildColEq(AcademicYear::TABLE_NAME, AcademicYear::PROP_ID, Group::TABLE_NAME, Group::PROP_START_AY_ID));
+        $this->joinTableWith(Student::TABLE_NAME, QBuilder::buildColEq(Group::TABLE_NAME, Group::PROP_ID, Student::TABLE_NAME, Student::PROP_GROUP_ID));
+        $this->joinTableWith(Department::TABLE_NAME, QBuilder::buildColEq(Department::TABLE_NAME, Department::PROP_ID, Group::TABLE_NAME, Group::PROP_DEPARTMENT_ID));
+        $this->joinTableWith(Exam::TABLE_NAME, QBuilder::buildColEq(Department::TABLE_NAME, Department::PROP_ID, Exam::TABLE_NAME, Exam::PROP_DEPARTMENT_ID));
+        $this->joinTableWith(Season::TABLE_NAME, QBuilder::buildColEq(Season::TABLE_NAME, Season::PROP_ID, Exam::TABLE_NAME, Exam::PROP_SEASON_ID));
+        $this->joinTableWith(Subject::TABLE_NAME, QBuilder::buildColEq(Subject::TABLE_NAME, Subject::PROP_ID, Exam::TABLE_NAME, Exam::PROP_SUBJECT_ID));
+        $this->joinTableWith(Attendance::TABLE_NAME, QBuilder::buildColEq(Subject::TABLE_NAME, Subject::PROP_ID, Attendance::TABLE_NAME, Attendance::PROP_SUBJECT_ID));
+        $resultStudentFilter = QBuilder::buildColEq(Student::TABLE_NAME, Student::PROP_ID, Result::TABLE_NAME, Result::PROP_STUDENT_ID);
+        $resultExamFilter = QBuilder::buildColEq(Exam::TABLE_NAME, Exam::PROP_ID, Result::TABLE_NAME, Result::PROP_EXAM_ID);
+        $this->joinTableWith(Result::TABLE_NAME, $resultExamFilter . ' AND ' . $resultStudentFilter, 'LEFT JOIN');
 
         $filters = array(
-            QueryPartsBuilder::buildColName(Group::TABLE_NAME, Group::PROP_ID) => $groupID,
+            QBuilder::buildColName(Group::TABLE_NAME, Group::PROP_ID) => $groupID,
         );
         $this->buildConjunctionWhereClause($filters);
-        $this->appendAndFilter(QueryPartsBuilder::buildColName(Result::TABLE_NAME, Result::PROP_EXAM_ID), QueryPartsBuilder::buildColName(Exam::TABLE_NAME, Exam::PROP_ID), true);
-        $this->appendAndFilter(QueryPartsBuilder::buildColName(Result::TABLE_NAME, Result::PROP_STUDENT_ID), QueryPartsBuilder::buildColName(Student::TABLE_NAME, Student::PROP_ID), true);
-        $this->appendAndFilter(QueryPartsBuilder::buildColName(Student::TABLE_NAME, Student::PROP_GROUP_ID), QueryPartsBuilder::buildColName(Group::TABLE_NAME, Group::PROP_ID), true);
 
-        $this->appendAndFilter(QueryPartsBuilder::buildColName(Exam::TABLE_NAME, Exam::PROP_SEASON_ID), QueryPartsBuilder::buildColName(Season::TABLE_NAME, Season::PROP_ID), true);
-        $this->appendAndFilter(QueryPartsBuilder::buildColName(Season::TABLE_NAME, Season::PROP_ID), $seasonID);
+        $this->appendAndFilter(QBuilder::buildColName(Season::TABLE_NAME, Season::PROP_ID), $seasonID);
+        $this->appendAndFilter(QBuilder::buildColName(Subject::TABLE_NAME, Subject::PROP_ID), $subjectID);
 
-        $this->appendAndFilter(QueryPartsBuilder::buildColName(Exam::TABLE_NAME, Exam::PROP_SUBJECT_ID), QueryPartsBuilder::buildColName(Subject::TABLE_NAME, Subject::PROP_ID), true);
-        $this->appendAndFilter(QueryPartsBuilder::buildColName(Subject::TABLE_NAME, Subject::PROP_ID), $subjectID);
-        $this->appendAndFilter(QueryPartsBuilder::buildColName(Professor::TABLE_NAME, Professor::PROP_ID), $professorID);
-        $this->appendAndFilter(QueryPartsBuilder::buildColName(Attendance::TABLE_NAME, Attendance::PROP_SUBJECT_ID), QueryPartsBuilder::buildColName(Subject::TABLE_NAME, Subject::PROP_ID), true);
-        $this->appendAndFilter(QueryPartsBuilder::buildColName(Attendance::TABLE_NAME, Attendance::PROP_ASSIGNMENT), '1');
-        $this->appendAndFilter(QueryPartsBuilder::buildColName(Attendance::TABLE_NAME, Attendance::PROP_LAB), '1');
-        $this->appendAndFilter(QueryPartsBuilder::buildColName(Attendance::TABLE_NAME, Attendance::PROP_SEMINARIES), '1');
-        $this->appendAndFilter(QueryPartsBuilder::buildColName(Attendance::TABLE_NAME, Attendance::PROP_STATUS), $isImprovement ? '1' : '0');
+        $this->appendAndFilter(QBuilder::buildColName(Attendance::TABLE_NAME, Attendance::PROP_ASSIGNMENT), '1');
+        $this->appendAndFilter(QBuilder::buildColName(Attendance::TABLE_NAME, Attendance::PROP_LAB), '1');
+        $this->appendAndFilter(QBuilder::buildColName(Attendance::TABLE_NAME, Attendance::PROP_SEMINARIES), '1');
+        $this->appendAndFilter(QBuilder::buildColName(Attendance::TABLE_NAME, Attendance::PROP_STATUS), $isImprovement ? '1' : '0');
 
-        $this->appendAndFilter(QueryPartsBuilder::buildColName(Exam::TABLE_NAME, Exam::PROP_HEAD_ID), $professorID);
+        $this->appendAndFilter(QBuilder::buildColName(Exam::TABLE_NAME, Exam::PROP_HEAD_ID), $professorID);
+    }
+
+
+    /**
+     * @param string $tableName
+     * @param string $condition
+     * @param string $joinKeyword [optional]
+     */
+    public function joinTableWith($tableName, $condition, $joinKeyword = 'INNER JOIN')
+    {
+        $joinClause = " $joinKeyword $tableName ON $condition";
+        $this->tableNames .= $joinClause;
     }
 
     /**

@@ -17,9 +17,14 @@ redirectIfNotProfessor();
 
 $previousURL = $_GET[PREVIOUS_URL];
 $previousURLArg = http_build_str(array(PREVIOUS_URL => $previousURL));
-$identifier = HttpEntityParamBuilder::retrieveFilter(array(Result::PROP_EXAM_ID, Result::PROP_STUDENT_ID));;
+$identifier = HttpEntityParamBuilder::retrieveFilter(array(Result::PROP_EXAM_ID, Result::PROP_STUDENT_ID));
 $entityBuilder = Result::getBuilder();
 $entityInstance = $entityBuilder->getByIdentifier($identifier);
+if (!$entityInstance) {
+    $entityInstance = $entityBuilder->createEmpty();
+}
+$entityInstance->setProperty(Result::PROP_EXAM_ID, $identifier[Result::PROP_EXAM_ID]);
+$entityInstance->setProperty(Result::PROP_STUDENT_ID, $identifier[Result::PROP_STUDENT_ID]);
 $formViewAggregator = new FormViewAggregator($entityInstance, $previousURLArg);
 
 $contentHeader = $entityBuilder->getLabel();

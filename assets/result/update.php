@@ -34,12 +34,21 @@ function build_error_path($errorCode, $previousURL)
     return $path;
 }
 
-$listURL = $_GET[PREVIOUS_URL];
-$listURL = urldecode($listURL);
+$identifier = HttpEntityParamBuilder::retrieveFilter(array(Result::PROP_EXAM_ID, Result::PROP_STUDENT_ID));
+$currentResultInstance = Result::getBuilder()->getByIdentifier($identifier);
+
 $params = HttpEntityParamBuilder::buildParams();
 $resultInstance = new Result($params);
+
+$listURL = $_GET[PREVIOUS_URL];
+$listURL = urldecode($listURL);
+
 try {
-    $resultInstance->update();
+    if ($currentResultInstance) {
+        $resultInstance->update();
+    } else {
+        $resultInstance->save();
+    }
     header("Location: $listURL");
 } catch (InvalidArgumentException $e) {
     $path = build_error_path($e->getCode(), $listURL);
