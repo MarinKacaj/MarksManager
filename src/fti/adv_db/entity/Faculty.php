@@ -14,6 +14,7 @@ use fti\adv_db\entity\util\EntityBuilderHelper;
 use fti\adv_db\property\EntityProperty;
 use fti\adv_db\property\IntegerProperty;
 use fti\adv_db\property\StringProperty;
+use InvalidArgumentException;
 
 require_once dirname(dirname(__FILE__)) . '/functions/auto_loader.php';
 
@@ -36,14 +37,19 @@ class Faculty extends BasicEntity
     const PROP_SECRETARY_ID = 'sekretar';
     const PROP_UNIVERSITY_ID = 'id_ial';
 
+    private $headSecretaryID;
+    private $secretaryID;
+
     /**
      * @param array $params
      */
     function __construct($params)
     {
-        $this->entityName = __CLASS__;
-        $this->tableName = self::TABLE_NAME;
-        $this->label = self::LABEL;
+        $headSecretaryID = intval($params[self::PROP_HEAD_SECRETARY_ID]);
+        $secretaryID = intval($params[self::PROP_SECRETARY_ID]);
+
+        $this->headSecretaryID = $headSecretaryID;
+        $this->secretaryID = $secretaryID;
 
         $this->properties = array();
         $this->id = array(self::PROP_ID => $params[self::PROP_ID]);
@@ -55,11 +61,11 @@ class Faculty extends BasicEntity
         );
         $this->properties[self::PROP_HEAD_SECRETARY_ID] = new EntityProperty(
             self::PROP_HEAD_SECRETARY_ID, 'Krye Sekretarja',
-            intval($params[self::PROP_HEAD_SECRETARY_ID]), Secretary::getBuilder()->getList(), true
+            $headSecretaryID, Secretary::getBuilder()->getList(), true
         );
         $this->properties[self::PROP_SECRETARY_ID] = new EntityProperty(
             self::PROP_SECRETARY_ID, 'Sekretarja',
-            intval($params[self::PROP_SECRETARY_ID]), Secretary::getBuilder()->getList(), true
+            $secretaryID, Secretary::getBuilder()->getList(), true
         );
         $this->properties[self::PROP_UNIVERSITY_ID] = new EntityProperty(
             self::PROP_UNIVERSITY_ID, 'Universiteti', $params[self::PROP_UNIVERSITY_ID], University::getBuilder()->getList(), true
@@ -83,6 +89,31 @@ class Faculty extends BasicEntity
     public function getDisplayName()
     {
         return $this->getProperty(self::PROP_NAME)->getValue();
+    }
+
+    private function validateSecretaries()
+    {
+        if ($this->headSecretaryID === $this->secretaryID) {
+            throw new InvalidArgumentException('Secretaries must not be the same', FACULTY_ERROR_CONSTRAINT_VIOLATION);
+        }
+    }
+
+    /**
+     * @return Exam
+     */
+    public function save()
+    {
+        $this->validateSecretaries();
+        return parent::save();
+    }
+
+    /**
+     * @return Exam
+     */
+    public function update()
+    {
+        $this->validateSecretaries();
+        return parent::update();
     }
 
 
