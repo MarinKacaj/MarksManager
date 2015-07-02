@@ -108,7 +108,8 @@ class Exam extends BasicEntity
      */
     public function getDisplayName()
     {
-        return $this->getProperty(self::PROP_SUBJECT_ID)->getEntityInstance()->getDisplayName();
+        return $this->getProperty(self::PROP_SUBJECT_ID)->getEntityInstance()->getDisplayName() . ', ' .
+        $this->getProperty(self::PROP_SEASON_ID)->getEntityInstance()->getDisplayName();
     }
 
     private function validateProfessors()
