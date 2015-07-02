@@ -9,6 +9,7 @@
 namespace fti\adv_db\entity;
 
 
+use fti\adv_db\db\AttendanceQuery;
 use fti\adv_db\entity\util\EntityActionHelper;
 use fti\adv_db\entity\util\EntityBuilderHelper;
 use fti\adv_db\property\BooleanProperty;
@@ -74,9 +75,23 @@ class Attendance extends BasicEntity
     }
 
 
+    /**
+     * @param int $professorID
+     * @return Attendance[]
+     */
     public static function getList($professorID)
     {
+        $attendanceQuery = new AttendanceQuery($professorID);
+        $resultList = $attendanceQuery->exec();
+        $studentSubjectAttendances = array();
 
+        foreach ($resultList as $params) {
+            $attendance = new Attendance($params, true);
+            array_push($studentSubjectAttendances, $attendance);
+        }
+        unset($params);
+
+        return $studentSubjectAttendances;
     }
 
     /**
@@ -93,7 +108,6 @@ class Attendance extends BasicEntity
     public function getDisplayName()
     {
         return $this->getProperty(self::PROP_SUBJECT_ID)->getValue() . '#' .
-        $this->getProperty(self::PROP_DEPARTMENT_ID)->getValue() . '#' .
         $this->getProperty(self::PROP_STUDENT_ID)->getValue();
     }
 }

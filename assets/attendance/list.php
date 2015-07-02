@@ -6,6 +6,7 @@
  * Time: 1:07 AM
  */
 
+use fti\adv_db\aggregator\ListViewAggregator;
 use fti\adv_db\entity\Attendance;
 
 require_once dirname(dirname(__FILE__)) . '/includes/loader.php';
@@ -14,5 +15,22 @@ require_once dirname(dirname(__FILE__)) . '/pages/listHelper.php';
 redirectIfNotProfessor();
 
 $entityBuilder = Attendance::getBuilder();
-buildListView($entityBuilder, true, true);
+$entityInstances = Attendance::getList(1);
+$isEmpty = false;
+if (empty($entityInstances)) {
+    $isEmpty = true;
+    array_push($entityInstances, $entityBuilder->createEmpty());
+}
+$listViewAggregator = new ListViewAggregator($entityInstances, true);
+$listViewAggregator->setIsUpdateButtonDisplayed(true);
+$listViewAggregator->setIsDeleteButtonDisplayed(false);
+
+$contentHeader = $entityBuilder->getLabel();
+$contentAction = 'Lista';
+$contentHTML = $listViewAggregator->buildListHTML($isEmpty, false);
+
+$GLOBALS[CONTENT_HEADER] = $contentHeader;
+$GLOBALS[CONTENT_ACTION] = $contentAction;
+$GLOBALS[CONTENT_HTML] = $contentHTML;
+
 require_once dirname(dirname(__FILE__)) . '/pages/listPage.php';
