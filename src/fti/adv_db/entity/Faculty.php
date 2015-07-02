@@ -45,6 +45,8 @@ class Faculty extends BasicEntity
      */
     function __construct($params)
     {
+        $this->label = 'NJK';
+
         $headSecretaryID = intval($params[self::PROP_HEAD_SECRETARY_ID]);
         $secretaryID = intval($params[self::PROP_SECRETARY_ID]);
 
