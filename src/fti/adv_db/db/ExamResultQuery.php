@@ -96,11 +96,7 @@ class ExamResultQuery extends SelectQuery
         $this->appendAndFilter(QueryPartsBuilder::buildColName(Attendance::TABLE_NAME, Attendance::PROP_SEMINARIES), '1');
         $this->appendAndFilter(QueryPartsBuilder::buildColName(Attendance::TABLE_NAME, Attendance::PROP_STATUS), $isImprovement ? '1' : '0');
 
-        $headIDQualifiedName = QueryPartsBuilder::buildColName(Exam::TABLE_NAME, Exam::PROP_HEAD_ID);
-        $m1IDQualifiedName = QueryPartsBuilder::buildColName(Exam::TABLE_NAME, Exam::PROP_MEMBER1_ID);
-        $m2IDQualifiedName = QueryPartsBuilder::buildColName(Exam::TABLE_NAME, Exam::PROP_MEMBER2_ID);
-        $profMembersQueryPart = "($headIDQualifiedName = $professorID OR $m1IDQualifiedName = $professorID OR $m2IDQualifiedName = $professorID)";
-        $this->profMembersQueryPart = $profMembersQueryPart;
+        $this->appendAndFilter(QueryPartsBuilder::buildColName(Exam::TABLE_NAME, Exam::PROP_HEAD_ID), $professorID);
     }
 
     /**
@@ -109,7 +105,7 @@ class ExamResultQuery extends SelectQuery
     public function getQuery()
     {
         $studentIDQualifiedName = QueryPartsBuilder::buildColName(Student::TABLE_NAME, Student::PROP_ID);
-        $query = "SELECT {$this->projection} FROM {$this->tableNames} WHERE {$this->selection} AND {$this->profMembersQueryPart} GROUP BY $studentIDQualifiedName";
+        $query = "SELECT {$this->projection} FROM {$this->tableNames} WHERE {$this->selection} GROUP BY $studentIDQualifiedName";
         return $query;
     }
 
