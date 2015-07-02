@@ -15,7 +15,7 @@ require_once dirname(dirname(__FILE__)) . '/pages/editHelper.php';
 redirectIfNotProfessor();
 
 $identifier = HttpEntityParamBuilder::retrieveFilter(array(
-        Attendance::PROP_DEPARTMENT_ID, Attendance::PROP_STUDENT_ID, Attendance::PROP_SUBJECT_ID
+        Attendance::PROP_STUDENT_ID, Attendance::PROP_SUBJECT_ID
     )
 );
 $entityBuilder = Attendance::getBuilder();
