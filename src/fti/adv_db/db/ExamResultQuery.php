@@ -106,8 +106,7 @@ class ExamResultQuery extends SelectQuery
      */
     public function getQuery()
     {
-        $studentIDQualifiedName = ExamResult::PROP_STUDENT_ID;
-        $query = "SELECT {$this->projection} FROM {$this->tableNames} WHERE {$this->selection} GROUP BY $studentIDQualifiedName";
+        $query = "SELECT {$this->projection} FROM {$this->tableNames} WHERE {$this->selection}";
         return $query;
     }
 
