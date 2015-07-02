@@ -356,17 +356,24 @@ class FormViewGenerator extends ViewGenerator
         $containerEl = $this->createFieldBlockContainer();
         $id = $this->genUniqueID();
 
-        $labelEl = $this->createLabel($label, DefaultAttributeValues::GENERIC_ID_PREFIX . $id);
-        $containerEl->appendChild($labelEl);
+        $innerContainerEl = $this->domDocument->createElement(Element::DIV);
+        $innerContainerEl->setAttribute(Attribute::CLASS_NAME, 'checkbox');
 
-        $inputWrapperEl = $this->createDefaultInputFieldWrapperElement();
-        $inputEl = $this->createInput($name, $value, DefaultAttributeValues::TYPE_CHECKBOX, $id);
+        $labelEl = $this->domDocument->createElement(Element::LABEL);
+
+        $inputEl = $this->domDocument->createElement(Element::INPUT);
+        $inputEl->setAttribute(Attribute::TYPE, DefaultAttributeValues::TYPE_CHECKBOX);
+        $inputEl->setAttribute(Attribute::ID, $id);
         if ($value == 1) {
             $inputEl->setAttribute(Attribute::CHECKED, DefaultAttributeValues::CHECKED);
         }
-        $inputWrapperEl->appendChild($inputEl);
 
-        $containerEl->appendChild($inputWrapperEl);
+        $textEl = $this->domDocument->createTextNode($label);
+
+        $labelEl->appendChild($inputEl);
+        $labelEl->appendChild($textEl);
+        $innerContainerEl->appendChild($labelEl);
+        $containerEl->appendChild($innerContainerEl);
 
         return $containerEl;
     }
