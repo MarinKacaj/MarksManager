@@ -35,12 +35,14 @@ class FormViewAggregator
 
     /**
      * @param BasicEntity $entityInstance
+     * @param string $extraActionArgs [optional]
      */
-    function __construct($entityInstance)
+    function __construct($entityInstance, $extraActionArgs = '')
     {
         $this->entityInstance = $entityInstance;
 
         $action = HttpEntityParamBuilder::buildFormAction($entityInstance);
+        $action .= '&' . $extraActionArgs;
         $title = $this->entityInstance->getEntityName();
         $this->formViewGenerator = new FormViewGenerator($title, $action);
     }

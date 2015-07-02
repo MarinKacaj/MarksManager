@@ -40,6 +40,10 @@ class ListViewAggregator
      * @var bool
      */
     private $tableHasActions;
+    /**
+     * @var array
+     */
+    private $commonParams;
 
     /**
      * @param Entity[] $entityInstances - must not be empty, should at least be an array of >=1 empty instances
@@ -69,6 +73,22 @@ class ListViewAggregator
     public function setIsDeleteButtonDisplayed($isDeleteButtonDisplayed)
     {
         $this->listViewGenerator->setIsDeleteButtonDisplayed($isDeleteButtonDisplayed);
+    }
+
+    /**
+     * @return array
+     */
+    public function getCommonParams()
+    {
+        return $this->commonParams;
+    }
+
+    /**
+     * @param array $commonParams
+     */
+    public function setCommonParams($commonParams)
+    {
+        $this->commonParams = $commonParams;
     }
 
     /**
@@ -141,8 +161,12 @@ class ListViewAggregator
         if (!$isEmpty) {
             foreach ($this->entityInstances as $entityInstance) {
                 $values = $this->extractEntityInstanceListPropertiesValues($entityInstance);
-                $deleteURL = DELETE_DEFAULT_FILE_NAME . '?' . http_build_str($entityInstance->getIdentifier());
-                $updateURL = EDIT_DEFAULT_FILE_NAME . '?' . http_build_str($entityInstance->getIdentifier());
+                $actionParams = $entityInstance->getIdentifier();
+                if ($this->commonParams) {
+                    $actionParams = array_merge($actionParams, $this->commonParams);
+                }
+                $deleteURL = DELETE_DEFAULT_FILE_NAME . '?' . http_build_str($actionParams);
+                $updateURL = EDIT_DEFAULT_FILE_NAME . '?' . http_build_str($actionParams);
                 $this->listViewGenerator->appendRow($values, $deleteURL, $updateURL);
             }
             unset($entityInstance);

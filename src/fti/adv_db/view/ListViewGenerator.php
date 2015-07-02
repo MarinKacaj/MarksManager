@@ -175,6 +175,17 @@ class ListViewGenerator extends ViewGenerator
      * @param string[] $values
      * @param string $deleteURL [optional]
      * @param string $updateURL [optional]
+     */
+    public function appendRow($values, $deleteURL = '', $updateURL = '')
+    {
+        $tableRowEl = $this->createRow($values, $deleteURL, $updateURL);
+        $this->listContainerEl->appendChild($tableRowEl);
+    }
+
+    /**
+     * @param string[] $values
+     * @param string $deleteURL [optional]
+     * @param string $updateURL [optional]
      * @return DOMElement
      */
     public function createRow($values, $deleteURL = '', $updateURL = '')
@@ -203,17 +214,6 @@ class ListViewGenerator extends ViewGenerator
         unset($value);
 
         return $tableRowEl;
-    }
-
-    /**
-     * @param string[] $values
-     * @param string $deleteURL [optional]
-     * @param string $updateURL [optional]
-     */
-    public function appendRow($values, $deleteURL = '', $updateURL = '')
-    {
-        $tableRowEl = $this->createRow($values, $deleteURL, $updateURL);
-        $this->listContainerEl->appendChild($tableRowEl);
     }
 
     /**

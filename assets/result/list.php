@@ -22,10 +22,13 @@ redirectIfNotProfessor();
 $currentlyLoggedInProfessor = getCurrentlyLoggedInUser();
 $professorID = $currentlyLoggedInProfessor->getProperty(Professor::PROP_ID)->getValue();
 $filters = HttpEntityParamBuilder::retrieveFilter(array(Season::TABLE_NAME, Subject::TABLE_NAME, Group::TABLE_NAME));
-$seasonID = intval($filters[Season::TABLE_NAME]);
-$subjectID = intval($filters[Subject::TABLE_NAME]);
-$groupID = intval($filters[Group::TABLE_NAME]);
+$seasonID = $filters[Season::TABLE_NAME] = intval($filters[Season::TABLE_NAME]);
+$subjectID = $filters[Subject::TABLE_NAME] = intval($filters[Subject::TABLE_NAME]);
+$groupID = $filters[Group::TABLE_NAME] = intval($filters[Group::TABLE_NAME]);
 $isImprovement = isset($_GET[RESULT_IS_FOR_IMPROVEMENT]) ? true : false;
+if (isset($_GET[RESULT_IS_FOR_IMPROVEMENT])) {
+    $filters[RESULT_IS_FOR_IMPROVEMENT] = true;
+}
 
 $entityBuilder = ExamResult::getBuilder();
 $entityInstances = ExamResult::getFilteredList($seasonID, $subjectID, $groupID, $professorID, $isImprovement);
@@ -48,6 +51,12 @@ if (empty($entityInstances)) {
 $listViewAggregator = new ListViewAggregator($entityInstances, true);
 $listViewAggregator->setIsUpdateButtonDisplayed(true);
 $listViewAggregator->setIsDeleteButtonDisplayed(false);
+$baseURL = get_assets_base_url();
+$listDefaultFileName = LIST_DEFAULT_FILE_NAME;
+$filterArgs = http_build_str($filters);
+$previousURL = $baseURL . "result/$listDefaultFileName?$filterArgs";
+$previousURL = urlencode($previousURL);
+$listViewAggregator->setCommonParams(array(PREVIOUS_URL => $previousURL));
 
 $subjectInstance = Subject::getBuilder()->getByIdentifier(array(Subject::PROP_ID => $subjectID));
 $groupInstance = Group::getBuilder()->getByIdentifier(array(Group::PROP_ID => $groupID));

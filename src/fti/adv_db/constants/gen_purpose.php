@@ -9,6 +9,7 @@
 /*
  * General
  */
+define('PREVIOUS_URL', 'previous_url');
 define('CREATE_BUTTON_TEXT', 'Ruaj');
 define('CREATE_DEFAULT_FILE_NAME', 'create.php');
 define('SAVE_DEFAULT_FILE_NAME', 'save.php');

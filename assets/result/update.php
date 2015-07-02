@@ -7,8 +7,8 @@
  */
 
 use fti\adv_db\entity\Result;
+use fti\adv_db\exceptions\MySQLException;
 use fti\adv_db\http\HttpEntityParamBuilder;
-use fti\adv_db\nav\ActionNavigator;
 
 require_once dirname(dirname(__FILE__)) . '/includes/session.php';
 require_once dirname(dirname(__FILE__)) . '/auth/security.php';
@@ -18,8 +18,33 @@ spl_autoload_register('class_auto_loader');
 
 redirectIfNotProfessor();
 
+/**
+ * @param int $errorCode
+ * @param string $previousURL
+ * @return string
+ */
+function build_error_path($errorCode, $previousURL)
+{
+    $path = EDIT_DEFAULT_FILE_NAME;
+    $args = http_build_str(array(
+        REPORT_CODE => $errorCode,
+        PREVIOUS_URL => $previousURL
+    ));
+    $path = $path . '?' . $args;
+    return $path;
+}
 
+$listURL = $_GET[PREVIOUS_URL];
+$listURL = urldecode($listURL);
 $params = HttpEntityParamBuilder::buildParams();
 $resultInstance = new Result($params);
-$actionNavigator = new ActionNavigator($resultInstance);
-$actionNavigator->updateAndRedirect();
+try {
+    $resultInstance->update();
+    header("Location: $listURL");
+} catch (InvalidArgumentException $e) {
+    $path = build_error_path($e->getCode(), $listURL);
+    header("Location: $path");
+} catch (MySQLException $e) {
+    $path = build_error_path($e->getCode(), $listURL);
+    header("Location: $path");
+}
