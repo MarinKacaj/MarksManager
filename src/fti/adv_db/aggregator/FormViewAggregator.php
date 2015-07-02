@@ -43,7 +43,11 @@ class FormViewAggregator
 
         $action = HttpEntityParamBuilder::buildFormAction($entityInstance);
         if ($extraActionArgs) {
-            $action .= '&' . $extraActionArgs;
+            if (strpos($action, '?') === false) {
+                $action .= '?' . $extraActionArgs;
+            } else {
+                $action .= '&' . $extraActionArgs;
+            }
         }
         $title = $this->entityInstance->getEntityName();
         $this->formViewGenerator = new FormViewGenerator($title, $action);
