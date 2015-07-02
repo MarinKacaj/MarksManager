@@ -14,5 +14,5 @@ require_once dirname(dirname(__FILE__)) . '/pages/listHelper.php';
 redirectIfNotProfessor();
 
 $entityBuilder = Attendance::getBuilder();
-buildListView($entityBuilder, true, false);
+buildListView($entityBuilder, true, true);
 require_once dirname(dirname(__FILE__)) . '/pages/listPage.php';
