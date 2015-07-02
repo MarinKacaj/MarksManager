@@ -76,7 +76,9 @@ class ExamResultQuery extends SelectQuery
         $this->joinTableWith(Exam::TABLE_NAME, QBuilder::buildColEq(Department::TABLE_NAME, Department::PROP_ID, Exam::TABLE_NAME, Exam::PROP_DEPARTMENT_ID));
         $this->joinTableWith(Season::TABLE_NAME, QBuilder::buildColEq(Season::TABLE_NAME, Season::PROP_ID, Exam::TABLE_NAME, Exam::PROP_SEASON_ID));
         $this->joinTableWith(Subject::TABLE_NAME, QBuilder::buildColEq(Subject::TABLE_NAME, Subject::PROP_ID, Exam::TABLE_NAME, Exam::PROP_SUBJECT_ID));
-        $this->joinTableWith(Attendance::TABLE_NAME, QBuilder::buildColEq(Subject::TABLE_NAME, Subject::PROP_ID, Attendance::TABLE_NAME, Attendance::PROP_SUBJECT_ID));
+        $attendanceSubjectFilter = QBuilder::buildColEq(Subject::TABLE_NAME, Subject::PROP_ID, Attendance::TABLE_NAME, Attendance::PROP_SUBJECT_ID);
+        $attendanceStudentFilter = QBuilder::buildColEq(Student::TABLE_NAME, Student::PROP_ID, Attendance::TABLE_NAME, Attendance::PROP_STUDENT_ID);
+        $this->joinTableWith(Attendance::TABLE_NAME, $attendanceStudentFilter . ' AND ' . $attendanceSubjectFilter);
         $resultStudentFilter = QBuilder::buildColEq(Student::TABLE_NAME, Student::PROP_ID, Result::TABLE_NAME, Result::PROP_STUDENT_ID);
         $resultExamFilter = QBuilder::buildColEq(Exam::TABLE_NAME, Exam::PROP_ID, Result::TABLE_NAME, Result::PROP_EXAM_ID);
         $this->joinTableWith(Result::TABLE_NAME, $resultExamFilter . ' AND ' . $resultStudentFilter, 'LEFT JOIN');
