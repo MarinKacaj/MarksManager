@@ -34,8 +34,9 @@ class Student extends UserEntity
 
     /**
      * @param array $params
+     * @param bool $isPartOfList [optional]
      */
-    function __construct($params)
+    function __construct($params, $isPartOfList = false)
     {
         parent::__construct($params);
 
@@ -43,10 +44,11 @@ class Student extends UserEntity
         $this->properties[self::PROP_FIRST_NAME] = new StringProperty(self::PROP_FIRST_NAME, 'Emri', $params[self::PROP_FIRST_NAME], true, true);
         $this->properties[self::PROP_LAST_NAME] = new StringProperty(self::PROP_LAST_NAME, 'Mbiemri', $params[self::PROP_LAST_NAME], true, true);
         $this->properties[self::PROP_GROUP_ID] = new EntityProperty(
-            self::PROP_GROUP_ID, 'Grupi', intval($params[self::PROP_GROUP_ID]), Group::getBuilder()->getList(), true
+            self::PROP_GROUP_ID, 'Grupi', intval($params[self::PROP_GROUP_ID]), Group::getBuilder()->getList($isPartOfList), true
         );
 
         $this->actionHelper = new EntityActionHelper(self::TABLE_NAME, $this);
+        $this->isPartOfList = $isPartOfList;
     }
 
 

@@ -83,7 +83,7 @@ class EntityActionHelper
         $selectQuery = new SelectQuery(array(), array($entityTableName), $filterData);
         $resultList = $selectQuery->exec();
         while (($params = $resultList->fetch_assoc()) !== NULL) {
-            $entityInstance = new $entityClassName($params);
+            $entityInstance = new $entityClassName($params, false);
             array_push($entityInstances, $entityInstance);
         }
 

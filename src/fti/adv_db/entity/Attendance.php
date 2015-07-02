@@ -38,10 +38,12 @@ class Attendance extends BasicEntity
 
     /**
      * @param array $params
+     * @param bool $isPartOfList [optional]
      */
-    function __construct($params)
+    function __construct($params, $isPartOfList = false)
     {
         $this->label = self::LABEL;
+        $this->isPartOfList = $isPartOfList;
 
         $this->id = array(
             self::PROP_SUBJECT_ID => intval($params[self::PROP_SUBJECT_ID]),
@@ -50,14 +52,14 @@ class Attendance extends BasicEntity
         );
 
         $this->properties[self::PROP_SUBJECT_ID] = new EntityProperty(
-            self::PROP_SUBJECT_ID, 'Lende', $this->id[self::PROP_SUBJECT_ID], Subject::getBuilder()->getList(), true
+            self::PROP_SUBJECT_ID, 'Lende', $this->id[self::PROP_SUBJECT_ID], Subject::getBuilder()->getList($isPartOfList), true
         );
         $this->properties[self::PROP_STUDENT_ID] = new EntityProperty(
-            self::PROP_STUDENT_ID, 'Student', $this->id[self::PROP_STUDENT_ID], Student::getBuilder()->getList(), true,
+            self::PROP_STUDENT_ID, 'Student', $this->id[self::PROP_STUDENT_ID], Student::getBuilder()->getList($isPartOfList), true,
             true, Student::getBuilder()->getByIdentifier(array(Student::PROP_ID => $this->id[self::PROP_STUDENT_ID]))
         );
         $this->properties[self::PROP_DEPARTMENT_ID] = new EntityProperty(
-            self::PROP_DEPARTMENT_ID, 'Dege', $this->id[self::PROP_DEPARTMENT_ID], Department::getBuilder()->getList(), true
+            self::PROP_DEPARTMENT_ID, 'Dege', $this->id[self::PROP_DEPARTMENT_ID], Department::getBuilder()->getList($isPartOfList), true
         );
         $this->properties[self::PROP_SEMINARIES] = new BooleanProperty(
             self::PROP_SEMINARIES, 'Frekuentim Seminaresh', $params, self::PROP_SEMINARIES, true, true

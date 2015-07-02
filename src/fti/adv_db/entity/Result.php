@@ -36,8 +36,9 @@ class Result extends BasicEntity
 
     /**
      * @param array $params
+     * @param bool $isPartOfList [optional]
      */
-    function __construct($params)
+    function __construct($params, $isPartOfList = false)
     {
         $examID = intval($params[self::PROP_EXAM_ID]);
         $studentID = intval($params[self::PROP_STUDENT_ID]);
@@ -56,11 +57,11 @@ class Result extends BasicEntity
         }
 
         $this->properties[self::PROP_EXAM_ID] = new EntityProperty(
-            self::PROP_EXAM_ID, 'Provimi', $examID, Exam::getBuilder()->getList(), true,
+            self::PROP_EXAM_ID, 'Provimi', $examID, Exam::getBuilder()->getList($isPartOfList), true,
             true, $examInstance
         );
         $this->properties[self::PROP_STUDENT_ID] = new EntityProperty(
-            self::PROP_STUDENT_ID, 'Studenti', $studentID, Student::getBuilder()->getList(), true,
+            self::PROP_STUDENT_ID, 'Studenti', $studentID, Student::getBuilder()->getList($isPartOfList), true,
             true, $studentInstance
         );
         $this->properties[self::PROP_MARK] = new IntegerProperty(
@@ -71,6 +72,7 @@ class Result extends BasicEntity
         );
 
         $this->actionHelper = new EntityActionHelper(self::TABLE_NAME, $this);
+        $this->isPartOfList = $isPartOfList;
     }
 
 

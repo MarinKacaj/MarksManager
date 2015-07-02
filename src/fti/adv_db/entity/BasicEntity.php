@@ -50,6 +50,10 @@ abstract class BasicEntity implements Entity
      * @var EntityActionHelper
      */
     protected $actionHelper;
+    /**
+     * @var bool
+     */
+    protected $isPartOfList;
 
 
     /**

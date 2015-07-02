@@ -91,12 +91,17 @@ class EntityBuilderHelper
     }
 
     /**
+     * @param bool $isInstanceAlreadyPartOfList [optional]
      * @return BasicEntity[]
      */
-    public function getList()
+    public function getList($isInstanceAlreadyPartOfList = false)
     {
-        $entityInstances = EntityActionHelper::getFullList($this->className, $this->tableName);
-        return $entityInstances;
+        if (!$isInstanceAlreadyPartOfList) {
+            $entityInstances = EntityActionHelper::getFullList($this->className, $this->tableName);
+            return $entityInstances;
+        } else {
+            return array();
+        }
     }
 
     /**

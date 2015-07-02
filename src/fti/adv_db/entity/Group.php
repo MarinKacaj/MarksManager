@@ -35,21 +35,23 @@ class Group extends BasicEntity
 
     /**
      * @param array $params
+     * @param bool $isPartOfList [optional]
      */
-    function __construct($params)
+    function __construct($params, $isPartOfList = false)
     {
         $this->label = self::LABEL;
         $this->id = array(self::PROP_ID => $params[self::PROP_ID]);
         $this->properties[self::PROP_ID] = new IntegerProperty(self::PROP_ID, 'ID', $this->id[self::PROP_ID], false, false);
         $this->properties[self::PROP_NAME] = new StringProperty(self::PROP_NAME, 'Emri', $params[self::PROP_NAME], true, true);
         $this->properties[self::PROP_DEPARTMENT_ID] = new EntityProperty(
-            self::PROP_DEPARTMENT_ID, 'Dega', intval($params[self::PROP_DEPARTMENT_ID]), Department::getBuilder()->getList(), true
+            self::PROP_DEPARTMENT_ID, 'Dega', intval($params[self::PROP_DEPARTMENT_ID]), Department::getBuilder()->getList($isPartOfList), true
         );
         $this->properties[self::PROP_START_AY_ID] = new EntityProperty(
-            self::PROP_START_AY_ID, 'Viti Akademik', intval($params[self::PROP_START_AY_ID]), AcademicYear::getBuilder()->getList(), true
+            self::PROP_START_AY_ID, 'Viti Akademik', intval($params[self::PROP_START_AY_ID]), AcademicYear::getBuilder()->getList($isPartOfList), true
         );
 
         $this->actionHelper = new EntityActionHelper(self::TABLE_NAME, $this);
+        $this->isPartOfList = $isPartOfList;
     }
 
 

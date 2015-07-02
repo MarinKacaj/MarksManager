@@ -43,8 +43,9 @@ class Exam extends BasicEntity
 
     /**
      * @param array $params
+     * @param bool $isPartOfList [optional]
      */
-    function __construct($params)
+    function __construct($params, $isPartOfList = false)
     {
         if (!isset($params[self::PROP_ID])) {
             $params[self::PROP_ID] = BasicEntity::UNSAVED_INSTANCE_ID;
@@ -68,28 +69,29 @@ class Exam extends BasicEntity
         $this->id = array(self::PROP_ID => $params[self::PROP_ID]);
         $this->properties[self::PROP_ID] = new IntegerProperty(self::PROP_ID, 'ID', $this->id[self::PROP_ID], false, false);
         $this->properties[self::PROP_SEASON_ID] = new EntityProperty(
-            self::PROP_SEASON_ID, 'Sezon', intval($params[self::PROP_SEASON_ID]), Season::getBuilder()->getList(), true,
+            self::PROP_SEASON_ID, 'Sezon', intval($params[self::PROP_SEASON_ID]), Season::getBuilder()->getList($isPartOfList), true,
             true, $seasonInstance
         );
         $this->properties[self::PROP_SUBJECT_ID] = new EntityProperty(
-            self::PROP_SUBJECT_ID, 'Lende', $subjectID, Subject::getBuilder()->getList(), true,
+            self::PROP_SUBJECT_ID, 'Lende', $subjectID, Subject::getBuilder()->getList($isPartOfList), true,
             true, $subjectInstance
         );
         $this->properties[self::PROP_DEPARTMENT_ID] = new EntityProperty(
-            self::PROP_DEPARTMENT_ID, 'Dege', $departmentID, Department::getBuilder()->getList(), true,
+            self::PROP_DEPARTMENT_ID, 'Dege', $departmentID, Department::getBuilder()->getList($isPartOfList), true,
             true, $departmentInstance
         );
         $this->properties[self::PROP_HEAD_ID] = new EntityProperty(
-            self::PROP_HEAD_ID, 'Kryetar Komisioni', $headID, Professor::getBuilder()->getList(), true
+            self::PROP_HEAD_ID, 'Kryetar Komisioni', $headID, Professor::getBuilder()->getList($isPartOfList), true
         );
         $this->properties[self::PROP_MEMBER1_ID] = new EntityProperty(
-            self::PROP_MEMBER1_ID, 'An&euml;tar 1', $member1ID, Professor::getBuilder()->getList(), true
+            self::PROP_MEMBER1_ID, 'An&euml;tar 1', $member1ID, Professor::getBuilder()->getList($isPartOfList), true
         );
         $this->properties[self::PROP_MEMBER2_ID] = new EntityProperty(
-            self::PROP_MEMBER2_ID, 'An&euml;tar 2', $member2ID, Professor::getBuilder()->getList(), true
+            self::PROP_MEMBER2_ID, 'An&euml;tar 2', $member2ID, Professor::getBuilder()->getList($isPartOfList), true
         );
 
         $this->actionHelper = new EntityActionHelper(self::TABLE_NAME, $this);
+        $this->isPartOfList = $isPartOfList;
     }
 
 

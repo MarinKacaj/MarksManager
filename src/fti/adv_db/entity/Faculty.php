@@ -42,8 +42,9 @@ class Faculty extends BasicEntity
 
     /**
      * @param array $params
+     * @param bool $isPartOfList [optional]
      */
-    function __construct($params)
+    function __construct($params, $isPartOfList = false)
     {
         $this->label = 'NJK';
 
@@ -59,21 +60,23 @@ class Faculty extends BasicEntity
         $this->properties[self::PROP_NAME] = new StringProperty(self::PROP_NAME, 'Emri', $params[self::PROP_NAME], true, true);
         $this->properties[self::PROP_ADDRESS] = new StringProperty(self::PROP_ADDRESS, 'Adresa', $params[self::PROP_ADDRESS], true, true);
         $this->properties[self::PROP_DEAN_ID] = new EntityProperty(self::PROP_DEAN_ID, 'Dekani',
-            intval($params[self::PROP_DEAN_ID]), Professor::getBuilder()->getList(), true
+            intval($params[self::PROP_DEAN_ID]), Professor::getBuilder()->getList($isPartOfList), true
         );
         $this->properties[self::PROP_HEAD_SECRETARY_ID] = new EntityProperty(
             self::PROP_HEAD_SECRETARY_ID, 'Krye Sekretarja',
-            $headSecretaryID, Secretary::getBuilder()->getList(), true
+            $headSecretaryID, Secretary::getBuilder()->getList($isPartOfList), true
         );
         $this->properties[self::PROP_SECRETARY_ID] = new EntityProperty(
             self::PROP_SECRETARY_ID, 'Sekretarja',
-            $secretaryID, Secretary::getBuilder()->getList(), true
+            $secretaryID, Secretary::getBuilder()->getList($isPartOfList), true
         );
         $this->properties[self::PROP_UNIVERSITY_ID] = new EntityProperty(
-            self::PROP_UNIVERSITY_ID, 'Universiteti', $params[self::PROP_UNIVERSITY_ID], University::getBuilder()->getList(), true
+            self::PROP_UNIVERSITY_ID, 'Universiteti', $params[self::PROP_UNIVERSITY_ID],
+            University::getBuilder()->getList($isPartOfList), true
         );
 
         $this->actionHelper = new EntityActionHelper(self::TABLE_NAME, $this);
+        $this->isPartOfList = $isPartOfList;
     }
 
 
