@@ -27,14 +27,14 @@ class ExamResult extends CompositeEntity
 {
 
     const LABEL = 'Flet&euml; Provimi';
-    const PROP_STUDENT_ID = Student::PROP_ID;
+    const PROP_STUDENT_ID = 'studentID';
     const PROP_STUDENT_FIRST_NAME = Student::PROP_FIRST_NAME;
     const PROP_STUDENT_LAST_NAME = Student::PROP_LAST_NAME;
     const PROP_RESULT_MARK = Result::PROP_MARK;
     const PROP_RESULT_DATE = Result::PROP_DATE;
     const PROP_SUBJECT_NAME = Subject::PROP_NAME;
     const PROP_GROUP_NAME = Group::PROP_NAME;
-    const PROP_EXAM_ID = Exam::PROP_ID;
+    const PROP_EXAM_ID = 'examID';
     const PROP_EXAM_HEAD_ID = Exam::PROP_HEAD_ID;
     const PROP_EXAM_MEMBER1_ID = Exam::PROP_MEMBER1_ID;
     const PROP_EXAM_MEMBER2_ID = Exam::PROP_MEMBER2_ID;
@@ -48,6 +48,7 @@ class ExamResult extends CompositeEntity
         if ($mark < 4 || $mark > 10) {
             $mark = 4;
         }
+        $studentID = intval($params[self::PROP_STUDENT_ID]);
         $examID = intval($params[self::PROP_EXAM_ID]);
         $headID = intval($params[self::PROP_EXAM_HEAD_ID]);
         $m1ID = intval($params[self::PROP_EXAM_MEMBER1_ID]);
@@ -58,6 +59,9 @@ class ExamResult extends CompositeEntity
 
         $this->properties[self::PROP_ORDINAL_NUMBER] = new IntegerProperty(
             self::PROP_ORDINAL_NUMBER, '#', $ordinalNumber, true, true, 0
+        );
+        $this->properties[self::PROP_STUDENT_ID] = new IntegerProperty(
+            self::PROP_STUDENT_ID, 'Studenti', $studentID, true, false
         );
         $this->properties[self::PROP_EXAM_ID] = new IntegerProperty(
             self::PROP_EXAM_ID, 'Provimi', $examID, true, false

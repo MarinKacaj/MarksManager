@@ -14,6 +14,7 @@ use fti\adv_db\entity\AcademicYear;
 use fti\adv_db\entity\Attendance;
 use fti\adv_db\entity\Department;
 use fti\adv_db\entity\Exam;
+use fti\adv_db\entity\ExamResult;
 use fti\adv_db\entity\Group;
 use fti\adv_db\entity\Professor;
 use fti\adv_db\entity\Result;
@@ -55,7 +56,7 @@ class ExamResultQuery extends SelectQuery
         $isImprovement = (bool)$isImprovement;
 
         $colNames = array(
-            QueryPartsBuilder::buildColName(Student::TABLE_NAME, Student::PROP_ID),
+            QueryPartsBuilder::buildColName(Student::TABLE_NAME, Student::PROP_ID . ' AS ' . ExamResult::PROP_STUDENT_ID),
             QueryPartsBuilder::buildColName(Student::TABLE_NAME, Student::PROP_FIRST_NAME),
             QueryPartsBuilder::buildColName(Student::TABLE_NAME, Student::PROP_LAST_NAME),
             QueryPartsBuilder::buildColName(Result::TABLE_NAME, Result::PROP_DATE),
@@ -64,7 +65,7 @@ class ExamResultQuery extends SelectQuery
             QueryPartsBuilder::buildColName(Department::TABLE_NAME, Department::PROP_NAME),
             QueryPartsBuilder::buildColName(AcademicYear::TABLE_NAME, AcademicYear::PROP_YEAR),
             QueryPartsBuilder::buildColName(Subject::TABLE_NAME, Subject::PROP_NAME),
-            QueryPartsBuilder::buildColName(Exam::TABLE_NAME, Exam::PROP_ID),
+            QueryPartsBuilder::buildColName(Exam::TABLE_NAME, Exam::PROP_ID . ' AS ' . ExamResult::PROP_EXAM_ID),
             QueryPartsBuilder::buildColName(Exam::TABLE_NAME, Exam::PROP_HEAD_ID),
             QueryPartsBuilder::buildColName(Exam::TABLE_NAME, Exam::PROP_MEMBER1_ID),
             QueryPartsBuilder::buildColName(Exam::TABLE_NAME, Exam::PROP_MEMBER2_ID)
@@ -82,6 +83,7 @@ class ExamResultQuery extends SelectQuery
         );
         $this->buildConjunctionWhereClause($filters);
         $this->appendAndFilter(QueryPartsBuilder::buildColName(Result::TABLE_NAME, Result::PROP_EXAM_ID), QueryPartsBuilder::buildColName(Exam::TABLE_NAME, Exam::PROP_ID), true);
+        $this->appendAndFilter(QueryPartsBuilder::buildColName(Result::TABLE_NAME, Result::PROP_STUDENT_ID), QueryPartsBuilder::buildColName(Student::TABLE_NAME, Student::PROP_ID), true);
         $this->appendAndFilter(QueryPartsBuilder::buildColName(Student::TABLE_NAME, Student::PROP_GROUP_ID), QueryPartsBuilder::buildColName(Group::TABLE_NAME, Group::PROP_ID), true);
 
         $this->appendAndFilter(QueryPartsBuilder::buildColName(Exam::TABLE_NAME, Exam::PROP_SEASON_ID), QueryPartsBuilder::buildColName(Season::TABLE_NAME, Season::PROP_ID), true);
@@ -104,7 +106,7 @@ class ExamResultQuery extends SelectQuery
      */
     public function getQuery()
     {
-        $studentIDQualifiedName = QueryPartsBuilder::buildColName(Student::TABLE_NAME, Student::PROP_ID);
+        $studentIDQualifiedName = ExamResult::PROP_STUDENT_ID;
         $query = "SELECT {$this->projection} FROM {$this->tableNames} WHERE {$this->selection} GROUP BY $studentIDQualifiedName";
         return $query;
     }
