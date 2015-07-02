@@ -57,11 +57,11 @@ class Result extends BasicEntity
         }
 
         $this->properties[self::PROP_EXAM_ID] = new EntityProperty(
-            self::PROP_EXAM_ID, 'Provimi', $examID, Exam::getBuilder()->getList($isPartOfList), true,
+            self::PROP_EXAM_ID, 'Provimi', $examID, array($examInstance), true, // TODO - change very bad solution
             true, $examInstance
         );
         $this->properties[self::PROP_STUDENT_ID] = new EntityProperty(
-            self::PROP_STUDENT_ID, 'Studenti', $studentID, Student::getBuilder()->getList($isPartOfList), true,
+            self::PROP_STUDENT_ID, 'Studenti', $studentID, array($studentInstance), true,
             true, $studentInstance
         );
         $this->properties[self::PROP_MARK] = new IntegerProperty(

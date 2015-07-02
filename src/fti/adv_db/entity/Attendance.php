@@ -74,6 +74,11 @@ class Attendance extends BasicEntity
     }
 
 
+    public static function getList($professorID)
+    {
+
+    }
+
     /**
      * @return EntityBuilderHelper
      */
