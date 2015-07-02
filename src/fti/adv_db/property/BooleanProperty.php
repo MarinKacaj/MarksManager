@@ -54,6 +54,14 @@ class BooleanProperty extends BasicProperty
      */
     public function getValue()
     {
+        return ($this->value == '1') ? '1' : '0';
+    }
+
+    /**
+     * @return string
+     */
+    public function getDisplayValue()
+    {
         return ($this->value == '1') ? '&#10003' : '&#10007';
     }
 

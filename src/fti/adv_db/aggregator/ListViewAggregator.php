@@ -11,6 +11,7 @@ namespace fti\adv_db\aggregator;
 
 use fti\adv_db\entity\Entity;
 use fti\adv_db\property\BasicProperty;
+use fti\adv_db\property\BooleanProperty;
 use fti\adv_db\property\EntityProperty;
 use fti\adv_db\view\ListViewGenerator;
 
@@ -118,6 +119,8 @@ class ListViewAggregator
         foreach ($listProperties as $listProperty) {
             if ($listProperty instanceof EntityProperty) {
                 $value = $listProperty->getEntityInstance()->getDisplayName();
+            } else if ($listProperty instanceof BooleanProperty) {
+                $value = $listProperty->getDisplayValue();
             } else {
                 $value = $listProperty->getValue();
             }
