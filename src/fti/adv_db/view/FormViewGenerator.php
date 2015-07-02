@@ -363,6 +363,7 @@ class FormViewGenerator extends ViewGenerator
 
         $inputEl = $this->domDocument->createElement(Element::INPUT);
         $inputEl->setAttribute(Attribute::TYPE, DefaultAttributeValues::TYPE_CHECKBOX);
+        $inputEl->setAttribute(Attribute::NAME, $name);
         $inputEl->setAttribute(Attribute::ID, $id);
         if ($value == 1) {
             $inputEl->setAttribute(Attribute::CHECKED, DefaultAttributeValues::CHECKED);
