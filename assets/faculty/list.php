@@ -22,13 +22,13 @@ if (empty($entityInstances)) {
     $isEmpty = true;
     array_push($entityInstances, $entityBuilder->createEmpty());
 }
-$listViewAggregator = new ListViewAggregator($entityInstances, true);
-$listViewAggregator->setIsUpdateButtonDisplayed(true);
+$listViewAggregator = new ListViewAggregator($entityInstances, false);
+$listViewAggregator->setIsUpdateButtonDisplayed(false);
 $listViewAggregator->setIsDeleteButtonDisplayed(false);
 
 $contentHeader = $entityBuilder->getLabel();
 $contentAction = 'Lista';
-$contentHTML = $listViewAggregator->buildListHTML($isEmpty, true);
+$contentHTML = $listViewAggregator->buildListHTML($isEmpty, false);
 
 $GLOBALS[CONTENT_HEADER] = $contentHeader;
 $GLOBALS[CONTENT_ACTION] = $contentAction;
