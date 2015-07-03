@@ -15,9 +15,9 @@ require_once dirname(dirname(__FILE__)) . '/pages/listHelper.php';
 
 redirectIfNotProfessor();
 
-$entityBuilder = Attendance::getBuilder();
 $currentlyLoggedInProfessor = getCurrentlyLoggedInUser();
 $professorID = $currentlyLoggedInProfessor->getProperty(Professor::PROP_ID)->getValue();
+$entityBuilder = Attendance::getBuilder();
 $entityInstances = Attendance::getList($professorID);
 $isEmpty = false;
 if (empty($entityInstances)) {
@@ -30,7 +30,7 @@ $listViewAggregator->setIsDeleteButtonDisplayed(false);
 
 $contentHeader = $entityBuilder->getLabel();
 $contentAction = 'Lista';
-$contentHTML = $listViewAggregator->buildListHTML($isEmpty, false);
+$contentHTML = $listViewAggregator->buildListHTML($isEmpty);
 
 $GLOBALS[CONTENT_HEADER] = $contentHeader;
 $GLOBALS[CONTENT_ACTION] = $contentAction;

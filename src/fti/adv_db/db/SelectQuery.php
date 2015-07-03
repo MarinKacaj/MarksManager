@@ -51,6 +51,17 @@ class SelectQuery extends CurrentDataQuery
 
 
     /**
+     * @param string $tableName
+     * @param string $condition
+     * @param string $joinKeyword [optional]
+     */
+    public function joinTableWith($tableName, $condition, $joinKeyword = 'INNER JOIN')
+    {
+        $joinClause = " $joinKeyword $tableName ON $condition";
+        $this->tableNames .= $joinClause;
+    }
+
+    /**
      * @return string
      */
     public function getQuery()

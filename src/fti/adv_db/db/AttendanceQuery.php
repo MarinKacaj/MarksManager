@@ -25,7 +25,6 @@ spl_autoload_register('class_auto_loader');
 class AttendanceQuery extends SelectQuery
 {
 
-
     /**
      * @param int $professorID
      */
@@ -38,13 +37,14 @@ class AttendanceQuery extends SelectQuery
         $colNames = array(QBuilder::buildColName(Attendance::TABLE_NAME, '*'));
         $this->projection = QBuilder::buildCSVString($colNames);
 
-        $tableNames = array(Attendance::TABLE_NAME, Subject::TABLE_NAME, Exam::TABLE_NAME);
+        $tableNames = array(Attendance::TABLE_NAME);
         $this->tableNames = QBuilder::buildCSVString($tableNames);
+        $this->joinTableWith(Subject::TABLE_NAME, QBuilder::buildColEq(Attendance::TABLE_NAME, Attendance::PROP_SUBJECT_ID, Subject::TABLE_NAME, Subject::PROP_ID));
+        $this->joinTableWith(Exam::TABLE_NAME, QBuilder::buildColEq(Subject::TABLE_NAME, Subject::PROP_ID, Exam::TABLE_NAME, Exam::PROP_SUBJECT_ID));
 
         $filters = array(QBuilder::buildColName(Exam::TABLE_NAME, Exam::PROP_HEAD_ID) => $professorID);
         $this->buildConjunctionWhereClause($filters);
-        $this->appendAndFilter(QBuilder::buildColName(Attendance::TABLE_NAME, Attendance::PROP_SUBJECT_ID), QBuilder::buildColName(Subject::TABLE_NAME, Subject::PROP_ID), true);
-        $this->appendAndFilter(QBuilder::buildColName(Subject::TABLE_NAME, Subject::PROP_ID), QBuilder::buildColName(Exam::TABLE_NAME, Exam::PROP_SUBJECT_ID), true);
     }
+
 
 }
