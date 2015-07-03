@@ -30,6 +30,9 @@ if (isset($GLOBALS[REPORT_CODE])) {
         case EXAM_ERROR_CONSTRAINT_VIOLATION:
             $errorMessage = 'Pedagog&euml;t nuk mund t&euml; jen&euml; i nj&euml;jti person.';
             break;
+        case MYSQL_ERROR_CHILD_KEY_CONSTRAINT_VIOLATED:
+            $errorMessage = 'Elementi nuk mund t&euml; shtohet.';
+            break;
         case FACULTY_ERROR_CONSTRAINT_VIOLATION:
             $errorMessage = 'Sekretaret nuk mund t&euml; jen&euml; i nj&euml;jti person.';
             break;

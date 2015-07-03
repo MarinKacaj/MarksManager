@@ -19,16 +19,7 @@ spl_autoload_register('class_auto_loader');
 redirectIfNotProfessor();
 
 
-$identifier = HttpEntityParamBuilder::retrieveFilter(array(Attendance::PROP_SUBJECT_ID, Attendance::PROP_STUDENT_ID));
-$currentAttendanceInstance = Attendance::getBuilder()->getByIdentifier($identifier);
-
 $params = HttpEntityParamBuilder::buildParams();
 $attendanceInstance = new Attendance($params);
-
 $actionNavigator = new ActionNavigator($attendanceInstance);
-
-if ($currentAttendanceInstance) {
-    $actionNavigator->updateAndRedirect();
-} else {
-    $actionNavigator->saveAndRedirect();
-}
+$actionNavigator->updateAndRedirect();
