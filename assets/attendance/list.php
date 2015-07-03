@@ -8,6 +8,7 @@
 
 use fti\adv_db\aggregator\ListViewAggregator;
 use fti\adv_db\entity\Attendance;
+use fti\adv_db\entity\Professor;
 
 require_once dirname(dirname(__FILE__)) . '/includes/loader.php';
 require_once dirname(dirname(__FILE__)) . '/pages/listHelper.php';
@@ -15,7 +16,9 @@ require_once dirname(dirname(__FILE__)) . '/pages/listHelper.php';
 redirectIfNotProfessor();
 
 $entityBuilder = Attendance::getBuilder();
-$entityInstances = Attendance::getList(1);
+$currentlyLoggedInProfessor = getCurrentlyLoggedInUser();
+$professorID = $currentlyLoggedInProfessor->getProperty(Professor::PROP_ID)->getValue();
+$entityInstances = Attendance::getList($professorID);
 $isEmpty = false;
 if (empty($entityInstances)) {
     $isEmpty = true;
