@@ -47,5 +47,4 @@ class AttendanceQuery extends SelectQuery
         $this->appendAndFilter(QBuilder::buildColName(Subject::TABLE_NAME, Subject::PROP_ID), QBuilder::buildColName(Exam::TABLE_NAME, Exam::PROP_SUBJECT_ID), true);
     }
 
-
 }

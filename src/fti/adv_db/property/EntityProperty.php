@@ -67,6 +67,22 @@ class EntityProperty extends BasicProperty
     }
 
     /**
+     * @param BasicEntity $entityInstance
+     */
+    public function setEntityInstance($entityInstance)
+    {
+        $this->entityInstance = $entityInstance;
+    }
+
+    /**
+     * @param BasicEntity[] $entityInstances
+     */
+    public function setEntityInstances($entityInstances)
+    {
+        $this->entityInstances = $entityInstances;
+    }
+
+    /**
      * @return int|string
      */
     public function getValue()
